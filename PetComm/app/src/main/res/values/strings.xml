@@ -1,6 +1,11 @@
 <resources>
     <string name="app_name">PetComm</string>
-    <string name="title_home">Home</string>
-    <string name="title_dashboard">Dashboard</string>
-    <string name="title_notifications">Notifications</string>
+    <string name="title_home">홈</string>
+    <string name="title_device">기기</string>
+    <string name="title_setting">설정</string>
+
+    <string name="splash_desc">Splash Image</string>
+
+
+    <string name="icon_desc">Icon Top Bar</string>
 </resources>
