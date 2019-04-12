@@ -22,7 +22,7 @@
         >
 
         <ImageView
-            android:contentDescription="@string/icon_desc"
+            android:contentDescription="@string/desc_icon"
             android:id="@+id/iv_icon"
             android:layout_width="200dp"
             android:layout_height="60dp"

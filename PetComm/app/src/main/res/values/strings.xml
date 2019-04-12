@@ -7,5 +7,7 @@
     <string name="splash_desc">Splash Image</string>
 
 
-    <string name="icon_desc">Icon Top Bar</string>
+    <string name="desc_icon">Icon PetComm</string>
+
+
 </resources>
