@@ -32,6 +32,7 @@ public class SignInActivity extends AppCompatActivity {
     public void signInListener(View view){
         Intent intent = new Intent(getApplicationContext(), MainActivity.class);
         startActivity(intent);
+        finish();
     }
 
     public void signUpListener(View view){
