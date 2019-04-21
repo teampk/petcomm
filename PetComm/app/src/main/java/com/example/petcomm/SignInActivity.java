@@ -3,6 +3,7 @@ package com.example.petcomm;
 import android.content.Intent;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
+
 import android.os.Handler;
 import android.support.annotation.Nullable;
 import android.support.constraint.ConstraintLayout;
@@ -88,5 +89,6 @@ public class SignInActivity extends AppCompatActivity {
 
     public void languageButtonListener(View view){
         Toast.makeText(this, "언어 설정", Toast.LENGTH_SHORT).show();
+
     }
 }

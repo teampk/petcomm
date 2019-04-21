@@ -6,7 +6,6 @@
 
     <string name="splash_desc">Splash Image</string>
 
-
     <string name="icon_desc">Icon Top Bar</string>
 
     <string name="et_email">메일주소</string>
@@ -22,6 +21,7 @@
     <string name="tv_language">Language</string>
 
     <string name="desc_lang_kor">Language Korean</string>
+    <string name="desc_icon">Icon PetComm</string>
 
 
 </resources>
