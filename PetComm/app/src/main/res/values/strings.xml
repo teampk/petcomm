@@ -17,6 +17,15 @@
     <string name="bt_sign_in">로그인</string>
     <string name="bt_find_pw">비밀번호 찾기</string>
     <string name="bt_sign_up">회원가입</string>
+    <string name="bt_sign_up_dog">강아지 등록</string>
+
+    <string name="tv_gender">성별</string>
+    <string name="tv_gender_male">남자아이</string>
+    <string name="tv_gender_female">여자아이</string>
+    <string name="tv_species">품종</string>
+    <string name="tv_birth">생일</string>
+    <string name="tv_weight">무게</string>
+
 
     <string name="tv_language">Language</string>
 

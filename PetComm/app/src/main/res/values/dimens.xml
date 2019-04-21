@@ -14,6 +14,8 @@
     <dimen name="height_button">60dp</dimen>
     <dimen name="height_button_small">40dp</dimen>
 
+    <dimen name="length_image_profile">130dp</dimen>
+
 
 
 
