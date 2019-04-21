@@ -9,7 +9,7 @@ import android.view.WindowManager;
 
 public class SplashActivity extends AppCompatActivity {
 
-    private final int SPLASH_DISPLAY_LENGTH = 1000;
+    private final int SPLASH_DISPLAY_LENGTH = 2000;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -22,7 +22,7 @@ public class SplashActivity extends AppCompatActivity {
             @Override
             public void run() {
                 /* 메뉴액티비티를 실행하고 로딩화면을 죽인다.*/
-                Intent mainIntent = new Intent(SplashActivity.this, MainActivity.class);
+                Intent mainIntent = new Intent(SplashActivity.this, SignInActivity.class);
                 SplashActivity.this.startActivity(mainIntent);
                 SplashActivity.this.finish();
             }

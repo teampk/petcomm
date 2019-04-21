@@ -1,11 +1,27 @@
 <resources>
     <string name="app_name">PetComm</string>
-    <string name="title_home">홈</string>
-    <string name="title_device">기기</string>
-    <string name="title_setting">설정</string>
+    <string name="nav_home">홈</string>
+    <string name="nav_device">기기</string>
+    <string name="nav_setting">설정</string>
 
     <string name="splash_desc">Splash Image</string>
 
 
     <string name="icon_desc">Icon Top Bar</string>
+
+    <string name="et_email">메일주소</string>
+    <string name="et_name">이름</string>
+    <string name="et_pw">비밀번호</string>
+    <string name="et_pw2">비밀번호 재 입력</string>
+
+
+    <string name="bt_sign_in">로그인</string>
+    <string name="bt_find_pw">비밀번호 찾기</string>
+    <string name="bt_sign_up">회원가입</string>
+
+    <string name="tv_language">Language</string>
+
+    <string name="desc_lang_kor">Language Korean</string>
+
+
 </resources>

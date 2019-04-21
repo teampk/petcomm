@@ -5,6 +5,12 @@
 
     <dimen name="height_top_bar">100dp</dimen>
 
+    <dimen name="height_edit_text">60dp</dimen>
+    <dimen name="height_button">60dp</dimen>
+    <dimen name="height_button_small">40dp</dimen>
+
+    <dimen name="text_size">18sp</dimen>
+
 
 
 
