@@ -74,9 +74,15 @@ public class SignInActivity extends AppCompatActivity {
     }
 
     public void signInButtonListener(View view){
-        startActivity(new Intent(getApplicationContext(), MainActivity.class));
-        Toast.makeText(this, "로그인 되었습니다.", Toast.LENGTH_SHORT).show();
-        finish();
+        if(checkSignIn()){
+            if(binding.cbAutoSignIn.isChecked()){
+                Toast.makeText(this, "로그인 되었습니다 (자동로그인)", Toast.LENGTH_SHORT).show();
+            }else{
+                Toast.makeText(this, "로그인 되었습니다", Toast.LENGTH_SHORT).show();
+            }
+            startActivity(new Intent(getApplicationContext(), MainActivity.class));
+            finish();
+        }
     }
 
     public void signUpButtonListener(View view){
@@ -91,5 +97,17 @@ public class SignInActivity extends AppCompatActivity {
     public void languageButtonListener(View view){
         Toast.makeText(this, "언어 설정", Toast.LENGTH_SHORT).show();
 
+    }
+
+    private boolean checkSignIn(){
+        if (binding.etId.length() == 0){
+            Toast.makeText(this, "아이디를 입력해주세요.", Toast.LENGTH_SHORT).show();
+            return false;
+        }
+        else if (binding.etPw.length() == 0){
+            Toast.makeText(this, "비밀번호를 입력해주세요.", Toast.LENGTH_SHORT).show();
+            return false;
+        }
+        return true;
     }
 }

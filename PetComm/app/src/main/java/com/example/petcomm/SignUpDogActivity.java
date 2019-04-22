@@ -33,12 +33,4 @@ public class SignUpDogActivity extends AppCompatActivity {
         finish();
     }
 
-    public void doLaterButtonListener(View view){
-        startActivity(new Intent(getApplicationContext(), SignInActivity.class));
-        Toast.makeText(this, "나중에 하시죠..", Toast.LENGTH_SHORT).show();
-        finish();
-    }
-
-
-
 }
