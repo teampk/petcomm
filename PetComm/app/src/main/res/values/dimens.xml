@@ -16,6 +16,8 @@
 
     <dimen name="length_image_profile">130dp</dimen>
 
+    <dimen name="margin_sign_up_dog">30dp</dimen>
+
 
 
 

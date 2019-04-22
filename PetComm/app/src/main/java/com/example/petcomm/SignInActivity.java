@@ -75,6 +75,7 @@ public class SignInActivity extends AppCompatActivity {
 
     public void signInButtonListener(View view){
         startActivity(new Intent(getApplicationContext(), MainActivity.class));
+        Toast.makeText(this, "로그인 되었습니다.", Toast.LENGTH_SHORT).show();
         finish();
     }
 

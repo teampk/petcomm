@@ -7,162 +7,327 @@
 
     <data>
         <variable
-            name="signUp"
-            type="com.example.petcomm.SignUpActivity"/>
+            name="signUpDog"
+            type="com.example.petcomm.SignUpDogActivity"/>
     </data>
 
-    <android.support.constraint.ConstraintLayout
-        android:id="@+id/cl_main"
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:paddingEnd="30dp"
-        android:paddingStart="30dp"
-        android:background="@color/colorWhite"
-        >
+        android:layout_height="match_parent">
 
-        <ImageView
-            android:id="@+id/iv_icon"
+        <android.support.constraint.ConstraintLayout
+            android:id="@+id/cl_main"
             android:layout_width="match_parent"
-            android:layout_height="100dp"
-            android:layout_marginTop="30dp"
-            android:contentDescription="@string/splash_desc"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:srcCompat="@drawable/ic_petcomm2" />
-
-        <de.hdodenhof.circleimageview.CircleImageView
-            android:id="@+id/iv_profile"
-            android:layout_width="@dimen/length_image_profile"
-            android:layout_height="@dimen/length_image_profile"
-            android:layout_marginTop="20dp"
-            app:civ_border_width="3dp"
-            app:civ_border_color="@color/colorBlack"
-            app:civ_circle_background_color="@color/colorWhite"
-            android:src="@drawable/ic_dog"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/iv_icon"
-            app:layout_constraintEnd_toEndOf="parent"
-            />
-
-        <com.rengwuxian.materialedittext.MaterialEditText
-            android:id="@+id/et_name"
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/height_edit_text"
-            android:hint="@string/et_name"
-            android:textColor="@color/colorBlack"
-            android:textSize="@dimen/text_size"
-            app:layout_constraintTop_toBottomOf="@+id/iv_profile"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:met_floatingLabel="highlight" />
-
-        <LinearLayout
-            android:id="@+id/ll_gender"
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/height_edit_text"
-            android:orientation="horizontal"
-            app:layout_constraintTop_toBottomOf="@+id/et_name"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_height="wrap_content"
+            android:paddingEnd="30dp"
+            android:paddingStart="30dp"
+            android:background="@color/colorWhite"
             >
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:gravity="center"
-                android:text="@string/tv_gender"
+            <ImageView
+                android:id="@+id/iv_icon"
+                android:layout_width="match_parent"
+                android:layout_height="100dp"
+                android:layout_marginTop="50dp"
+                android:contentDescription="@string/splash_desc"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:srcCompat="@drawable/ic_petcomm2" />
+
+            <de.hdodenhof.circleimageview.CircleImageView
+                android:id="@+id/iv_profile"
+                android:layout_width="@dimen/length_image_profile"
+                android:layout_height="@dimen/length_image_profile"
+                android:layout_marginTop="30dp"
+                app:civ_border_width="3dp"
+                app:civ_border_color="@color/colorBlack"
+                app:civ_circle_background_color="@color/colorWhite"
+                android:src="@drawable/ic_dog"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/iv_icon"
+                app:layout_constraintEnd_toEndOf="parent"
+                />
+
+
+            <LinearLayout
+                android:id="@+id/ll_name"
+                android:layout_marginTop="20dp"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/height_edit_text"
+                android:orientation="horizontal"
+                app:layout_constraintTop_toBottomOf="@+id/iv_profile"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                >
+
+                <TextView
+                    android:id="@+id/tv_name"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:gravity="center"
+                    android:text="@string/tv_name"
+                    android:textSize="@dimen/text_size"
+                    android:textColor="@color/colorBlack"
+
+                    />
+
+
+
+                <com.rengwuxian.materialedittext.MaterialEditText
+                    android:id="@+id/et_name"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/height_edit_text"
+                    android:layout_marginStart="@dimen/margin_sign_up_dog"
+
+                    android:textColor="@color/colorBlack"
+                    android:textSize="@dimen/text_size"
+                    app:layout_constraintStart_toEndOf="@+id/tv_name"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:met_floatingLabel="highlight" />
+
+            </LinearLayout>
+
+
+
+            <LinearLayout
+                android:id="@+id/ll_gender"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/height_edit_text"
+                android:orientation="horizontal"
+                app:layout_constraintTop_toBottomOf="@+id/ll_name"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                >
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:gravity="center"
+                    android:text="@string/tv_gender"
+                    android:textSize="@dimen/text_size"
+                    android:textColor="@color/colorBlack"
+
+                    />
+
+                <RadioButton
+                    android:id="@+id/rb_male"
+                    android:layout_marginStart="@dimen/margin_sign_up_dog"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:gravity="center"
+                    android:text="@string/tv_gender_male"
+                    android:textSize="@dimen/text_size"
+                    android:textColor="@color/colorBlack"
+
+                    />
+
+                <RadioButton
+                    android:id="@+id/rb_female"
+                    android:layout_marginStart="20dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    />
+
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:gravity="center"
+                    android:text="@string/tv_gender_female"
+                    android:textSize="@dimen/text_size"
+                    android:textColor="@color/colorBlack"
+
+
+                    />
+
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/ll_species"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/height_edit_text"
+                android:orientation="horizontal"
+                app:layout_constraintTop_toBottomOf="@+id/ll_gender"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                >
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:gravity="center"
+                    android:text="@string/tv_species"
+                    android:textSize="@dimen/text_size"
+                    android:textColor="@color/colorBlack"
+
+                    />
+
+                <TextView
+                    android:layout_marginStart="@dimen/margin_sign_up_dog"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:gravity="center"
+                    android:text="@string/tv_example_species"
+                    android:textSize="@dimen/text_size"
+
+                    />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/ll_birth"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/height_edit_text"
+                android:orientation="horizontal"
+                app:layout_constraintTop_toBottomOf="@+id/ll_species"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                >
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:gravity="center"
+                    android:text="@string/tv_birth"
+                    android:textSize="@dimen/text_size"
+                    android:textColor="@color/colorBlack"
+
+
+                    />
+
+                <TextView
+                    android:layout_marginStart="@dimen/margin_sign_up_dog"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:gravity="center"
+                    android:text="@string/tv_example_birth"
+                    android:textSize="@dimen/text_size"
+
+                    />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/ll_weight"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/height_edit_text"
+                android:orientation="horizontal"
+                app:layout_constraintTop_toBottomOf="@+id/ll_birth"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                >
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:gravity="center"
+                    android:text="@string/tv_weight"
+                    android:textSize="@dimen/text_size"
+                    android:textColor="@color/colorBlack"
+
+
+                    />
+
+                <com.rengwuxian.materialedittext.MaterialEditText
+                    android:id="@+id/et_weight"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_height="@dimen/height_edit_text"
+                    android:layout_marginStart="@dimen/margin_sign_up_dog"
+                    android:gravity="end"
+                    android:textColor="@color/colorBlack"
+                    android:textSize="@dimen/text_size"
+                    app:met_floatingLabel="highlight" />
+
+
+                <TextView
+                    android:id="@+id/tv_kg"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:text="@string/tv_kg"
+                    android:gravity="center"
+                    android:textColor="@color/colorBlack"
+                    android:textSize="@dimen/text_size"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginEnd="30dp"
+
+                    />
+
+
+            </LinearLayout>
+
+
+            <Button
+                android:id="@+id/bt_sign_in"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/height_button"
+                android:layout_marginTop="20dp"
+
+                android:text="@string/bt_sign_up_dog"
                 android:textSize="@dimen/text_size"
+                android:textStyle="bold"
+                android:background="@drawable/layout_rounded_primary"
 
+                app:layout_constraintTop_toBottomOf="@+id/ll_weight"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                android:onClick="@{signUpDog::submitButtonListener}"
                 />
 
-            <RadioButton
-                android:id="@+id/rb_male"
-                android:layout_marginStart="50dp"
+
+
+            <android.support.constraint.ConstraintLayout
+                android:id="@+id/ll_do_later"
+                android:layout_marginTop="20dp"
                 android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                />
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toBottomOf="@+id/bt_sign_in"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                android:onClick="@{signUpDog::doLaterButtonListener}"
+                >
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:gravity="center"
-                android:text="@string/tv_gender_male"
-                android:textSize="@dimen/text_size"
-                android:textColor="@color/colorBlack"
-
-                />
-
-            <RadioButton
-                android:id="@+id/rb_female"
-                android:layout_marginStart="20dp"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                />
-
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:gravity="center"
-                android:text="@string/tv_gender_female"
-                android:textSize="@dimen/text_size"
-                android:textColor="@color/colorBlack"
+                <TextView
+                    android:id="@+id/tv_do_later"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/bt_do_later"
+                    android:textColor="@color/colorAccent"
+                    android:textSize="@dimen/text_size"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    />
 
 
-                />
+            </android.support.constraint.ConstraintLayout>
 
 
-        </LinearLayout>
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
 
-        <LinearLayout
-            android:id="@+id/ll_species"
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/height_edit_text"
-            android:orientation="horizontal"
-            app:layout_constraintTop_toBottomOf="@+id/ll_gender"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            >
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/ll_do_later"
+                app:layout_constraintBottom_toBottomOf="parent"
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:gravity="center"
-                android:text="@string/tv_gender"
-                android:textSize="@dimen/text_size"
+                >
 
-                />
+            </RelativeLayout>
+
+        </android.support.constraint.ConstraintLayout>
+    </ScrollView>
 
 
-
-
-
-        </LinearLayout>
-
-
-        <Button
-            android:id="@+id/bt_sign_in"
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/height_button"
-            android:layout_marginTop="20dp"
-
-            android:text="@string/bt_sign_up_dog"
-            android:textSize="@dimen/text_size"
-            android:textStyle="bold"
-            android:background="@drawable/layout_rounded_primary"
-
-            app:layout_constraintTop_toBottomOf="@+id/ll_species"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-
-            android:onClick="@{signUp::submitButtonListener}"
-
-            />
-
-
-
-
-
-    </android.support.constraint.ConstraintLayout>
 </layout>
