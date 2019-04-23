@@ -7,7 +7,7 @@
     android:background="@color/colorWhite">
 
     <ImageView
-        android:contentDescription="@string/splash_desc"
+        android:contentDescription="@string/desc_splash"
         android:layout_marginStart="30dp"
         android:layout_marginEnd="30dp"
         android:layout_width="match_parent"

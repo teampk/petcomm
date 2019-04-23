@@ -28,9 +28,22 @@ public class SignUpDogActivity extends AppCompatActivity {
 
 
     public void submitButtonListener(View view){
-        startActivity(new Intent(getApplicationContext(), SignInActivity.class));
-        Toast.makeText(this, "강아지 등록이 완료되었습니다.", Toast.LENGTH_SHORT).show();
+        Toast.makeText(this, "강아지 등록 완료\n다시 로그인 해주세요.", Toast.LENGTH_SHORT).show();
         finish();
+    }
+
+    // 두번 뒤 누르면 앱 종료
+    long pressTime;
+    @Override
+    public void onBackPressed() {
+
+        if(System.currentTimeMillis() - pressTime <2000){
+            finish();
+            return;
+        }
+        Toast.makeText(this,"강아지 등록을 취소하려면 한번 더 눌러주세요.\n\n강아지 등록은 나중에 할 수 있지만\n기기와 연동하여 어플을 사용하려면\n강아지 등록이 필요합니다.",Toast.LENGTH_SHORT).show();
+        pressTime = System.currentTimeMillis();
+
     }
 
 }

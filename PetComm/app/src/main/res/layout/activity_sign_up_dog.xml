@@ -27,11 +27,13 @@
             >
 
             <ImageView
+                android:focusable="true"
+                android:focusableInTouchMode="true"
                 android:id="@+id/iv_icon"
                 android:layout_width="match_parent"
                 android:layout_height="100dp"
                 android:layout_marginTop="50dp"
-                android:contentDescription="@string/splash_desc"
+                android:contentDescription="@string/desc_icon"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
@@ -275,7 +277,7 @@
                 android:layout_height="@dimen/height_button"
                 android:layout_marginTop="50dp"
 
-                android:text="@string/bt_sign_up_dog"
+                android:text="@string/bt_register_dog"
                 android:textSize="@dimen/text_size"
                 android:textStyle="bold"
                 android:background="@drawable/layout_rounded_primary"

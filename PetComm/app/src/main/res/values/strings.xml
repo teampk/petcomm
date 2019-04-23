@@ -4,9 +4,7 @@
     <string name="nav_device">기기</string>
     <string name="nav_setting">설정</string>
 
-    <string name="splash_desc">Splash Image</string>
 
-    <string name="icon_desc">Icon Top Bar</string>
 
     <string name="et_email">메일주소</string>
     <string name="et_name">이름</string>
@@ -17,8 +15,9 @@
     <string name="bt_sign_in">로그인</string>
     <string name="bt_find_pw">비밀번호 찾기</string>
     <string name="bt_sign_up">회원가입</string>
-    <string name="bt_sign_up_dog">강아지 등록</string>
+    <string name="bt_register_dog">강아지 등록</string>
     <string name="bt_do_later">나중에 하기</string>
+    <string name="bt_register_device">기기 등록</string>
 
     <string name="tv_auto_sin_in">자동 로그인</string>
     <string name="tv_name">이름</string>
@@ -34,11 +33,18 @@
 
     <string name="tv_device">DEVICE</string>
 
+    <string name="tv_empty_device">등록된 급식기가 없습니다.\n오른쪽 위 + 버튼을 통해 기기를 추가해주세요.</string>
+
 
     <string name="tv_language">Language</string>
 
     <string name="desc_lang_kor">Language Korean</string>
     <string name="desc_icon">Icon PetComm</string>
+    <string name="desc_splash">Splash Image</string>
+    <string name="desc_device">Device Image</string>
+
+
+
 
 
 </resources>

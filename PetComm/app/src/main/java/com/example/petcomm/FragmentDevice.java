@@ -1,5 +1,6 @@
 package com.example.petcomm;
 
+import android.content.Intent;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -20,9 +21,13 @@ public class FragmentDevice extends Fragment {
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_device, container, false);
         final View mView = binding.getRoot();
+        binding.setFragmentDevice(this);
 
 
         return mView;
+    }
+    public void addDeviceListener (View view){
+        startActivity(new Intent(getContext(), AddDeviceActivity.class));
     }
 
 

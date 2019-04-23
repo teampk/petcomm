@@ -25,6 +25,8 @@
         <activity android:name=".SignUpActivity"/>
         <activity android:name=".SignUpDogActivity"/>
 
+        <activity android:name=".AddDeviceActivity"/>
+
 
 
 
