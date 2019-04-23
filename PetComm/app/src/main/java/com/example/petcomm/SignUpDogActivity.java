@@ -28,7 +28,7 @@ public class SignUpDogActivity extends AppCompatActivity {
 
 
     public void submitButtonListener(View view){
-        Toast.makeText(this, "강아지 등록 완료\n다시 로그인 해주세요.", Toast.LENGTH_SHORT).show();
+        Toast.makeText(this, "회원가입 완료\n다시 로그인 해주세요.", Toast.LENGTH_SHORT).show();
         finish();
     }
 
@@ -41,7 +41,7 @@ public class SignUpDogActivity extends AppCompatActivity {
             finish();
             return;
         }
-        Toast.makeText(this,"강아지 등록을 취소하려면 한번 더 눌러주세요.\n\n강아지 등록은 나중에 할 수 있지만\n기기와 연동하여 어플을 사용하려면\n강아지 등록이 필요합니다.",Toast.LENGTH_SHORT).show();
+        Toast.makeText(this,"회원가입을 취소하려면 다시 한번 눌러주세요.",Toast.LENGTH_SHORT).show();
         pressTime = System.currentTimeMillis();
 
     }

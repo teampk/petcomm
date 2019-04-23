@@ -100,6 +100,7 @@ public class SignInActivity extends AppCompatActivity {
     }
 
     private boolean checkSignIn(){
+        /*
         if (binding.etId.length() == 0){
             Toast.makeText(this, "아이디를 입력해주세요.", Toast.LENGTH_SHORT).show();
             return false;
@@ -108,6 +109,7 @@ public class SignInActivity extends AppCompatActivity {
             Toast.makeText(this, "비밀번호를 입력해주세요.", Toast.LENGTH_SHORT).show();
             return false;
         }
+        */
         return true;
     }
 }

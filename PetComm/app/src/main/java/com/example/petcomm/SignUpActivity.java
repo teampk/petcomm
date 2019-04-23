@@ -36,7 +36,7 @@ public class SignUpActivity extends AppCompatActivity {
     public void submitButtonListener(View view){
         startActivity(new Intent(getApplicationContext(), SignUpDogActivity.class));
         overridePendingTransition(R.anim.anim_slide_in_top, R.anim.anim_slide_out_bottom);
-        Toast.makeText(this, "회원가입이 완료", Toast.LENGTH_SHORT).show();
+        Toast.makeText(this, "강아지를 등록해주세요.", Toast.LENGTH_SHORT).show();
         finish();
     }
 
