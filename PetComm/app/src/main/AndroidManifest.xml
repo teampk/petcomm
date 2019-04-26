@@ -26,6 +26,7 @@
         <activity android:name=".SignUpDogActivity"/>
 
         <activity android:name=".AddDeviceActivity"/>
+        <activity android:name=".DogProfileAcitivty"/>
 
 
 

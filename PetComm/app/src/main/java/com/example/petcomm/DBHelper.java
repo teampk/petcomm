@@ -55,6 +55,26 @@ public class DBHelper extends SQLiteOpenHelper {
         return dogData;
     }
 
+
+    public Dog getDogById(int id){
+        SQLiteDatabase db = getReadableDatabase();
+        Dog dataElement = null;
+        Cursor cursor = db.rawQuery("SELECT * FROM DOGLIST WHERE _id = '" + id + "';", null);
+        while (cursor.moveToNext()){
+            dataElement = new Dog(
+                    Integer.valueOf(cursor.getString(0)),
+                    cursor.getString(1),
+                    cursor.getString(2),
+                    cursor.getString(3),
+                    cursor.getString(4),
+                    cursor.getString(5),
+                    cursor.getString(6),
+                    cursor.getString(7)
+            );
+        }
+        return dataElement;
+    }
+
     public void deleteDogDataAll(){
         SQLiteDatabase db = getWritableDatabase();
         db.execSQL("DELETE FROM DOGLIST;");

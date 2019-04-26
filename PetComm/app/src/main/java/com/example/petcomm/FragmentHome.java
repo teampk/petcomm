@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -27,7 +28,7 @@ public class FragmentHome extends Fragment{
     private DBHelper dbHelper;
     private ArrayList<String> dogList;
     private ArrayList<Dog> dogData;
-
+    private int selectedId;
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -63,9 +64,6 @@ public class FragmentHome extends Fragment{
             dogList.add(dogData.get(i).name);
         }
 
-
-
-
     }
 
     private void setVisible(){
@@ -94,6 +92,8 @@ public class FragmentHome extends Fragment{
             binding.clEmptyDog.setVisibility(View.VISIBLE);
             binding.clExistDog.setVisibility(View.GONE);
             binding.tvEmptyDog.setText(getText(R.string.tv_empty_dog));
+        }else{
+            binding.spinnerDog.setSelection(dogList.size()-1);
         }
 
 
@@ -122,8 +122,7 @@ public class FragmentHome extends Fragment{
                 binding.tvDevice2.setText(dogData.get(id).toiletId);
 
             }
-
-
+            selectedId = dogData.get(id).id;
         }
     }
 
@@ -131,8 +130,13 @@ public class FragmentHome extends Fragment{
     public void addDogListener(View view){
         startActivity(new Intent(getContext(), SignUpDogActivity.class));
     }
-    public void testListener(View view){
-        Toast.makeText(getActivity(), binding.tvId.getText().toString(), Toast.LENGTH_SHORT).show();
+
+    public void dogProfileListener(View view){
+        Intent intent = new Intent(getContext(), DogProfileAcitivty.class);
+        intent.putExtra("dogId", selectedId);
+        Log.d("PETCOMMTEST", String.valueOf(selectedId));
+        startActivity(intent);
+
     }
 
 }
