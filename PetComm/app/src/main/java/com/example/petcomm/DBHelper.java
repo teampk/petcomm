@@ -19,7 +19,7 @@ public class DBHelper extends SQLiteOpenHelper {
     @Override
     public void onCreate(SQLiteDatabase db) {
         db.execSQL("CREATE TABLE DOGLIST (_id INTEGER PRIMARY KEY AUTOINCREMENT, name TEXT, gender TEXT," +
-                "species TEXT, birth TEXT, weight TEXT)");
+                "species TEXT, birth TEXT, weight TEXT, feederId, toiletId)");
 
     }
 
@@ -28,9 +28,9 @@ public class DBHelper extends SQLiteOpenHelper {
 
     }
 
-    public void addDog(String name, String gender, String species, String birth, String weight){
+    public void addDog(String name, String gender, String species, String birth, String weight, String feederId, String toiletId){
         SQLiteDatabase db = getWritableDatabase();
-        db.execSQL("INSERT INTO DOGLIST VALUES(null, '" +name+"','"+gender+"','"+species+"','"+birth+"','"+weight+"')");
+        db.execSQL("INSERT INTO DOGLIST VALUES(null, '" +name+"','"+gender+"','"+species+"','"+birth+"','"+weight+"','"+feederId+"','"+toiletId+"')");
         db.close();
     }
 
@@ -45,7 +45,9 @@ public class DBHelper extends SQLiteOpenHelper {
                     cursor.getString(2),
                     cursor.getString(3),
                     cursor.getString(4),
-                    cursor.getString(5)
+                    cursor.getString(5),
+                    cursor.getString(6),
+                    cursor.getString(7)
             );
             dogData.add(dogElement);
         }

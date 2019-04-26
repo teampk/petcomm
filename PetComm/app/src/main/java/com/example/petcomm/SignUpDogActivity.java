@@ -48,7 +48,7 @@ public class SignUpDogActivity extends AppCompatActivity {
     public void submitButtonListener(View view){
         if(checkRegister()){
 
-            dbHelper.addDog(binding.etName.getText().toString(), gender, "진돗개", "19951114", "3.5");
+            dbHelper.addDog(binding.etName.getText().toString(), gender, "진돗개", "19951114", "3.5", "", "");
 
 
 

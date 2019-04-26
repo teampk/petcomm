@@ -121,6 +121,14 @@
                         app:layout_constraintTop_toTopOf="parent"
                         />
 
+                    <!-- id -->
+                    <TextView
+                        android:id="@+id/tv_id"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="0"
+                        app:layout_constraintBottom_toTopOf="parent"/>
+
                     <!-- 이름 -->
                     <LinearLayout
                         android:layout_marginTop="10dp"
@@ -499,7 +507,7 @@
 
                 </android.support.constraint.ConstraintLayout>
 
-
+                <!-- 강아지가 없을 때 -->
                 <android.support.constraint.ConstraintLayout
                     android:visibility="gone"
                     android:id="@+id/cl_empty_dog"
@@ -509,9 +517,10 @@
                     >
 
                     <TextView
+                        android:id="@+id/tv_empty_dog"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:text="@string/tv_no_dog"
+                        android:text="@string/tv_empty_dog"
                         android:textSize="@dimen/text_size"
                         android:textColor="@color/colorBlack"
                         android:gravity="center"
@@ -519,13 +528,6 @@
 
 
                 </android.support.constraint.ConstraintLayout>
-
-
-
-
-
-
-
 
 
             </android.support.constraint.ConstraintLayout>

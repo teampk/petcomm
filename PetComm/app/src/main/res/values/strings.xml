@@ -65,10 +65,10 @@
     <string name="tv_exist_feeder">자동 급식기 FWEIJF234</string>
     <string name="tv_exist_toilet">배변판 EOIJF2313</string>
 
-
     <string name="tv_language">Language</string>
 
-    <string name="tv_no_dog">강아지가 선택되지 않았습니다.</string>
+    <string name="tv_empty_dog">강아지가 선택되지 않았습니다.</string>
+    <string name="tv_unselected_dog">강아지를 선택해주세요.</string>
 
     <string name="desc_lang_kor">Language Korean</string>
     <string name="desc_icon">Icon PetComm</string>

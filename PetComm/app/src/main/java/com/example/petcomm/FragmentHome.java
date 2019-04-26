@@ -21,7 +21,7 @@ import java.util.ArrayList;
 
 import static android.app.Activity.RESULT_OK;
 
-public class FragmentHome extends Fragment implements AdapterView.OnItemSelectedListener{
+public class FragmentHome extends Fragment{
 
     FragmentHomeBinding binding;
     private DBHelper dbHelper;
@@ -56,7 +56,7 @@ public class FragmentHome extends Fragment implements AdapterView.OnItemSelected
     private void setData(){
         dbHelper = new DBHelper(getContext(), "PetComm.db", null, 1);
         dogList = new ArrayList<>();
-        dogList.add("강아지를 선택해주세요");
+        dogList.add(getString(R.string.tv_unselected_dog));
         dogData = new ArrayList<>();
         dogData = dbHelper.getDogData();
         for (int i=0;i<dogData.size();i++){
@@ -69,41 +69,70 @@ public class FragmentHome extends Fragment implements AdapterView.OnItemSelected
     }
 
     private void setVisible(){
+
+
+        binding.spinnerDog.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                setDogProfile(position-1);
+
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+                setDogProfile(-1);
+
+            }
+        });
+
         ArrayAdapter<String> adapter = new ArrayAdapter<>(this.getActivity(), android.R.layout.simple_spinner_item, dogList);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         binding.spinnerDog.setAdapter(adapter);
 
+        // 강아지가 없을 때
         if(dogList.size()==1){
             binding.clEmptyDog.setVisibility(View.VISIBLE);
             binding.clExistDog.setVisibility(View.GONE);
-        }else{
-            binding.clEmptyDog.setVisibility(View.GONE);
-            binding.clExistDog.setVisibility(View.VISIBLE);
-
+            binding.tvEmptyDog.setText(getText(R.string.tv_empty_dog));
         }
-    }
 
-    @Override
-    public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l){
 
     }
 
-    @Override
-    public void onNothingSelected(AdapterView<?> parent) {
-        setDogProfile("");
-    }
-
-    private void setDogProfile(String name){
-        if(name.equals("")){
+    private void setDogProfile(int id){
+        if(id == -1){
             binding.clEmptyDog.setVisibility(View.VISIBLE);
             binding.clExistDog.setVisibility(View.GONE);
+            binding.tvEmptyDog.setText(getText(R.string.tv_unselected_dog));
+        }
+        else{
+            binding.clEmptyDog.setVisibility(View.GONE);
+            binding.clExistDog.setVisibility(View.VISIBLE);
+            binding.tvName.setText(dogData.get(id).name);
+            if(dogData.get(id).feederId.equals("")){
+                binding.tvDevice.setText(getString(R.string.tv_device_empty));
+            }else{
+                binding.tvDevice.setText(dogData.get(id).feederId);
+            }
+
+
+            if(dogData.get(id).toiletId.equals("")){
+                binding.tvDevice2.setText(getString(R.string.tv_device_empty));
+            }else{
+                binding.tvDevice2.setText(dogData.get(id).toiletId);
+
+            }
+
+
         }
     }
+
+
     public void addDogListener(View view){
         startActivity(new Intent(getContext(), SignUpDogActivity.class));
     }
     public void testListener(View view){
-        Toast.makeText(getActivity(), String.valueOf(dogList.size()), Toast.LENGTH_SHORT).show();
+        Toast.makeText(getActivity(), binding.tvId.getText().toString(), Toast.LENGTH_SHORT).show();
     }
 
 }
