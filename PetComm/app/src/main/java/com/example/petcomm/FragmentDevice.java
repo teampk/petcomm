@@ -8,6 +8,7 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import com.example.petcomm.databinding.FragmentDeviceBinding;
 import com.example.petcomm.databinding.FragmentHomeBinding;
@@ -15,6 +16,8 @@ import com.example.petcomm.databinding.FragmentHomeBinding;
 public class FragmentDevice extends Fragment {
 
     FragmentDeviceBinding binding;
+    boolean existFeeder = false;
+    boolean existToilet = false;
 
     @Nullable
     @Override
@@ -22,12 +25,40 @@ public class FragmentDevice extends Fragment {
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_device, container, false);
         final View mView = binding.getRoot();
         binding.setFragmentDevice(this);
+        setExistDevice();
+
+
 
 
         return mView;
     }
-    public void addDeviceListener (View view){
-        startActivity(new Intent(getContext(), AddDeviceActivity.class));
+
+    public void setExistDevice(){
+        if(existFeeder){
+            binding.clEmptyFeeder.setVisibility(View.GONE);
+            binding.clExistFeeder.setVisibility(View.VISIBLE);
+        }else{
+            binding.clEmptyFeeder.setVisibility(View.VISIBLE);
+            binding.clExistFeeder.setVisibility(View.GONE);
+        }
+        if(existToilet){
+            binding.clEmptyToilet.setVisibility(View.GONE);
+            binding.clExistToilet.setVisibility(View.VISIBLE);
+        }else{
+            binding.clEmptyToilet.setVisibility(View.VISIBLE);
+            binding.clExistToilet.setVisibility(View.GONE);
+        }
+    }
+
+    public void addFeederListener(View view){
+        existFeeder = true;
+        setExistDevice();
+    }
+
+    public void addToiletListener(View view){
+        existToilet = true;
+        setExistDevice();
+
     }
 
 

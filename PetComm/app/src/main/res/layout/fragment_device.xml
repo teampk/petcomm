@@ -11,10 +11,11 @@
             type="com.example.petcomm.FragmentDevice"/>
     </data>
 
-    <android.support.constraint.ConstraintLayout
+    <LinearLayout
         android:id="@+id/constraint"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:orientation="vertical"
         >
 
         <android.support.constraint.ConstraintLayout
@@ -32,8 +33,8 @@
             <ImageView
                 android:contentDescription="@string/desc_icon"
                 android:id="@+id/iv_icon"
-                android:layout_width="200dp"
-                android:layout_height="60dp"
+                android:layout_width="167dp"
+                android:layout_height="50dp"
                 android:gravity="center"
                 android:background="@drawable/ic_petcomm_device"
                 app:layout_constraintRight_toRightOf="parent"
@@ -41,36 +42,166 @@
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintBottom_toBottomOf="parent"/>
 
-            <ImageView
-                android:id="@+id/iv_plus"
-                android:layout_width="50dp"
-                android:layout_height="50dp"
-                android:background="@drawable/ic_add_black_24dp"
-
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                android:layout_marginEnd="10dp"
-                android:onClick="@{fragmentDevice::addDeviceListener}"
-
-                />
 
         </android.support.constraint.ConstraintLayout>
 
-        <TextView
-            android:id="@+id/top_bar"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:gravity="center"
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
 
-            android:text="@string/tv_empty_device"
-            android:textSize="@dimen/text_size"
+            <!-- 급식기 없을 때 -->
+            <android.support.constraint.ConstraintLayout
+                android:id="@+id/cl_empty_feeder"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:orientation="vertical">
 
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent"
-            />
+                <TextView
+                    android:id="@+id/tv_empty_feeder"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
 
-    </android.support.constraint.ConstraintLayout>
+                    android:text="@string/tv_empty_feeder"
+                    android:textSize="@dimen/text_size"
+
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintRight_toRightOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    />
+
+                <Button
+                    android:id="@+id/bt_empty_feeder"
+                    android:layout_width="200dp"
+                    android:layout_height="50dp"
+                    android:layout_marginTop="10dp"
+                    android:text="@string/bt_register_feeder"
+                    android:background="@color/colorPrimary"
+
+                    app:layout_constraintTop_toBottomOf="@+id/tv_empty_feeder"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintRight_toRightOf="parent"
+                    android:onClick="@{fragmentDevice::addFeederListener}"
+
+
+                    />
+
+            </android.support.constraint.ConstraintLayout>
+
+            <!-- 급식기 있을 때 -->
+            <android.support.constraint.ConstraintLayout
+                android:visibility="gone"
+                android:id="@+id/cl_exist_feeder"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/tv_exist_feeder"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+
+                    android:text="@string/tv_exist_feeder"
+                    android:textSize="@dimen/text_size"
+
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintRight_toRightOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    />
+
+
+            </android.support.constraint.ConstraintLayout>
+
+            <!-- Divider -->
+            <ImageView
+                android:contentDescription="@string/desc_divider"
+                android:id="@+id/divider"
+                android:layout_marginStart="15dp"
+                android:layout_marginEnd="15dp"
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@color/colorBackgroundGray"
+                app:layout_constraintTop_toBottomOf="@+id/ll_feed_plan"
+
+                />
+
+            <!-- 배변판 없을 때 -->
+            <android.support.constraint.ConstraintLayout
+                android:id="@+id/cl_empty_toilet"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1">
+
+                <TextView
+                    android:id="@+id/tv_empty_toilet"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+
+                    android:text="@string/tv_empty_toilet"
+                    android:textSize="@dimen/text_size"
+
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintRight_toRightOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    />
+
+                <Button
+                    android:id="@+id/bt_empty_toilet"
+                    android:layout_width="200dp"
+                    android:layout_height="50dp"
+                    android:layout_marginTop="10dp"
+                    android:text="@string/bt_register_toilet"
+                    android:background="@color/colorPrimary"
+
+
+                    app:layout_constraintTop_toBottomOf="@+id/tv_empty_toilet"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintRight_toRightOf="parent"
+                    android:onClick="@{fragmentDevice::addToiletListener}"
+
+
+                    />
+            </android.support.constraint.ConstraintLayout>
+
+            <!-- 배변판 있을 때 -->
+            <android.support.constraint.ConstraintLayout
+                android:visibility="gone"
+                android:id="@+id/cl_exist_toilet"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1">
+
+                <TextView
+                    android:id="@+id/tv_exist_toilet"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+
+                    android:text="@string/tv_exist_toilet"
+                    android:textSize="@dimen/text_size"
+
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintRight_toRightOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    />
+
+            </android.support.constraint.ConstraintLayout>
+
+
+
+
+        </LinearLayout>
+
+
+
+    </LinearLayout>
 </layout>
