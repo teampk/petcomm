@@ -37,6 +37,7 @@
     <string name="tv_device_empty">등록된 기기가 없습니다.</string>
     <string name="tv_device_example">petComm_FSBT4283</string>
     <string name="tv_device2_example">petComm_TWHJ8092</string>
+    <string name="tv_device_test_example">===== WIFI Direct =====\n</string>
     <string name="tv_gender">성별</string>
     <string name="tv_gender_is">성별 :</string>
     <string name="tv_gender_male">남자아이</string>

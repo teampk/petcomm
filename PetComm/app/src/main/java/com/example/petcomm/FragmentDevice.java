@@ -51,8 +51,10 @@ public class FragmentDevice extends Fragment {
     }
 
     public void addFeederListener(View view){
-        existFeeder = true;
-        setExistDevice();
+        // existFeeder = true;
+        // setExistDevice();
+
+        startActivity(new Intent(getContext(), AddDeviceActivity.class));
     }
 
     public void addToiletListener(View view){
