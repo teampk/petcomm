@@ -8,8 +8,14 @@ router.get('/', function(req, res){
 });
 
 router.post('/', function(req, res){
+    const ip = req.headers['x-forwarded-for'] ||  req.connection.remoteAddress;
     var data = req.body.data;
-    res.send('data', data);
+    console.log('post connected complete in :'+ip)
+    if(data!=null){
+        res.send('data', data);
+    }else{
+        res.send('Post')
+    }
 });
 
 module.exports = router;
