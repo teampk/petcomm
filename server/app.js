@@ -9,9 +9,10 @@ var routes = require('./server/routes/routes');
 var app = express();
 var router = express.Router();
 
-app.configure(function(){
-    app.use(express.bodyParser());
-});
+app.use(bodyParser.json());
+
+//app.use(express.bodyParser());
+
 app.use(logger('petcomm'));
 
 // mongoose.Promise = global.Promise;

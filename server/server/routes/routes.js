@@ -9,14 +9,14 @@ router.get('/', function(req, res){
 
 router.post('/', function(req, res){
     const ip = req.headers['x-forwarded-for'] ||  req.connection.remoteAddress;
-    var data = req.body.data;
+    var data1 = req.body.data1;
+    var data2 = req.body.data2;
     console.log('post connected complete in :'+ip);
-    console.log(data);
-    if(data!=undefined){
-        res.send('data', data);
-    }else{
-        res.send('Data empty')
-    }
+    console.log(data1);
+    console.log(data2);
+    res.status(200).json({
+        message: 'data1 is:' + data1 + '  data2 is:' + data2
+    });
 });
 
 module.exports = router;
