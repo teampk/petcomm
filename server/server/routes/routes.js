@@ -11,8 +11,8 @@ router.post('/', function(req, res){
     const ip = req.headers['x-forwarded-for'] ||  req.connection.remoteAddress;
     var data = req.body.data;
     console.log('post connected complete in :'+ip);
-    console.log(req.body.data);
-    if(data!=null){
+    console.log(data);
+    if(data!=undefined){
         res.send('data', data);
     }else{
         res.send('Data empty')
