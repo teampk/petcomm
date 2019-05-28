@@ -2,7 +2,7 @@ var express = require('express');
 var router = express.Router();
 
 router.get('/', function(req, res){
-    res.send('this is user page');
+    res.send('This is PetComm, Welcome World!');
 });
 
 router.post('/', function(req, res){
