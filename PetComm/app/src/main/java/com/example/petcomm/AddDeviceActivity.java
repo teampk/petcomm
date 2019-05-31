@@ -137,11 +137,13 @@ public class AddDeviceActivity extends AppCompatActivity {
                     @Override
                     public void onSuccess() {
                         binding.tvDevice.append("Connected to "+device.deviceName+"\n\n");
+                        Toast.makeText(AddDeviceActivity.this, "Connected to "+device.deviceName, Toast.LENGTH_SHORT).show();
                     }
 
                     @Override
                     public void onFailure(int reason) {
                         binding.tvDevice.append("Not Connected\n\n");
+                        Toast.makeText(AddDeviceActivity.this, "Not Connected", Toast.LENGTH_SHORT).show();
 
                     }
                 });
@@ -149,18 +151,14 @@ public class AddDeviceActivity extends AppCompatActivity {
         });
     }
 
-
     public void addDeviceListener(View view){
         if(wifiManager.isWifiEnabled()){
             wifiManager.setWifiEnabled(false);
             binding.btWifi.setText("WIFI ON");
         }else{
             wifiManager.setWifiEnabled(true);
-            binding.btWifi.setText("OFF");
-
-
+            binding.btWifi.setText("WIFI OFF");
         }
-
     }
 
     public void addDevice2Listener(View view){
