@@ -4,14 +4,12 @@
     <string name="nav_device">기기</string>
     <string name="nav_setting">설정</string>
 
-
-
     <string name="et_email">메일주소</string>
     <string name="et_name">이름</string>
     <string name="et_pw">비밀번호</string>
     <string name="et_pw2">비밀번호 재 입력</string>
 
-
+    <!-- BUTTON -->
     <string name="bt_sign_in">로그인</string>
     <string name="bt_find_pw">비밀번호 찾기</string>
     <string name="bt_sign_up">회원가입</string>
@@ -20,6 +18,21 @@
     <string name="bt_register_device">기기 등록</string>
     <string name="bt_register_feeder">급식기 등록</string>
     <string name="bt_register_toilet">배변판 등록</string>
+
+    <!-- 급식기 버튼 -->
+    <string name="bt_setting_feeder">급식기 설정</string>
+    <string name="tv_feeder_example">PC_F_UFWR4</string>
+    <string name="bt_func_feeder_feed">수동 배식</string>
+    <string name="bt_func_feeder_auto_feed">자동 배식 설정</string>
+    <string name="bt_func_feeder_camera">카메라 확인</string>
+
+
+
+    <!-- 배변판 버튼-->
+    <string name="bt_setting_toilet">배변판 설정</string>
+
+
+
     <string name="bt_delete_data_all">모든 데이터 삭제하기</string>
 
 
@@ -72,8 +85,8 @@
     <string name="tv_petcomm_said_empty">등록된 기기가 없습니다.\n아래 기기 추가 번튼을 통해 주 기기를 등록해주세요.</string>
     <string name="tv_petcomm_said_example">초코는 3일간 규칙적인 식습관을 유지하고 있습니다.\n다만 체중이 지난 일주일간 증가하고 있어\n간식을 줄여주시는 것이 좋을 것 같습니다!</string>
 
-    <string name="tv_empty_feeder">등록된 급식기가 없습니다.\n오른쪽 위 + 버튼을 통해 기기를 추가해주세요.</string>
-    <string name="tv_empty_toilet">등록된 배변판이 없습니다.\n오른쪽 위 + 버튼을 통해 기기를 추가해주세요.</string>
+    <string name="tv_empty_feeder">등록된 급식기가 없습니다.\n아래 버튼을 통해 기기를 추가해주세요.</string>
+    <string name="tv_empty_toilet">등록된 배변판이 없습니다.\n아래 버튼을 통해 기기를 추가해주세요.</string>
     <string name="tv_exist_feeder">자동 급식기 FWEIJF234</string>
     <string name="tv_exist_toilet">배변판 EOIJF2313</string>
 

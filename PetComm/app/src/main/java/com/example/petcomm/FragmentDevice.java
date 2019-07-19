@@ -28,8 +28,6 @@ public class FragmentDevice extends Fragment {
         setExistDevice();
 
 
-
-
         return mView;
     }
 
@@ -51,14 +49,32 @@ public class FragmentDevice extends Fragment {
     }
 
     public void addFeederListener(View view){
-        // existFeeder = true;
+        existFeeder = true;
+        setExistDevice();
+        // startActivity(new Intent(getContext(), AddDeviceActivity.class));
+    }
+
+    public void addToiletListener(View view){
+        // existToilet = true;
         // setExistDevice();
         startActivity(new Intent(getContext(), AddDeviceActivity.class));
     }
 
-    public void addToiletListener(View view){
-        existToilet = true;
-        setExistDevice();
+    public void feederFeedListener(View view){
+        Toast.makeText(getContext(), "feeder", Toast.LENGTH_SHORT).show();
+
+    }
+
+    public void feederFeedAutoListener(View view){
+        Toast.makeText(getContext(), "auto feed", Toast.LENGTH_SHORT).show();
+    }
+
+    public void feederCameraListener(View view){
+        Toast.makeText(getContext(), "camera", Toast.LENGTH_SHORT).show();
+    }
+
+    public void settingToiletListener(View view){
+        Toast.makeText(getContext(), "toilet", Toast.LENGTH_SHORT).show();
 
     }
 
