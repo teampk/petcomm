@@ -148,11 +148,17 @@
                             android:textColor="@color/colorBlack"
                             android:textSize="20sp"/>
 
-                        <Button
+
+                        <Spinner
+                            android:id="@+id/spinner_feeder"
                             android:layout_width="30dp"
                             android:layout_height="30dp"
                             android:background="@drawable/ic_dehaze_black_24dp"
-                            />
+
+                            >
+
+
+                        </Spinner>
 
 
                     </LinearLayout>

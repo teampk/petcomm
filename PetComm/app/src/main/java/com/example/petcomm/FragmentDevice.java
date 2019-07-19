@@ -8,16 +8,26 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Toast;
 
 import com.example.petcomm.databinding.FragmentDeviceBinding;
 import com.example.petcomm.databinding.FragmentHomeBinding;
+
+import java.util.ArrayList;
 
 public class FragmentDevice extends Fragment {
 
     FragmentDeviceBinding binding;
     boolean existFeeder = false;
     boolean existToilet = false;
+    ArrayList<String> settingFeeder;
+
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+    }
 
     @Nullable
     @Override
@@ -25,10 +35,13 @@ public class FragmentDevice extends Fragment {
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_device, container, false);
         final View mView = binding.getRoot();
         binding.setFragmentDevice(this);
-        setExistDevice();
-
-
+        setVisible();
         return mView;
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
     }
 
     public void setExistDevice(){
@@ -46,6 +59,49 @@ public class FragmentDevice extends Fragment {
             binding.clEmptyToilet.setVisibility(View.VISIBLE);
             binding.clExistToilet.setVisibility(View.GONE);
         }
+    }
+
+    public void setVisible(){
+        setExistDevice();
+        settingFeeder = new ArrayList<>();
+        settingFeeder.add("기기 설정");
+        settingFeeder.add("기기 이름 변경");
+        settingFeeder.add("연결 해제");
+
+        ArrayAdapter<String> adapter = new ArrayAdapter<>(this.getActivity(), android.R.layout.simple_spinner_item, settingFeeder);
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        binding.spinnerFeeder.setAdapter(adapter);
+        binding.spinnerFeeder.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+
+                switch (position){
+                    case 0:
+
+                        break;
+                    case 1:
+                        Toast.makeText(getContext(), "기기 이름을 변경", Toast.LENGTH_SHORT).show();
+
+                        break;
+
+                    case 2:
+                        Toast.makeText(getContext(), "기기 해제", Toast.LENGTH_SHORT).show();
+
+                        break;
+                    default:
+                        break;
+                }
+
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+
+            }
+        });
+
+
     }
 
     public void addFeederListener(View view){
