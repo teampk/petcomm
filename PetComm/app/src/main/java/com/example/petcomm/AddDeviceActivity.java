@@ -2,7 +2,9 @@ package com.example.petcomm;
 
 import android.content.BroadcastReceiver;
 import android.content.Context;
+import android.content.Intent;
 import android.content.IntentFilter;
+import android.content.SharedPreferences;
 import android.databinding.DataBindingUtil;
 import android.net.wifi.WifiConfiguration;
 import android.net.wifi.WifiInfo;
@@ -13,6 +15,7 @@ import android.net.wifi.p2p.WifiP2pDeviceList;
 import android.net.wifi.p2p.WifiP2pInfo;
 import android.net.wifi.p2p.WifiP2pManager;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
@@ -26,10 +29,16 @@ import com.example.petcomm.databinding.ActivityAddDeviceBinding;
 import java.net.InetAddress;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 public class AddDeviceActivity extends AppCompatActivity {
 
     ActivityAddDeviceBinding binding;
+
+    private SharedPreferences mSharedPreferences;
+    private SharedPreferences.Editor mEditor;
+    private DBHelper dbHelper;
+    private int deviceMode;
 
     WifiManager wifiManager;
     WifiP2pManager mManager;
@@ -49,6 +58,13 @@ public class AddDeviceActivity extends AppCompatActivity {
                 WindowManager.LayoutParams.FLAG_FULLSCREEN);
         binding = DataBindingUtil.setContentView(this, R.layout.activity_add_device);
         binding.setAddDevice(this);
+        dbHelper = new DBHelper(getApplicationContext(), "PetComm.db", null, 1);
+        mSharedPreferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+
+        Intent intent = getIntent();
+        deviceMode  = intent.getIntExtra("mode", 1);
+
+
 
         /*
 
@@ -181,6 +197,34 @@ public class AddDeviceActivity extends AppCompatActivity {
             }
         });
         */
+        if(deviceMode==1){
+            dbHelper.registerFeeder(mSharedPreferences.getInt(Constants.DOG, 0), getRandomId(1));
+            Toast.makeText(this, "급식기가 등록되었습니다.", Toast.LENGTH_SHORT).show();
+            finish();
+        }
+        else if(deviceMode==2){
+            dbHelper.registerToilet(mSharedPreferences.getInt(Constants.DOG, 0), getRandomId(2));
+            Toast.makeText(this, "배변판이 등록되었습니다.", Toast.LENGTH_SHORT).show();
+            finish();
+        }
 
+    }
+
+    private String getRandomId(int mode){
+        Random rnd = new Random();
+        String result = "";
+        for (int i=0; i<5; i++){
+            if(rnd.nextBoolean()){
+                result += (char)((int)(Math.random()*26)+65);
+            }
+            else{
+                result += (char)((int)(Math.random()*26)+97);
+            }
+        }
+        if (mode==1){
+            return "F_"+result;
+        }else{
+            return "T_"+result;
+        }
     }
 }

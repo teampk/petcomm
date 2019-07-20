@@ -91,5 +91,14 @@ public class DBHelper extends SQLiteOpenHelper {
         db.execSQL("DELETE FROM DOGLIST;");
         db.close();
     }
+    public void registerFeeder(int id, String feederId){
+        SQLiteDatabase db = getWritableDatabase();
+        db.execSQL("UPDATE DOGLIST SET feederId='" + feederId + "' WHERE _id='" + id + "';");
+    }
+    public void registerToilet(int id, String toiletId){
+        SQLiteDatabase db = getWritableDatabase();
+        db.execSQL("UPDATE DOGLIST SET toiletId='" + toiletId + "' WHERE _id='" + id + "';");
+    }
+
 
 }

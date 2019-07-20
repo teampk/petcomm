@@ -30,7 +30,9 @@
 
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent"
+
+            />
 
         <!-- id -->
         <LinearLayout
@@ -287,6 +289,8 @@
             app:layout_constraintEnd_toEndOf="parent"
             android:layout_marginTop="30dp"
             android:text="delete"
+            android:onClick="@{dogProfile::deleteListener}"
+
             />
 
 
