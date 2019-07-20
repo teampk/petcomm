@@ -145,7 +145,6 @@
                     app:srcCompat="@drawable/img_feeder"
 
                     android:layout_marginStart="10dp"
-
                     android:layout_marginEnd="10dp"
 
 
@@ -180,13 +179,8 @@
                             android:layout_width="30dp"
                             android:layout_height="30dp"
                             android:background="@drawable/ic_dehaze_black_24dp"
-
                             >
-
-
                         </Spinner>
-
-
                     </LinearLayout>
 
 
@@ -369,85 +363,92 @@
             </android.support.constraint.ConstraintLayout>
 
             <!-- 배변판 있을 때 -->
-            <android.support.constraint.ConstraintLayout
+            <LinearLayout
+                android:paddingTop="20dp"
+                android:paddingBottom="20dp"
                 android:id="@+id/cl_exist_toilet"
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
                 android:layout_weight="1"
+                android:orientation="horizontal"
                 >
 
                 <ImageView
                     android:id="@+id/img_toilet"
-                    android:layout_width="match_parent"
-                    android:layout_height="120dp"
-
-                    app:layout_constraintBottom_toTopOf="@+id/ll_toilet_id"
-                    app:layout_constraintLeft_toLeftOf="parent"
-                    app:layout_constraintRight_toRightOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
-
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
                     app:srcCompat="@drawable/img_toilet"
-
+                    android:layout_marginStart="10dp"
+                    android:layout_marginEnd="10dp"
 
                     />
 
                 <LinearLayout
                     android:id="@+id/ll_toilet_id"
-                    android:layout_width="match_parent"
-                    android:layout_height="30dp"
-                    android:orientation="horizontal"
-                    android:layout_marginEnd="50dp"
-                    android:layout_marginStart="50dp"
-
-                    app:layout_constraintBottom_toTopOf="@+id/bt_setting_toilet"
-                    app:layout_constraintLeft_toLeftOf="parent"
-                    app:layout_constraintRight_toRightOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/img_toilet"
-
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="2"
+                    android:orientation="vertical"
                     >
 
-                    <TextView
-                        android:id="@+id/tv_toilet_id"
-                        android:layout_width="0dp"
-                        android:layout_weight="1"
+                    <LinearLayout
+                        android:layout_width="match_parent"
                         android:layout_height="30dp"
-                        android:text="@string/tv_feeder_example"
-                        android:textColor="@color/colorBlack"
-                        android:textSize="20sp"/>
+                        android:orientation="horizontal"
+                        android:layout_marginEnd="10dp">
+
+                        <TextView
+                            android:id="@+id/tv_toilet_id"
+                            android:layout_width="0dp"
+                            android:layout_weight="1"
+                            android:layout_height="30dp"
+                            android:text="@string/tv_feeder_example"
+                            android:textColor="@color/colorBlack"
+                            android:textSize="20sp"/>
+
+                        <Spinner
+                            android:id="@+id/spinner_toilet"
+                            android:layout_width="30dp"
+                            android:layout_height="30dp"
+                            android:background="@drawable/ic_dehaze_black_24dp"
+
+                            >
+                        </Spinner>
+                    </LinearLayout>
+
+                    <android.support.constraint.ConstraintLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:paddingStart="15dp"
+                        android:paddingEnd="5dp">
+
+                        <Button
+                            android:id="@+id/bt_setting_toilet"
+                            android:layout_width="200dp"
+                            android:layout_height="40dp"
+                            android:text="@string/bt_setting_toilet"
+                            android:background="@color/colorPrimary"
 
 
-                    <Spinner
-                        android:id="@+id/spinner_toilet"
-                        android:layout_width="30dp"
-                        android:layout_height="30dp"
-                        android:background="@drawable/ic_dehaze_black_24dp"
-
-                        >
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent"
+                            android:onClick="@{fragmentDevice::settingToiletListener}"
 
 
-                    </Spinner>
+                            />
+
+
+
+                    </android.support.constraint.ConstraintLayout>
 
 
                 </LinearLayout>
 
-                <Button
-                    android:id="@+id/bt_setting_toilet"
-                    android:layout_width="200dp"
-                    android:layout_height="wrap_content"
-                    android:text="@string/bt_setting_toilet"
-                    android:background="@color/colorPrimary"
 
 
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintLeft_toLeftOf="parent"
-                    app:layout_constraintRight_toRightOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/ll_toilet_id"
-                    android:onClick="@{fragmentDevice::settingToiletListener}"
-
-
-                    />
-
-            </android.support.constraint.ConstraintLayout>
+            </LinearLayout>
 
 
         </LinearLayout>
