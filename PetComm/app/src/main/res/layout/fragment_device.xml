@@ -45,7 +45,27 @@
 
         </android.support.constraint.ConstraintLayout>
 
+        <android.support.constraint.ConstraintLayout
+            android:id="@+id/ll_dog_false"
+            android:visibility="gone"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:text="@string/tv_device_empty_total"
+                android:textSize="18sp"
+                android:textColor="@color/colorBlack"
+                android:gravity="center"
+
+                />
+
+
+        </android.support.constraint.ConstraintLayout>
+
         <LinearLayout
+            android:id="@+id/ll_dog_true"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="vertical">

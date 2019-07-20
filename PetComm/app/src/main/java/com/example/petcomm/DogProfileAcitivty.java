@@ -30,17 +30,23 @@ public class DogProfileAcitivty extends AppCompatActivity {
         DBHelper dbHelper = new DBHelper(getApplicationContext(), "PetComm.db", null, 1);
         myDog = dbHelper.getDogById(id);
 
-
-
-
         binding.tvId.setText(String.valueOf(myDog.id));
         binding.tvName.setText(String.valueOf(myDog.name));
         binding.tvGender.setText(String.valueOf(myDog.gender));
         binding.tvBreeds.setText(String.valueOf(myDog.breeds));
         binding.tvBirth.setText(String.valueOf(myDog.birth));
         binding.tvWeight.setText(String.valueOf(myDog.weight));
-        binding.tvFeederId.setText(String.valueOf(myDog.feederId));
-        binding.tvToiletId.setText(String.valueOf(myDog.toiletId));
+        if(myDog.feederId.equals("")){
+            binding.tvFeederId.setText(getString(R.string.tv_device_empty));
+        }else{
+            binding.tvFeederId.setText(myDog.feederId);
+        }
+        if(myDog.feederId.equals("")){
+            binding.tvFeederId.setText(getString(R.string.tv_device_empty));
+        }else{
+            binding.tvToiletId.setText(myDog.toiletId);
+
+        }
 
     }
 }

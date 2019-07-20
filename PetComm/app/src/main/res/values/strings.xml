@@ -100,6 +100,7 @@
 
     <string name="tv_empty_dog">강아지가 선택되지 않았습니다.</string>
     <string name="tv_unselected_dog">강아지를 선택해주세요.</string>
+    <string name="tv_device_empty_total">선택된 강아지가 없습니다.\n\n등록한 강아지가 없다면\n홈 탭에서 강아지 등록 후 사용해주세요.\n\n기기는 강아지 당\n한 대 씩만 등록 가능합니다.</string>
 
     <string name="desc_lang_kor">Language Korean</string>
     <string name="desc_icon">Icon PetComm</string>

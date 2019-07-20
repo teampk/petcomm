@@ -33,14 +33,12 @@ public class RegisterDogActivity extends AppCompatActivity {
         mSharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
         mEmail = mSharedPreferences.getString(Constants.EMAIL, "");
 
-
         binding.rgGender.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(RadioGroup group, int checkedId) {
                 switch(checkedId){
                     case R.id.rb_male:
                         gender = "male";
-
                     case R.id.rb_female:
                         gender = "female";
 
@@ -55,7 +53,9 @@ public class RegisterDogActivity extends AppCompatActivity {
         if(checkRegister()){
 
             dbHelper.addDog(binding.etName.getText().toString(), gender, "진돗개", "19951114", binding.etWeight.getText().toString(), mEmail, "", "");
-
+            SharedPreferences.Editor mEditor = mSharedPreferences.edit();
+            mEditor.putInt(Constants.DOG, dbHelper.getHightestDogId());
+            mEditor.apply();
             Toast.makeText(this, "강아지가 등록되었습니다.", Toast.LENGTH_SHORT).show();
             finish();
         }

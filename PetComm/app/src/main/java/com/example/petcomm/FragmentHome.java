@@ -74,7 +74,6 @@ public class FragmentHome extends Fragment{
 
         mEditor = mSharedPreferences.edit();
 
-
         binding.spinnerDog.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
@@ -92,28 +91,29 @@ public class FragmentHome extends Fragment{
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         binding.spinnerDog.setAdapter(adapter);
 
-        // 강아지가 없을 때
+        // 화면 이동 시 홈 화면 띄울 모습
         if(dogList.size()==1){
             binding.clEmptyDog.setVisibility(View.VISIBLE);
             binding.clExistDog.setVisibility(View.GONE);
             binding.tvEmptyDog.setText(getText(R.string.tv_empty_dog));
-            mEditor.putInt(Constants.DOG, -1);
-            mEditor.apply();
         }else{
-            binding.spinnerDog.setSelection(dogList.size()-1);
+            Log.d("TESTPAENG", "shared::"+String.valueOf(findDogListIndexById(mSharedPreferences.getInt(Constants.DOG, 0))));
+            binding.spinnerDog.setSelection(findDogListIndexById(mSharedPreferences.getInt(Constants.DOG, 0)));
         }
     }
-    //findDogIndexById(mSharedPreferences.getInt(Constants.DOG, 0))
 
 
     public void registerDeviceListener(View view){
-        Toast.makeText(getContext(), String.valueOf(findDogIndexById(mSharedPreferences.getInt(Constants.DOG, 0))), Toast.LENGTH_SHORT).show();
 
 
     }
+    public void testListener(View view){
+        Toast.makeText(getContext(), "highest ID:" + dbHelper.getHightestDogId(), Toast.LENGTH_SHORT).show();
 
-    public int findDogIndexById(int id){
-        int index = 0;
+    }
+
+    public int findDogListIndexById(int id){
+        int index = -1;
 
         for (int i=0;i<dogData.size();i++){
             if(dogData.get(i).id == id){
@@ -121,7 +121,7 @@ public class FragmentHome extends Fragment{
                 break;
             }
         }
-        return index;
+        return index+1;
     }
 
     private void setDogProfile(int id){
@@ -130,11 +130,10 @@ public class FragmentHome extends Fragment{
             binding.clEmptyDog.setVisibility(View.VISIBLE);
             binding.clExistDog.setVisibility(View.GONE);
             binding.tvEmptyDog.setText(getText(R.string.tv_empty_dog));
+            mEditor.putInt(Constants.DOG, 0);
+            mEditor.apply();
         }
         else{
-
-            mEditor.putInt(Constants.DOG, dogData.get(id).id);
-            mEditor.apply();
             binding.clEmptyDog.setVisibility(View.GONE);
             binding.clExistDog.setVisibility(View.VISIBLE);
             binding.tvName.setText(dogData.get(id).name);
@@ -150,6 +149,8 @@ public class FragmentHome extends Fragment{
                 binding.tvDevice2.setText(dogData.get(id).toiletId);
             }
             selectedId = dogData.get(id).id;
+            mEditor.putInt(Constants.DOG, dogData.get(id).id);
+            mEditor.apply();
         }
     }
 
@@ -160,7 +161,7 @@ public class FragmentHome extends Fragment{
 
     public void dogProfileListener(View view){
         Intent intent = new Intent(getContext(), DogProfileAcitivty.class);
-        intent.putExtra("dogId", selectedId);
+        intent.putExtra("dogId", mSharedPreferences.getInt(Constants.DOG, -1));
         Log.d("PETCOMMTEST", String.valueOf(selectedId));
         startActivity(intent);
 

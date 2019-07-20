@@ -76,6 +76,15 @@ public class DBHelper extends SQLiteOpenHelper {
         }
         return dataElement;
     }
+    public int getHightestDogId(){
+        SQLiteDatabase db = getReadableDatabase();
+        Cursor cursor = db.rawQuery("SELECT * FROM DOGLIST", null);
+        int i=0;
+        while (cursor.moveToNext()){
+            i=Integer.valueOf(cursor.getString(0));
+        }
+        return i;
+    }
 
     public void deleteDogDataAll(){
         SQLiteDatabase db = getWritableDatabase();

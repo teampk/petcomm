@@ -15,6 +15,7 @@ import android.widget.ArrayAdapter;
 import android.widget.Toast;
 
 import com.example.petcomm.databinding.FragmentDeviceBinding;
+import com.example.petcomm.model.Dog;
 
 import java.util.ArrayList;
 import java.lang.Math;
@@ -27,7 +28,9 @@ public class FragmentDevice extends Fragment {
     boolean existFeeder = false;
     boolean existToilet = false;
     ArrayList<String> settingFeeder;
+    private DBHelper dbHelper;
     private SharedPreferences mSharedPreferences;
+    private int selectedDogId;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -40,10 +43,20 @@ public class FragmentDevice extends Fragment {
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_device, container, false);
         final View mView = binding.getRoot();
         binding.setFragmentDevice(this);
+        dbHelper = new DBHelper(getContext(), "PetComm.db", null, 1);
         mSharedPreferences = PreferenceManager.getDefaultSharedPreferences(getContext());
 
+        selectedDogId = mSharedPreferences.getInt(Constants.DOG, 0);
+        if (selectedDogId == 0){
+            binding.llDogFalse.setVisibility(View.VISIBLE);
+            binding.llDogTrue.setVisibility(View.GONE);
 
-        setVisible();
+        }else{
+            binding.llDogFalse.setVisibility(View.GONE);
+            binding.llDogTrue.setVisibility(View.VISIBLE);
+            setVisible();
+        }
+
         return mView;
     }
 
@@ -52,24 +65,14 @@ public class FragmentDevice extends Fragment {
         super.onResume();
     }
 
-    public void setExistDevice(){
-        if(existFeeder){
-            binding.clEmptyFeeder.setVisibility(View.GONE);
-            binding.clExistFeeder.setVisibility(View.VISIBLE);
-        }else{
-            binding.clEmptyFeeder.setVisibility(View.VISIBLE);
-            binding.clExistFeeder.setVisibility(View.GONE);
-        }
-        if(existToilet){
-            binding.clEmptyToilet.setVisibility(View.GONE);
-            binding.clExistToilet.setVisibility(View.VISIBLE);
-        }else{
-            binding.clEmptyToilet.setVisibility(View.VISIBLE);
-            binding.clExistToilet.setVisibility(View.GONE);
-        }
+    private boolean existDevice(String deviceId){
+        return !deviceId.equals("");
     }
 
     public void setVisible(){
+        Dog selectedDog = dbHelper.getDogById(selectedDogId);
+        existFeeder = existDevice(selectedDog.feederId);
+        existToilet = existDevice(selectedDog.toiletId);
         setExistDevice();
 
 
@@ -91,7 +94,7 @@ public class FragmentDevice extends Fragment {
                         break;
                     case 1:
 
-                        Toast.makeText(getContext(), mSharedPreferences.getInt(Constants.DOG, 0), Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getContext(), String.valueOf(mSharedPreferences.getInt(Constants.DOG, 0)), Toast.LENGTH_SHORT).show();
                         break;
 
                     case 2:
@@ -160,6 +163,23 @@ public class FragmentDevice extends Fragment {
             return "F_"+result;
         }else{
             return "T_"+result;
+        }
+    }
+
+    public void setExistDevice(){
+        if(existFeeder){
+            binding.clEmptyFeeder.setVisibility(View.GONE);
+            binding.clExistFeeder.setVisibility(View.VISIBLE);
+        }else{
+            binding.clEmptyFeeder.setVisibility(View.VISIBLE);
+            binding.clExistFeeder.setVisibility(View.GONE);
+        }
+        if(existToilet){
+            binding.clEmptyToilet.setVisibility(View.GONE);
+            binding.clExistToilet.setVisibility(View.VISIBLE);
+        }else{
+            binding.clEmptyToilet.setVisibility(View.VISIBLE);
+            binding.clExistToilet.setVisibility(View.GONE);
         }
     }
 

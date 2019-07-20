@@ -42,6 +42,7 @@
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:srcCompat="@drawable/ic_title_home"
+                android:onClick="@{fragmentHome::testListener}"
 
 
                 />
@@ -82,13 +83,12 @@
 
                         >
 
-
                     </Spinner>
 
                     <Button
                         android:layout_width="25dp"
                         android:layout_height="match_parent"
-                        android:background="@drawable/ic_add_black_24dp"
+                        android:background="@drawable/ic_plus"
 
                         android:onClick="@{fragmentHome::addDogListener}"
 
@@ -99,7 +99,6 @@
 
                 <!-- 선택된 강아지가 있을 때 -->
                 <android.support.constraint.ConstraintLayout
-                    android:visibility="gone"
                     android:id="@+id/cl_exist_dog"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -186,7 +185,7 @@
                             android:layout_marginStart="5dp"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="@string/tv_device_example"
+                            android:text="@string/tv_device_empty"
                             android:textSize="@dimen/text_size"
                             android:textColor="@color/colorPrimaryDark"
                             android:textStyle="bold"
@@ -273,7 +272,7 @@
                                 android:layout_height="wrap_content"
                                 android:layout_weight="1"
                                 android:gravity="start"
-                                android:text="@string/tv_feed_plan_example_1_time"
+                                android:text="-"
                                 android:textSize="@dimen/text_size_small"
                                 android:textColor="@color/colorBlack"
 
@@ -285,7 +284,7 @@
                                 android:layout_height="wrap_content"
                                 android:layout_weight="1"
                                 android:gravity="center"
-                                android:text="@string/tv_feed_plan_example_1_amount"
+                                android:text="-"
                                 android:textSize="@dimen/text_size_small"
                                 android:textColor="@color/colorBlack"
                                 />
@@ -296,7 +295,7 @@
                                 android:layout_height="wrap_content"
                                 android:layout_weight="1"
                                 android:gravity="end"
-                                android:text="@string/tv_feed_plan_example_1_status"
+                                android:text="-"
                                 android:textSize="@dimen/text_size_small"
                                 android:textColor="@color/colorBlack"
                                 />
@@ -316,7 +315,7 @@
                                 android:layout_height="wrap_content"
                                 android:layout_weight="1"
                                 android:gravity="start"
-                                android:text="@string/tv_feed_plan_example_2_time"
+                                android:text="-"
                                 android:textSize="@dimen/text_size_small"
                                 android:textColor="@color/colorBlack"
 
@@ -328,7 +327,7 @@
                                 android:layout_height="wrap_content"
                                 android:layout_weight="1"
                                 android:gravity="center"
-                                android:text="@string/tv_feed_plan_example_2_amount"
+                                android:text="-"
                                 android:textSize="@dimen/text_size_small"
                                 android:textColor="@color/colorBlack"
                                 />
@@ -339,7 +338,7 @@
                                 android:layout_height="wrap_content"
                                 android:layout_weight="1"
                                 android:gravity="end"
-                                android:text="@string/tv_feed_plan_example_2_status"
+                                android:text="-"
                                 android:textSize="@dimen/text_size_small"
                                 android:textColor="@color/colorBlack"
                                 />
@@ -359,7 +358,7 @@
                                 android:layout_height="wrap_content"
                                 android:layout_weight="1"
                                 android:gravity="start"
-                                android:text="@string/tv_feed_plan_example_3_time"
+                                android:text="-"
                                 android:textSize="@dimen/text_size_small"
                                 android:textColor="@color/colorBlack"
 
@@ -371,7 +370,7 @@
                                 android:layout_height="wrap_content"
                                 android:layout_weight="1"
                                 android:gravity="center"
-                                android:text="@string/tv_feed_plan_example_3_amount"
+                                android:text="-"
                                 android:textSize="@dimen/text_size_small"
                                 android:textColor="@color/colorBlack"
                                 />
@@ -382,7 +381,7 @@
                                 android:layout_height="wrap_content"
                                 android:layout_weight="1"
                                 android:gravity="end"
-                                android:text="@string/tv_feed_plan_example_3_status"
+                                android:text="-"
                                 android:textSize="@dimen/text_size_small"
                                 android:textColor="@color/colorBlack"
                                 />
