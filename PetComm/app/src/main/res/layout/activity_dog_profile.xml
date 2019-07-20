@@ -124,7 +124,7 @@
 
         <!-- 품종 -->
         <LinearLayout
-            android:id="@+id/ll_species"
+            android:id="@+id/ll_breeds"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
@@ -135,16 +135,16 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/tv_species_is"
+                android:text="@string/tv_breeds_is"
                 android:textColor="@color/colorBlack"
                 android:textSize="@dimen/text_size" />
 
             <TextView
-                android:id="@+id/tv_species"
+                android:id="@+id/tv_breeds"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="5dp"
-                android:text="@string/tv_species_example"
+                android:text="@string/tv_breeds_example"
                 android:textColor="@color/colorPrimaryDark"
                 android:textSize="@dimen/text_size"
                 android:textStyle="bold" />
@@ -160,7 +160,7 @@
             android:orientation="horizontal"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/ll_species">
+            app:layout_constraintTop_toBottomOf="@+id/ll_breeds">
 
             <TextView
                 android:layout_width="wrap_content"

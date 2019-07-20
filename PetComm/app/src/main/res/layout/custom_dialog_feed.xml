@@ -1,0 +1,139 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+xmlns:app="http://schemas.android.com/apk/res-auto"
+android:orientation="vertical"
+android:layout_width="match_parent"
+android:layout_height="match_parent"
+android:background="#ffffff">
+
+<TextView
+    android:id="@+id/tv_dialog_title"
+    android:layout_width="match_parent"
+    android:layout_height="60dp"
+    android:gravity="center"
+    android:textColor="@color/colorBlack"
+    android:textSize="20sp"
+    android:text="@string/tv_dialog_title_example"
+
+    android:background="@color/colorPrimary"/>
+
+<View
+    android:layout_width="match_parent"
+    android:layout_height="1dp"
+    android:background="#20000000"/>
+
+<LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:paddingTop="20dp"
+    android:paddingStart="20dp"
+    android:paddingEnd="20dp"
+    android:orientation="vertical">
+
+    <SeekBar
+        android:id="@+id/sb_feed_amount"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        style="@style/Widget.AppCompat.SeekBar.Discrete"
+        android:max="20"
+        android:thumb="@drawable/ic_bone5"
+        />
+
+    <android.support.constraint.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginTop="15dp"
+        android:layout_marginBottom="15dp"
+        >
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            >
+
+            <TextView
+                android:id="@+id/tv_feed_amount"
+                android:layout_width="wrap_content"
+                android:layout_height="50dp"
+                android:text="0"
+                android:textColor="@color/colorBlack"
+                android:textSize="28sp"
+                android:gravity="center"
+
+
+                />
+
+            <TextView
+                android:layout_marginStart="5dp"
+                android:id="@+id/tv_feed_amount_gram"
+                android:layout_width="wrap_content"
+                android:layout_height="50dp"
+                android:text="g"
+                android:textColor="@color/colorBlack"
+                android:textSize="28sp"
+                android:textStyle="bold"
+                android:gravity="center"
+
+
+                />
+
+
+        </LinearLayout>
+
+
+
+    </android.support.constraint.ConstraintLayout>
+
+
+</LinearLayout>
+
+<View
+    android:layout_width="match_parent"
+    android:layout_height="1dp"
+    android:background="#30000000"/>
+
+<LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="60dp"
+    android:orientation="horizontal">
+
+    <Button
+        android:id="@+id/bt_dialog_ok"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:layout_weight="1"
+        android:gravity="center"
+        android:text="@string/tv_dialog_button_ok"
+        android:textColor="#000000"
+        android:textSize="18sp"
+        android:background="@color/colorPrimary"/>
+
+    <View
+        android:layout_width="1dp"
+        android:layout_height="match_parent"
+        android:background="#30000000" />
+
+    <Button
+        android:id="@+id/bt_dialog_cancel"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:layout_weight="1"
+        android:gravity="center"
+        android:text="@string/tv_dialog_button_cancel"
+        android:textColor="#000000"
+        android:textSize="18sp"
+        android:background="#ffffff"/>
+</LinearLayout>
+
+<View
+    android:layout_width="match_parent"
+    android:layout_height="1dp"
+    android:background="#30000000"/>
+</LinearLayout>

@@ -1,8 +1,10 @@
 package com.example.petcomm;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -17,10 +19,7 @@ import android.widget.Toast;
 import com.example.petcomm.databinding.FragmentHomeBinding;
 import com.example.petcomm.model.Dog;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
-
-import static android.app.Activity.RESULT_OK;
 
 public class FragmentHome extends Fragment{
 
@@ -29,6 +28,9 @@ public class FragmentHome extends Fragment{
     private ArrayList<String> dogList;
     private ArrayList<Dog> dogData;
     private int selectedId;
+    private SharedPreferences mSharedPreferences;
+    private SharedPreferences.Editor mEditor;
+
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -41,7 +43,9 @@ public class FragmentHome extends Fragment{
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_home, container, false);
         final View mView = binding.getRoot();
         binding.setFragmentHome(this);
-        setData();
+        mSharedPreferences = PreferenceManager.getDefaultSharedPreferences(getContext());
+
+        setDogList();
         setVisible();
 
         return mView;
@@ -50,11 +54,11 @@ public class FragmentHome extends Fragment{
     @Override
     public void onResume() {
         super.onResume();
-        setData();
+        setDogList();
         setVisible();
 
     }
-    private void setData(){
+    private void setDogList(){
         dbHelper = new DBHelper(getContext(), "PetComm.db", null, 1);
         dogList = new ArrayList<>();
         dogList.add(getString(R.string.tv_unselected_dog));
@@ -68,12 +72,13 @@ public class FragmentHome extends Fragment{
 
     private void setVisible(){
 
+        mEditor = mSharedPreferences.edit();
+
 
         binding.spinnerDog.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 setDogProfile(position-1);
-
             }
 
             @Override
@@ -92,20 +97,44 @@ public class FragmentHome extends Fragment{
             binding.clEmptyDog.setVisibility(View.VISIBLE);
             binding.clExistDog.setVisibility(View.GONE);
             binding.tvEmptyDog.setText(getText(R.string.tv_empty_dog));
+            mEditor.putInt(Constants.DOG, -1);
+            mEditor.apply();
         }else{
             binding.spinnerDog.setSelection(dogList.size()-1);
         }
+    }
+    //findDogIndexById(mSharedPreferences.getInt(Constants.DOG, 0))
+
+
+    public void registerDeviceListener(View view){
+        Toast.makeText(getContext(), String.valueOf(findDogIndexById(mSharedPreferences.getInt(Constants.DOG, 0))), Toast.LENGTH_SHORT).show();
 
 
     }
 
+    public int findDogIndexById(int id){
+        int index = 0;
+
+        for (int i=0;i<dogData.size();i++){
+            if(dogData.get(i).id == id){
+                index = i;
+                break;
+            }
+        }
+        return index;
+    }
+
     private void setDogProfile(int id){
+
         if(id == -1){
             binding.clEmptyDog.setVisibility(View.VISIBLE);
             binding.clExistDog.setVisibility(View.GONE);
-            binding.tvEmptyDog.setText(getText(R.string.tv_unselected_dog));
+            binding.tvEmptyDog.setText(getText(R.string.tv_empty_dog));
         }
         else{
+
+            mEditor.putInt(Constants.DOG, dogData.get(id).id);
+            mEditor.apply();
             binding.clEmptyDog.setVisibility(View.GONE);
             binding.clExistDog.setVisibility(View.VISIBLE);
             binding.tvName.setText(dogData.get(id).name);
@@ -115,12 +144,10 @@ public class FragmentHome extends Fragment{
                 binding.tvDevice.setText(dogData.get(id).feederId);
             }
 
-
             if(dogData.get(id).toiletId.equals("")){
                 binding.tvDevice2.setText(getString(R.string.tv_device_empty));
             }else{
                 binding.tvDevice2.setText(dogData.get(id).toiletId);
-
             }
             selectedId = dogData.get(id).id;
         }
@@ -128,7 +155,7 @@ public class FragmentHome extends Fragment{
 
 
     public void addDogListener(View view){
-        startActivity(new Intent(getContext(), SignUpDogActivity.class));
+        startActivity(new Intent(getContext(), RegisterDogActivity.class));
     }
 
     public void dogProfileListener(View view){

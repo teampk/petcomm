@@ -1,10 +1,12 @@
 package com.example.petcomm;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 
 import android.os.Handler;
+import android.preference.PreferenceManager;
 import android.support.annotation.Nullable;
 import android.support.constraint.ConstraintLayout;
 import android.support.constraint.ConstraintSet;
@@ -23,6 +25,7 @@ public class SignInActivity extends AppCompatActivity {
 
     ActivitySignInBinding binding;
     private static String TAG = "PetCommTest";
+    private SharedPreferences mSharedPreferences;
 
     @Override
     protected void onCreate(@Nullable final Bundle savedInstanceState) {
@@ -32,6 +35,8 @@ public class SignInActivity extends AppCompatActivity {
         binding = DataBindingUtil.setContentView(this, R.layout.activity_sign_in);
         final View mView = binding.getRoot();
         binding.setSignIn(this);
+
+        mSharedPreferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
 
         hideComponents(mView);
 
@@ -75,6 +80,11 @@ public class SignInActivity extends AppCompatActivity {
 
     public void signInButtonListener(View view){
         if(checkSignIn()){
+            SharedPreferences.Editor editor = mSharedPreferences.edit();
+            editor.putString(Constants.EMAIL, "nuggy875@naver.com");
+            editor.apply();
+
+
             if(binding.cbAutoSignIn.isChecked()){
                 Toast.makeText(this, "로그인 되었습니다 (자동로그인)", Toast.LENGTH_SHORT).show();
             }else{
@@ -91,11 +101,11 @@ public class SignInActivity extends AppCompatActivity {
     }
 
     public void findPwButtonListener(View view){
-        Toast.makeText(this, "비밀번호 찾기", Toast.LENGTH_SHORT).show();
+        Toast.makeText(this, "준비 중입니다...", Toast.LENGTH_SHORT).show();
     }
 
     public void languageButtonListener(View view){
-        Toast.makeText(this, "언어 설정", Toast.LENGTH_SHORT).show();
+        Toast.makeText(this, "Korean", Toast.LENGTH_SHORT).show();
 
     }
 

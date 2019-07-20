@@ -32,6 +32,12 @@
     <string name="bt_setting_toilet">배변판 설정</string>
 
 
+    <!-- 다이얼로그 -->
+    <string name="tv_dialog_title_example">Title</string>
+    <string name="tv_dialog_button_ok">확인</string>
+    <string name="tv_dialog_button_cancel">취소</string>
+
+
 
     <string name="bt_delete_data_all">모든 데이터 삭제하기</string>
 
@@ -55,9 +61,9 @@
     <string name="tv_gender_is">성별 :</string>
     <string name="tv_gender_male">남자아이</string>
     <string name="tv_gender_female">여자아이</string>
-    <string name="tv_species">품종</string>
-    <string name="tv_species_is">품종 :</string>
-    <string name="tv_species_example">비숑</string>
+    <string name="tv_breeds">품종</string>
+    <string name="tv_breeds_is">품종 :</string>
+    <string name="tv_breeds_example">비숑</string>
     <string name="tv_birth">생일</string>
     <string name="tv_birth_is">생일 :</string>
     <string name="tv_birth_example">2015.11.14</string>
@@ -65,7 +71,7 @@
     <string name="tv_weight_is">무게 :</string>
     <string name="tv_weight_example">3.14kg</string>
 
-    <string name="tv_example_species">품종을 선택해주세요</string>
+    <string name="tv_example_breeds">품종을 선택해주세요</string>
     <string name="tv_example_birth">19XX년 0월 0일</string>
     <string name="tv_kg">kg</string>
 

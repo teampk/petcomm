@@ -488,6 +488,7 @@
                                     android:textStyle="bold"
                                     android:textSize="@dimen/text_size"
                                     android:background="@color/colorAccent"
+                                    android:onClick="@{fragmentHome::registerDeviceListener}"
 
                                     />
 

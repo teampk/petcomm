@@ -1,8 +1,10 @@
 package com.example.petcomm;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -13,9 +15,11 @@ import android.widget.ArrayAdapter;
 import android.widget.Toast;
 
 import com.example.petcomm.databinding.FragmentDeviceBinding;
-import com.example.petcomm.databinding.FragmentHomeBinding;
 
 import java.util.ArrayList;
+import java.lang.Math;
+import java.util.Random;
+
 
 public class FragmentDevice extends Fragment {
 
@@ -23,6 +27,7 @@ public class FragmentDevice extends Fragment {
     boolean existFeeder = false;
     boolean existToilet = false;
     ArrayList<String> settingFeeder;
+    private SharedPreferences mSharedPreferences;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -35,6 +40,9 @@ public class FragmentDevice extends Fragment {
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_device, container, false);
         final View mView = binding.getRoot();
         binding.setFragmentDevice(this);
+        mSharedPreferences = PreferenceManager.getDefaultSharedPreferences(getContext());
+
+
         setVisible();
         return mView;
     }
@@ -63,6 +71,8 @@ public class FragmentDevice extends Fragment {
 
     public void setVisible(){
         setExistDevice();
+
+
         settingFeeder = new ArrayList<>();
         settingFeeder.add("기기 설정");
         settingFeeder.add("기기 이름 변경");
@@ -80,8 +90,8 @@ public class FragmentDevice extends Fragment {
 
                         break;
                     case 1:
-                        Toast.makeText(getContext(), "기기 이름을 변경", Toast.LENGTH_SHORT).show();
 
+                        Toast.makeText(getContext(), mSharedPreferences.getInt(Constants.DOG, 0), Toast.LENGTH_SHORT).show();
                         break;
 
                     case 2:
@@ -97,17 +107,15 @@ public class FragmentDevice extends Fragment {
             @Override
             public void onNothingSelected(AdapterView<?> parent) {
 
-
             }
         });
-
-
     }
 
     public void addFeederListener(View view){
+        // startActivity(new Intent(getContext(), AddDeviceActivity.class));
         existFeeder = true;
         setExistDevice();
-        // startActivity(new Intent(getContext(), AddDeviceActivity.class));
+
     }
 
     public void addToiletListener(View view){
@@ -117,21 +125,42 @@ public class FragmentDevice extends Fragment {
     }
 
     public void feederFeedListener(View view){
-        Toast.makeText(getContext(), "feeder", Toast.LENGTH_SHORT).show();
-
+        binding.pbFuncFeederFeed.setVisibility(View.VISIBLE);
+        CustomDialog customDialogFeed = new CustomDialog(getContext());
+        customDialogFeed.callFunction(1, "배식할 양을 설정해주세요.", "배식", "취소", binding.pbFuncFeederFeed);
     }
 
     public void feederFeedAutoListener(View view){
-        Toast.makeText(getContext(), "auto feed", Toast.LENGTH_SHORT).show();
+        CustomDialog customDialogFeed = new CustomDialog(getContext());
+        customDialogFeed.callFunction(2, "자동 배식 설정", "설정", "취소", binding.pbFuncFeederAutoFeed);
     }
 
     public void feederCameraListener(View view){
-        Toast.makeText(getContext(), "camera", Toast.LENGTH_SHORT).show();
+        Toast.makeText(getContext(), getRandomId(1), Toast.LENGTH_SHORT).show();
+
     }
 
     public void settingToiletListener(View view){
         Toast.makeText(getContext(), "toilet", Toast.LENGTH_SHORT).show();
 
+    }
+
+    private String getRandomId(int mode){
+        Random rnd = new Random();
+        String result = "";
+        for (int i=0; i<5; i++){
+            if(rnd.nextBoolean()){
+                result += (char)((int)(Math.random()*26)+65);
+            }
+            else{
+                result += (char)((int)(Math.random()*26)+97);
+            }
+        }
+        if (mode==1){
+            return "F_"+result;
+        }else{
+            return "T_"+result;
+        }
     }
 
 

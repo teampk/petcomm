@@ -36,7 +36,7 @@ public class DogProfileAcitivty extends AppCompatActivity {
         binding.tvId.setText(String.valueOf(myDog.id));
         binding.tvName.setText(String.valueOf(myDog.name));
         binding.tvGender.setText(String.valueOf(myDog.gender));
-        binding.tvSpecies.setText(String.valueOf(myDog.species));
+        binding.tvBreeds.setText(String.valueOf(myDog.breeds));
         binding.tvBirth.setText(String.valueOf(myDog.birth));
         binding.tvWeight.setText(String.valueOf(myDog.weight));
         binding.tvFeederId.setText(String.valueOf(myDog.feederId));

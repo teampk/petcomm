@@ -50,6 +50,8 @@ public class AddDeviceActivity extends AppCompatActivity {
         binding = DataBindingUtil.setContentView(this, R.layout.activity_add_device);
         binding.setAddDevice(this);
 
+        /*
+
         wifiManager = (WifiManager) getApplicationContext().getSystemService(Context.WIFI_SERVICE);
         mManager = (WifiP2pManager) getSystemService(Context.WIFI_P2P_SERVICE);
         mChannel = mManager.initialize(this, getMainLooper(), null);
@@ -68,18 +70,20 @@ public class AddDeviceActivity extends AppCompatActivity {
         }
 
         listviewListener();
+        */
+
 
     }
     @Override
     public void onResume(){
         super.onResume();
-        registerReceiver(mReceiver, mIntentFilter);
+        //registerReceiver(mReceiver, mIntentFilter);
     }
 
     @Override
     public void onPause(){
         super.onPause();
-        unregisterReceiver(mReceiver);
+        // unregisterReceiver(mReceiver);
     }
 
     WifiP2pManager.PeerListListener peerListListener = new WifiP2pManager.PeerListListener() {
@@ -151,7 +155,8 @@ public class AddDeviceActivity extends AppCompatActivity {
         });
     }
 
-    public void addDeviceListener(View view){
+    public void wifiListener(View view){
+        /*
         if(wifiManager.isWifiEnabled()){
             wifiManager.setWifiEnabled(false);
             binding.btWifi.setText("WIFI ON");
@@ -159,9 +164,11 @@ public class AddDeviceActivity extends AppCompatActivity {
             wifiManager.setWifiEnabled(true);
             binding.btWifi.setText("WIFI OFF");
         }
+        */
     }
 
-    public void addDevice2Listener(View view){
+    public void addDeviceListener(View view){
+        /*
         mManager.discoverPeers(mChannel, new WifiP2pManager.ActionListener() {
             @Override
             public void onSuccess() {
@@ -173,6 +180,7 @@ public class AddDeviceActivity extends AppCompatActivity {
                 binding.tvDevice.append("---Discovery Starting Failed---\n\n");
             }
         });
+        */
 
     }
 }

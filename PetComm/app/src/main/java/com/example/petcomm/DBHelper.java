@@ -18,8 +18,8 @@ public class DBHelper extends SQLiteOpenHelper {
 
     @Override
     public void onCreate(SQLiteDatabase db) {
-        db.execSQL("CREATE TABLE DOGLIST (_id INTEGER PRIMARY KEY AUTOINCREMENT, name TEXT, gender TEXT," +
-                "species TEXT, birth TEXT, weight TEXT, feederId, toiletId)");
+        db.execSQL("CREATE TABLE IF NOT EXISTS DOGLIST (_id INTEGER PRIMARY KEY AUTOINCREMENT, name TEXT, gender TEXT," +
+                "breeds TEXT, birth TEXT, weight TEXT, email TEXT, feederId TEXT, toiletId TEXT)");
 
     }
 
@@ -28,9 +28,9 @@ public class DBHelper extends SQLiteOpenHelper {
 
     }
 
-    public void addDog(String name, String gender, String species, String birth, String weight, String feederId, String toiletId){
+    public void addDog(String name, String gender, String breeds, String birth, String weight, String email, String feederId, String toiletId){
         SQLiteDatabase db = getWritableDatabase();
-        db.execSQL("INSERT INTO DOGLIST VALUES(null, '" +name+"','"+gender+"','"+species+"','"+birth+"','"+weight+"','"+feederId+"','"+toiletId+"')");
+        db.execSQL("INSERT INTO DOGLIST VALUES(null, '" +name+"','"+gender+"','"+breeds+"','"+birth+"','"+weight+"','"+email+"','"+feederId+"','"+toiletId+"')");
         db.close();
     }
 
@@ -47,7 +47,8 @@ public class DBHelper extends SQLiteOpenHelper {
                     cursor.getString(4),
                     cursor.getString(5),
                     cursor.getString(6),
-                    cursor.getString(7)
+                    cursor.getString(7),
+                    cursor.getString(8)
             );
             dogData.add(dogElement);
         }
@@ -69,7 +70,8 @@ public class DBHelper extends SQLiteOpenHelper {
                     cursor.getString(4),
                     cursor.getString(5),
                     cursor.getString(6),
-                    cursor.getString(7)
+                    cursor.getString(7),
+                    cursor.getString(8)
             );
         }
         return dataElement;

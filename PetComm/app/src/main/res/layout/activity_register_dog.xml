@@ -2,13 +2,13 @@
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    tools:context=".SignUpActivity"
+    tools:context=".RegisterDogActivity"
     >
 
     <data>
         <variable
             name="signUpDog"
-            type="com.example.petcomm.SignUpDogActivity"/>
+            type="com.example.petcomm.RegisterDogActivity"/>
     </data>
 
     <ScrollView
@@ -145,7 +145,7 @@
             </LinearLayout>
 
             <LinearLayout
-                android:id="@+id/ll_species"
+                android:id="@+id/ll_breeds"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/height_edit_text"
                 android:orientation="horizontal"
@@ -158,7 +158,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:gravity="center"
-                    android:text="@string/tv_species"
+                    android:text="@string/tv_breeds"
                     android:textSize="@dimen/text_size"
                     android:textColor="@color/colorBlack"
 
@@ -169,7 +169,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:gravity="center"
-                    android:text="@string/tv_example_species"
+                    android:text="@string/tv_example_breeds"
                     android:textSize="@dimen/text_size"
 
                     />
@@ -181,7 +181,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/height_edit_text"
                 android:orientation="horizontal"
-                app:layout_constraintTop_toBottomOf="@+id/ll_species"
+                app:layout_constraintTop_toBottomOf="@+id/ll_breeds"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 >
@@ -240,7 +240,7 @@
                     android:textColor="@color/colorBlack"
                     android:textSize="@dimen/text_size"
                     app:met_floatingLabel="normal"
-                    android:inputType="number"/>
+                    android:inputType="numberDecimal"/>
 
 
                 <TextView
