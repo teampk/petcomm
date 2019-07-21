@@ -61,7 +61,15 @@ public class FragmentDevice extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
-        setExistDevice();
+        if (selectedDogId == 0){
+            binding.llDogFalse.setVisibility(View.VISIBLE);
+            binding.llDogTrue.setVisibility(View.GONE);
+
+        }else{
+            binding.llDogFalse.setVisibility(View.GONE);
+            binding.llDogTrue.setVisibility(View.VISIBLE);
+            setVisible();
+        }
     }
 
     public void setVisible(){
@@ -121,14 +129,17 @@ public class FragmentDevice extends Fragment {
 
     // (급식기) 수동 배식
     public void feederFeedListener(View view){
-        binding.pbFuncFeederFeed.setVisibility(View.VISIBLE);
         CustomDialog customDialogFeed = new CustomDialog(getContext());
-        customDialogFeed.callFunction(1, "배식할 양을 설정해주세요.", "배식", "취소", binding.pbFuncFeederFeed);
+        customDialogFeed.callFunction(1, "배식할 양을 설정해주세요.", "배식", "취소");
     }
     // (급식기) 자동 배식
     public void feederFeedAutoListener(View view){
-        CustomDialog customDialogFeed = new CustomDialog(getContext());
-        customDialogFeed.callFunction(2, "자동 배식 설정", "설정", "취소", binding.pbFuncFeederAutoFeed);
+        // CustomDialog customDialogFeed = new CustomDialog(getContext());
+        // customDialogFeed.callFunction(2, "자동 배식 설정", "설정", "취소", binding.pbFuncFeederAutoFeed);
+
+        startActivity(new Intent(getContext(), AutoFeedActivity.class));
+
+
     }
     // (급식기) 카메라
     public void feederCameraListener(View view){

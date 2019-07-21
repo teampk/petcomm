@@ -160,7 +160,7 @@ public class FragmentHome extends Fragment{
     }
 
     public void dogProfileListener(View view){
-        Intent intent = new Intent(getContext(), DogProfileAcitivty.class);
+        Intent intent = new Intent(getContext(), DogProfileActivity.class);
         intent.putExtra("dogId", mSharedPreferences.getInt(Constants.DOG, -1));
         Log.d("PETCOMMTEST", String.valueOf(selectedId));
         startActivity(intent);

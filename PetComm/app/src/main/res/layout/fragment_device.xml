@@ -214,12 +214,10 @@
 
                                 />
 
-                            <ProgressBar
-                                android:id="@+id/pb_func_feeder_feed"
+                            <View
                                 android:layout_width="40dp"
                                 android:layout_height="40dp"
-                                android:layout_marginStart="5dp"
-                                android:visibility="invisible" />
+                                android:layout_marginStart="5dp" />
 
 
                         </LinearLayout>
@@ -245,12 +243,10 @@
 
                                 />
 
-                            <ProgressBar
-                                android:id="@+id/pb_func_feeder_camera"
+                            <View
                                 android:layout_width="40dp"
                                 android:layout_height="40dp"
-                                android:layout_marginStart="5dp"
-                                android:visibility="invisible" />
+                                android:layout_marginStart="5dp" />
                         </LinearLayout>
 
                         <LinearLayout
@@ -272,12 +268,10 @@
                                 android:onClick="@{fragmentDevice::feederCameraListener}"
                                 />
 
-                            <ProgressBar
-                                android:id="@+id/pb_func_feeder_auto_feed"
+                            <View
                                 android:layout_width="40dp"
                                 android:layout_height="40dp"
-                                android:layout_marginStart="5dp"
-                                android:visibility="invisible" />
+                                android:layout_marginStart="5dp" />
 
                         </LinearLayout>
 

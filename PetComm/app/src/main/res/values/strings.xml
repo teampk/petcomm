@@ -50,7 +50,7 @@
 
     <string name="tv_name">이름</string>
     <string name="tv_name_is">이름 :</string>
-    <string name="tv_name_example">몽이</string>
+    <string name="tv_name_example">-</string>
     <string name="tv_device_is">급식기 :</string>
     <string name="tv_device2_is">배변판 :</string>
     <string name="tv_device_empty">등록된 기기가 없습니다.</string>

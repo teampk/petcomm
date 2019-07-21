@@ -14,7 +14,7 @@ import com.example.petcomm.model.Dog;
 
 import java.util.ArrayList;
 
-public class DogProfileAcitivty extends AppCompatActivity {
+public class DogProfileActivity extends AppCompatActivity {
     ActivityDogProfileBinding binding;
     private Dog myDog;
     @Override

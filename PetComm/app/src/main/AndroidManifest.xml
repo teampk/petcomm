@@ -32,7 +32,8 @@
         <activity android:name=".RegisterDogActivity"/>
 
         <activity android:name=".AddDeviceActivity"/>
-        <activity android:name=".DogProfileAcitivty"/>
+        <activity android:name=".DogProfileActivity"/>
+        <activity android:name=".AutoFeedActivity"/>
 
 
 

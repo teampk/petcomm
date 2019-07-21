@@ -8,7 +8,7 @@
 
         <variable
             name="dogProfile"
-            type="com.example.petcomm.DogProfileAcitivty" />
+            type="com.example.petcomm.DogProfileActivity" />
     </data>
 
     <android.support.constraint.ConstraintLayout
