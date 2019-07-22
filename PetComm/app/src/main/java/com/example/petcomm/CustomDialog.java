@@ -6,14 +6,19 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.view.Window;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.SeekBar;
 import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
 
+import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.List;
 
 public class CustomDialog {
     private Context context;
@@ -28,7 +33,7 @@ public class CustomDialog {
     }
 
     interface CustomDialogListener{
-        void onPositiveClicked(String feedTime, String feedAmount);
+        void onPositiveClicked(String val1, String val2);
         void onNegativeClicked();
     }
     public void setDialoglistener(CustomDialogListener customDialogListener){
@@ -40,29 +45,26 @@ public class CustomDialog {
         dlg.requestWindowFeature(Window.FEATURE_NO_TITLE);
         if (dialogMode == 1) {
             dlg.setContentView(R.layout.custom_dialog_feed);
-        }else if (dialogMode == 2){
+        }else if (dialogMode == 2) {
             dlg.setContentView(R.layout.custom_dialog_feed_auto);
+        }else if (dialogMode == 3) {
+            dlg.setContentView(R.layout.custom_dialog_breeds);
         }
         dlg.show();
 
 
         // common variable
-        final Button btOk = dlg.findViewById(R.id.bt_dialog_ok);
-        final Button btCancel = dlg.findViewById(R.id.bt_dialog_cancel);
-        tvTitle = dlg.findViewById(R.id.tv_dialog_title);
-        btOk.setText(dialogBtOkay);
-        btCancel.setText(dialogBtCancel);
-        tvTitle.setText(dialogTitle);
 
-        btCancel.setOnClickListener(new View.OnClickListener(){
-            @Override
-            public void onClick(View view){
-                dlg.dismiss();
-            }
-        });
+
         /////////////////////////////////////////////
 
         if (dialogMode == 1){
+            final Button btOk = dlg.findViewById(R.id.bt_dialog_ok);
+            final Button btCancel = dlg.findViewById(R.id.bt_dialog_cancel);
+            tvTitle = dlg.findViewById(R.id.tv_dialog_title);
+            btOk.setText(dialogBtOkay);
+            btCancel.setText(dialogBtCancel);
+            tvTitle.setText(dialogTitle);
             sbFeedAmount = dlg.findViewById(R.id.sb_feed_amount);
             tvFeedAmount = dlg.findViewById(R.id.tv_feed_amount);
             sbFeedAmount.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
@@ -92,9 +94,22 @@ public class CustomDialog {
                     }
                 }
             });
+            btCancel.setOnClickListener(new View.OnClickListener(){
+                @Override
+                public void onClick(View view){
+                    dlg.dismiss();
+                }
+            });
+
 
 
         }else if(dialogMode == 2){
+            final Button btOk = dlg.findViewById(R.id.bt_dialog_ok);
+            final Button btCancel = dlg.findViewById(R.id.bt_dialog_cancel);
+            tvTitle = dlg.findViewById(R.id.tv_dialog_title);
+            btOk.setText(dialogBtOkay);
+            btCancel.setText(dialogBtCancel);
+            tvTitle.setText(dialogTitle);
             sbFeedAmount = dlg.findViewById(R.id.sb_feed_amount);
             tvFeedAmount = dlg.findViewById(R.id.tv_feed_amount);
             tvFeedTime = dlg.findViewById(R.id.tv_feed_time);
@@ -154,8 +169,29 @@ public class CustomDialog {
                     }
                 }
             });
+            btCancel.setOnClickListener(new View.OnClickListener(){
+                @Override
+                public void onClick(View view){
+                    dlg.dismiss();
+                }
+            });
 
 
+        }else if(dialogMode == 3){
+            ListView lvBreeds = dlg.findViewById(R.id.recycler_breeds);
+            List<String> breedsList = new ArrayList<>();
+            ArrayAdapter<String> adapter = new ArrayAdapter<String>(context, android.R.layout.simple_list_item_1, breedsList);
+            lvBreeds.setAdapter(adapter);
+            lvBreeds.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                @Override
+                public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                    customDialogListener.onPositiveClicked(String.valueOf(parent.getItemAtPosition(position)), "");
+                    dlg.dismiss();
+                }
+            });
+            breedsList.add("비숑");
+            breedsList.add("허스키");
+            breedsList.add("요크셔테리어");
 
 
         }

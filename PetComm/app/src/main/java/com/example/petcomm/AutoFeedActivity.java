@@ -27,8 +27,6 @@ public class AutoFeedActivity extends AppCompatActivity {
     private Dog selectedDog;
     private ArrayList<FeedSchedule> feedScheduleList;
 
-
-
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -40,44 +38,52 @@ public class AutoFeedActivity extends AppCompatActivity {
         mSharedPreferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
         selectedDog = dbHelper.getDogById(mSharedPreferences.getInt(Constants.DOG, 0));
         initRecyclerView();
-
-
     }
-
     @Override
     public void onResume(){
         super.onResume();
         initRecyclerView();
     }
 
-
     private void initRecyclerView(){
 
         feedScheduleList = new ArrayList<>();
         feedScheduleList = dbHelper.getScheduleData();
 
-        //TEST
-        Log.d("TestPaeng", "-----------------------------------");
-        Log.d("TestPaeng", "size:"+feedScheduleList.size());
-
-        for(int i=0;i<feedScheduleList.size();i++){
-            Log.d("TestPaeng", "   ");
-            Log.d("TestPaeng", String.valueOf(feedScheduleList.get(i).getmId()));
-            Log.d("TestPaeng", String.valueOf(feedScheduleList.get(i).getmFeederId()));
-            Log.d("TestPaeng", String.valueOf(feedScheduleList.get(i).getmFeedTime()));
-            Log.d("TestPaeng", String.valueOf(feedScheduleList.get(i).getmFeedAmount()));
-        }
-        ////
-
-
         binding.recyclerSchedule.setHasFixedSize(true);
         binding.recyclerSchedule.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
         binding.recyclerSchedule.scrollToPosition(0);
 
-        RecyclerCustomAdapter mAdapter = new RecyclerCustomAdapter(getApplicationContext(), feedScheduleList);
+        RecyclerCustomAdapter mAdapter = new RecyclerCustomAdapter(getApplicationContext(), listSorting(feedScheduleList));
         binding.recyclerSchedule.setAdapter(mAdapter);
         binding.recyclerSchedule.setItemAnimator(new DefaultItemAnimator());
 
+    }
+
+    public ArrayList<FeedSchedule> listSorting(ArrayList<FeedSchedule> inputAl){
+        ArrayList<FeedSchedule> outputAl = new ArrayList<>();
+        for (int i=0; i<inputAl.size();i++){
+            if(inputAl.get(i).getmFeederId().equals(selectedDog.feederId)){
+                outputAl.add(inputAl.get(i));
+            }
+        }
+
+        //시간 순으로 정렬
+        int element1, element2;
+        for(int i=0;i<outputAl.size();i++){
+            for(int j=0;j<outputAl.size()-1;j++){
+                element1 = Integer.valueOf(outputAl.get(j).getmFeedTime().replace(":",""));
+                element2 = Integer.valueOf(outputAl.get(j+1).getmFeedTime().replace(":",""));
+                if(element1>element2){
+                    FeedSchedule buffer1, buffer2;
+                    buffer1 = outputAl.get(j);
+                    buffer2 = outputAl.get(j+1);
+                    outputAl.set(j, buffer2);
+                    outputAl.set(j+1, buffer1);
+                }
+            }
+        }
+        return outputAl;
     }
 
     public void addListListener(View view){
@@ -86,28 +92,18 @@ public class AutoFeedActivity extends AppCompatActivity {
         customDialogFeed.setDialoglistener(new CustomDialog.CustomDialogListener() {
             @Override
             public void onPositiveClicked(String feedTime, String feedAmount) {
-                Toast.makeText(AutoFeedActivity.this, feedTime+"//"+feedAmount, Toast.LENGTH_SHORT).show();
                 dbHelper.addFeederSchedule(selectedDog.feederId, feedTime, feedAmount);
-
+                initRecyclerView();
             }
 
             @Override
             public void onNegativeClicked() {
-
 
             }
         });
     }
 
     public void testListener(View view){
-        ArrayList<FeedSchedule> scheduleArrayList = dbHelper.getScheduleData();
-        Log.d("TestPaeng", "size:"+scheduleArrayList.size());
 
-        for(int i=0;i<scheduleArrayList.size();i++){
-            Log.d("TestPaeng", String.valueOf(scheduleArrayList.get(i).getmId()));
-            Log.d("TestPaeng", String.valueOf(scheduleArrayList.get(i).getmFeederId()));
-            Log.d("TestPaeng", String.valueOf(scheduleArrayList.get(i).getmFeedTime()));
-            Log.d("TestPaeng", String.valueOf(scheduleArrayList.get(i).getmFeedAmount()));
-        }
     }
 }

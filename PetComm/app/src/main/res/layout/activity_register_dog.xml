@@ -165,12 +165,16 @@
                     />
 
                 <TextView
+                    android:id="@+id/tv_breeds"
                     android:layout_marginStart="@dimen/margin_sign_up_dog"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:gravity="center"
-                    android:text="@string/tv_example_breeds"
+                    android:hint="@string/tv_example_breeds"
+                    android:textColor="@color/colorBlack"
                     android:textSize="@dimen/text_size"
+
+                    android:onClick="@{signUpDog::selectBreedsListener}"
 
                     />
 
@@ -198,12 +202,16 @@
                     />
 
                 <TextView
+                    android:id="@+id/tv_birth"
                     android:layout_marginStart="@dimen/margin_sign_up_dog"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:gravity="center"
-                    android:text="@string/tv_example_birth"
+                    android:hint="@string/tv_example_birth"
                     android:textSize="@dimen/text_size"
+                    android:textColor="@color/colorBlack"
+                    android:onClick="@{signUpDog::selectBirthListener}"
+
 
                     />
 
