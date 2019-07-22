@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="breeds">
+        <item>Beagle</item>
+        <item>Bichon Frise</item>
+        <item>Bull Dog</item>
+        <item>Chow Chow</item>
+        <item>Dachshund</item>
+        <item>Dalmatian</item>
+        <item>Golden Retriever</item>
+        <item>Korean Jindo Dog</item>
+        <item>Maltese</item>
+        <item>Poodle</item>
+        <item>Pomeranian</item>
+        <item>Pug</item>
+        <item>Yorkshire Terrier</item>
+    </string-array>
+</resources>

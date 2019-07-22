@@ -107,6 +107,29 @@
             </android.support.v7.widget.RecyclerView>
 
 
+            <android.support.constraint.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="150dp">
+
+                <Button
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/height_button"
+                    android:background="@drawable/layout_rounded_primary"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    android:text="설정"
+                    android:textColor="@color/colorBlack"
+                    android:textSize="28sp"
+                    android:onClick="@{autoFeed::submitListener}"
+
+                    />
+
+
+            </android.support.constraint.ConstraintLayout>
+
+
         </LinearLayout>
 
 

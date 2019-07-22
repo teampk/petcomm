@@ -208,7 +208,7 @@
                                 android:layout_width="0dp"
                                 android:layout_height="40dp"
                                 android:layout_weight="1"
-                                android:background="@color/colorPrimary"
+                                android:background="@drawable/layout_rounded_primary"
                                 android:onClick="@{fragmentDevice::feederFeedListener}"
                                 android:text="@string/bt_func_feeder_feed"
 
@@ -238,7 +238,7 @@
                                 android:layout_height="40dp"
                                 android:layout_weight="1"
                                 android:text="@string/bt_func_feeder_auto_feed"
-                                android:background="@color/colorPrimary"
+                                android:background="@drawable/layout_rounded_primary"
                                 android:onClick="@{fragmentDevice::feederFeedAutoListener}"
 
                                 />
@@ -264,7 +264,7 @@
                                 android:layout_height="40dp"
                                 android:layout_weight="1"
                                 android:text="@string/bt_func_feeder_camera"
-                                android:background="@color/colorPrimary"
+                                android:background="@drawable/layout_rounded_primary"
                                 android:onClick="@{fragmentDevice::feederCameraListener}"
                                 />
 
@@ -422,7 +422,7 @@
                             android:layout_width="200dp"
                             android:layout_height="40dp"
                             android:text="@string/bt_setting_toilet"
-                            android:background="@color/colorPrimary"
+                            android:background="@drawable/layout_rounded_primary"
 
 
                             app:layout_constraintBottom_toBottomOf="parent"

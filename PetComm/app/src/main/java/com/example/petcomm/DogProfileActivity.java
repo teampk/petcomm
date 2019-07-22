@@ -12,7 +12,9 @@ import android.view.WindowManager;
 import com.example.petcomm.databinding.ActivityDogProfileBinding;
 import com.example.petcomm.model.Dog;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 
 public class DogProfileActivity extends AppCompatActivity {
     ActivityDogProfileBinding binding;
@@ -32,11 +34,12 @@ public class DogProfileActivity extends AppCompatActivity {
         myDog = dbHelper.getDogById(id);
 
         binding.tvId.setText(String.valueOf(myDog.id));
-        binding.tvName.setText(String.valueOf(myDog.name));
-        binding.tvGender.setText(String.valueOf(myDog.gender));
-        binding.tvBreeds.setText(String.valueOf(myDog.breeds));
-        binding.tvBirth.setText(String.valueOf(myDog.birth));
-        binding.tvWeight.setText(String.valueOf(myDog.weight));
+        binding.tvName.setText(myDog.name);
+        binding.tvGender.setText(myDog.gender);
+        binding.tvBreeds.setText(myDog.breeds);
+        binding.tvAge.setText(getAgeByBirth(myDog.birth));
+        binding.tvBirth.setText(myDog.birth);
+        binding.tvWeight.setText(myDog.weight);
         if(myDog.feederId.equals("")){
             binding.tvFeederId.setText(getString(R.string.tv_device_empty));
         }else{
@@ -51,4 +54,18 @@ public class DogProfileActivity extends AppCompatActivity {
     public void deleteListener(View view){
         Log.d("TESTPAENG", myDog.id+"/"+myDog.email+"/"+myDog.feederId+"/"+ myDog.toiletId+"/");
     }
+
+    public String getAgeByBirth(String birth){
+        SimpleDateFormat sdfNow = new SimpleDateFormat("yyyy");
+        String formatDate = sdfNow.format(new Date(System.currentTimeMillis()));
+
+        String birthYear = birth.split("/")[0];
+
+        int age = Integer.valueOf(formatDate) - Integer.valueOf(birthYear);
+
+
+
+        return String.valueOf(age+1);
+    }
+
 }

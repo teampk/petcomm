@@ -66,10 +66,16 @@
     <string name="tv_breeds_example">비숑</string>
     <string name="tv_birth">생일</string>
     <string name="tv_birth_is">생일 :</string>
-    <string name="tv_birth_example">2015.11.14</string>
+    <string name="tv_birth_example">2015/11/14</string>
     <string name="tv_weight">무게</string>
     <string name="tv_weight_is">무게 :</string>
-    <string name="tv_weight_example">3.14kg</string>
+    <string name="tv_weight_is2">kg</string>
+    <string name="tv_weight_example">3.14</string>
+
+    <string name="tv_age">나이</string>
+    <string name="tv_age_is">나이 :</string>
+    <string name="tv_age_is2">살</string>
+    <string name="tv_age_example">3</string>
 
     <string name="tv_example_breeds">품종을 선택해주세요</string>
     <string name="tv_example_birth">19XX년 0월 0일</string>

@@ -17,6 +17,7 @@ import android.widget.TimePicker;
 import android.widget.Toast;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Calendar;
 import java.util.List;
 
@@ -179,7 +180,7 @@ public class CustomDialog {
 
         }else if(dialogMode == 3){
             ListView lvBreeds = dlg.findViewById(R.id.recycler_breeds);
-            List<String> breedsList = new ArrayList<>();
+            ArrayList<String> breedsList = new ArrayList<String>(Arrays.asList(context.getResources().getStringArray(R.array.breeds)));
             ArrayAdapter<String> adapter = new ArrayAdapter<String>(context, android.R.layout.simple_list_item_1, breedsList);
             lvBreeds.setAdapter(adapter);
             lvBreeds.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -189,9 +190,6 @@ public class CustomDialog {
                     dlg.dismiss();
                 }
             });
-            breedsList.add("비숑");
-            breedsList.add("허스키");
-            breedsList.add("요크셔테리어");
 
 
         }

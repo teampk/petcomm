@@ -18,7 +18,7 @@
     <dimen name="height_button">60dp</dimen>
     <dimen name="height_button_small">40dp</dimen>
 
-    <dimen name="length_image_profile">100dp</dimen>
+    <dimen name="length_image_profile">120dp</dimen>
 
     <dimen name="margin_sign_up_dog">30dp</dimen>
 

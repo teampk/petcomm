@@ -106,4 +106,8 @@ public class AutoFeedActivity extends AppCompatActivity {
     public void testListener(View view){
 
     }
+
+    public void submitListener(View view){
+        
+    }
 }
