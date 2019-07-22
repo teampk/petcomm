@@ -22,6 +22,9 @@
 
     <dimen name="margin_sign_up_dog">30dp</dimen>
 
+    <dimen name="text_size_recycler">20sp</dimen>
+    <dimen name="text_size_recycler_header">24sp</dimen>
+
 
 
 

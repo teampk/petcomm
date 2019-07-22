@@ -39,6 +39,7 @@
                 android:textStyle="bold"
                 android:textSize="24sp"
                 android:textColor="@color/colorBlack"
+                android:onClick="@{autoFeed::testListener}"
                 />
 
             <ImageView
@@ -58,36 +59,55 @@
 
         </android.support.constraint.ConstraintLayout>
 
-        <ScrollView
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            >
+            android:orientation="vertical"
+            android:layout_marginTop="10dp"
+            android:layout_marginStart="20dp"
+            android:layout_marginEnd="20dp"
 
-            <android.support.constraint.ConstraintLayout
+
+            >
+            <LinearLayout
+                android:id="@+id/ll_schedule_top_bar"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:paddingTop="15dp"
-                android:paddingStart="15dp"
-                android:paddingEnd="15dp"
+                android:orientation="horizontal"
+                >
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="@string/tv_recycler_header_time"
+                    android:textSize="@dimen/text_size_recycler_header"
+                    android:textColor="@color/colorBlack"
+                    android:gravity="center"/>
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="@string/tv_recycler_header_amount"
+                    android:textSize="@dimen/text_size_recycler_header"
+                    android:textColor="@color/colorBlack"
+                    android:gravity="center"/>
+
+            </LinearLayout>
+
+            <android.support.v7.widget.RecyclerView
+                android:layout_marginTop="10dp"
+                android:id="@+id/recycler_schedule"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"
                 >
 
-                <android.support.v7.widget.RecyclerView
-                    android:id="@+id/recycler"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    >
+
+            </android.support.v7.widget.RecyclerView>
 
 
-                </android.support.v7.widget.RecyclerView>
-
-
-            </android.support.constraint.ConstraintLayout>
-
-
-        </ScrollView>
+        </LinearLayout>
 
 
 

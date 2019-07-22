@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,10 +17,9 @@ import android.widget.Toast;
 
 import com.example.petcomm.databinding.FragmentDeviceBinding;
 import com.example.petcomm.model.Dog;
+import com.example.petcomm.model.FeedSchedule;
 
 import java.util.ArrayList;
-import java.lang.Math;
-import java.util.Random;
 
 
 public class FragmentDevice extends Fragment {
@@ -173,6 +173,16 @@ public class FragmentDevice extends Fragment {
     }
 
     public void testListener(View view){
+
+        ArrayList<FeedSchedule> scheduleArrayList = dbHelper.getScheduleData();
+        Log.d("TestPaeng", "size:"+scheduleArrayList.size());
+
+        for(int i=0;i<scheduleArrayList.size();i++){
+            Log.d("TestPaeng", String.valueOf(scheduleArrayList.get(i).getmId()));
+            Log.d("TestPaeng", String.valueOf(scheduleArrayList.get(i).getmFeederId()));
+            Log.d("TestPaeng", String.valueOf(scheduleArrayList.get(i).getmFeedTime()));
+            Log.d("TestPaeng", String.valueOf(scheduleArrayList.get(i).getmFeedAmount()));
+        }
         Toast.makeText(getContext(), String.valueOf(selectedDogId), Toast.LENGTH_SHORT).show();
     }
 

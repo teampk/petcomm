@@ -36,7 +36,7 @@ public class FragmentSetting extends Fragment {
                 new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int which) {
                         DBHelper dbHelper = new DBHelper(getContext(), "PetComm.db", null, 1);
-                        dbHelper.deleteDogDataAll();
+                        dbHelper.deleteDataAll();
                         Toast.makeText(getActivity(), "모든 일정이 삭제되었습니다.", Toast.LENGTH_SHORT).show();
 
                     }

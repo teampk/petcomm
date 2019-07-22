@@ -6,6 +6,7 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
 import com.example.petcomm.model.Dog;
+import com.example.petcomm.model.FeedSchedule;
 
 import java.util.ArrayList;
 
@@ -21,12 +22,16 @@ public class DBHelper extends SQLiteOpenHelper {
         db.execSQL("CREATE TABLE IF NOT EXISTS DOGLIST (_id INTEGER PRIMARY KEY AUTOINCREMENT, name TEXT, gender TEXT," +
                 "breeds TEXT, birth TEXT, weight TEXT, email TEXT, feederId TEXT, toiletId TEXT)");
 
+        db.execSQL("CREATE TABLE IF NOT EXISTS FEEDSCHEDULE (_id INTEGER PRIMARY KEY AUTOINCREMENT, feederId TEXT, feedTime TEXT, feedAmount TEXT)");
+
     }
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
 
     }
+
+    // DOG DATA
 
     public void addDog(String name, String gender, String breeds, String birth, String weight, String email, String feederId, String toiletId){
         SQLiteDatabase db = getWritableDatabase();
@@ -56,7 +61,6 @@ public class DBHelper extends SQLiteOpenHelper {
         return dogData;
     }
 
-
     public Dog getDogById(int id){
         SQLiteDatabase db = getReadableDatabase();
         Dog dataElement = null;
@@ -76,6 +80,7 @@ public class DBHelper extends SQLiteOpenHelper {
         }
         return dataElement;
     }
+
     public int getHightestDogId(){
         SQLiteDatabase db = getReadableDatabase();
         Cursor cursor = db.rawQuery("SELECT * FROM DOGLIST", null);
@@ -86,11 +91,7 @@ public class DBHelper extends SQLiteOpenHelper {
         return i;
     }
 
-    public void deleteDogDataAll(){
-        SQLiteDatabase db = getWritableDatabase();
-        db.execSQL("DELETE FROM DOGLIST;");
-        db.close();
-    }
+
     public void registerFeeder(int id, String feederId){
         SQLiteDatabase db = getWritableDatabase();
         db.execSQL("UPDATE DOGLIST SET feederId='" + feederId + "' WHERE _id='" + id + "';");
@@ -100,5 +101,36 @@ public class DBHelper extends SQLiteOpenHelper {
         db.execSQL("UPDATE DOGLIST SET toiletId='" + toiletId + "' WHERE _id='" + id + "';");
     }
 
+    // FEED SCHEDULE LIST
 
+    public void addFeederSchedule(String feederId, String feedTime, String feedSchedule){
+        SQLiteDatabase db = getWritableDatabase();
+        db.execSQL("INSERT INTO FEEDSCHEDULE VALUES(null, '" +feederId+"','"+feedTime+"','"+feedSchedule+"')");
+        db.close();
+    }
+    public ArrayList<FeedSchedule> getScheduleData(){
+        SQLiteDatabase db = getReadableDatabase();
+        ArrayList<FeedSchedule> scheduleData = new ArrayList<>();
+        Cursor cursor = db.rawQuery("SELECT * FROM FEEDSCHEDULE", null);
+        while (cursor.moveToNext()){
+            FeedSchedule scheduleElement = new FeedSchedule(
+                    Integer.valueOf(cursor.getString(0)),
+                    cursor.getString(1),
+                    cursor.getString(2),
+                    cursor.getString(3)
+            );
+            scheduleData.add(scheduleElement);
+        }
+
+        return scheduleData;
+    }
+
+
+    // Delete All Data
+    public void deleteDataAll(){
+        SQLiteDatabase db = getWritableDatabase();
+        db.execSQL("DELETE FROM DOGLIST;");
+        db.execSQL("DELETE FROM FEEDSCHEDULE;");
+        db.close();
+    }
 }
