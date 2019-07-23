@@ -26,6 +26,7 @@ public class AutoFeedActivity extends AppCompatActivity {
     private SharedPreferences mSharedPreferences;
     private Dog selectedDog;
     private ArrayList<FeedSchedule> feedScheduleList;
+    private boolean isEdited = false;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -37,6 +38,12 @@ public class AutoFeedActivity extends AppCompatActivity {
         dbHelper = new DBHelper(getApplicationContext(), "PetComm.db", null, 1);
         mSharedPreferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
         selectedDog = dbHelper.getDogById(mSharedPreferences.getInt(Constants.DOG, 0));
+        isEdited = false;
+
+
+        feedScheduleList = new ArrayList<>();
+        feedScheduleList = dbHelper.getScheduleDataByFeederId(selectedDog.feederId);
+
         initRecyclerView();
     }
     @Override
@@ -46,10 +53,6 @@ public class AutoFeedActivity extends AppCompatActivity {
     }
 
     private void initRecyclerView(){
-
-        feedScheduleList = new ArrayList<>();
-        feedScheduleList = dbHelper.getScheduleData();
-
         binding.recyclerSchedule.setHasFixedSize(true);
         binding.recyclerSchedule.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
         binding.recyclerSchedule.scrollToPosition(0);
@@ -57,7 +60,6 @@ public class AutoFeedActivity extends AppCompatActivity {
         RecyclerCustomAdapter mAdapter = new RecyclerCustomAdapter(getApplicationContext(), listSorting(feedScheduleList));
         binding.recyclerSchedule.setAdapter(mAdapter);
         binding.recyclerSchedule.setItemAnimator(new DefaultItemAnimator());
-
     }
 
     public ArrayList<FeedSchedule> listSorting(ArrayList<FeedSchedule> inputAl){
@@ -92,7 +94,9 @@ public class AutoFeedActivity extends AppCompatActivity {
         customDialogFeed.setDialoglistener(new CustomDialog.CustomDialogListener() {
             @Override
             public void onPositiveClicked(String feedTime, String feedAmount) {
-                dbHelper.addFeederSchedule(selectedDog.feederId, feedTime, feedAmount);
+                // dbHelper.addFeederSchedule(selectedDog.feederId, feedTime, feedAmount);
+                feedScheduleList.add(new FeedSchedule(0, selectedDog.feederId, feedTime, feedAmount));
+                isEdited = true;
                 initRecyclerView();
             }
 
@@ -108,6 +112,15 @@ public class AutoFeedActivity extends AppCompatActivity {
     }
 
     public void submitListener(View view){
-        
+
+        if(isEdited){
+            dbHelper.deleteScheduleByFeederId(selectedDog.feederId);
+            for(FeedSchedule fsItem:feedScheduleList){
+                dbHelper.addFeederSchedule(selectedDog.feederId, fsItem.getmFeedTime(), fsItem.getmFeedAmount());
+            }
+            Toast.makeText(this, "수정 되었습니다.", Toast.LENGTH_SHORT).show();
+        }
+
+        finish();
     }
 }

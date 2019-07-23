@@ -20,12 +20,12 @@ import com.example.petcomm.model.Dog;
 import com.example.petcomm.model.FeedSchedule;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 
 
 public class FragmentDevice extends Fragment {
 
     FragmentDeviceBinding binding;
-    ArrayList<String> settingFeeder;
     private DBHelper dbHelper;
     private SharedPreferences mSharedPreferences;
     private int selectedDogId;
@@ -45,6 +45,7 @@ public class FragmentDevice extends Fragment {
         mSharedPreferences = PreferenceManager.getDefaultSharedPreferences(getContext());
         selectedDogId = mSharedPreferences.getInt(Constants.DOG, 0);
 
+        // 강아지가 선택되지 않았을 때.
         if (selectedDogId == 0){
             binding.llDogFalse.setVisibility(View.VISIBLE);
             binding.llDogTrue.setVisibility(View.GONE);
@@ -74,14 +75,12 @@ public class FragmentDevice extends Fragment {
 
     public void setVisible(){
         setExistDevice();
-        settingFeeder = new ArrayList<>();
-        settingFeeder.add("기기 설정");
-        settingFeeder.add("기기 이름 변경");
-        settingFeeder.add("연결 해제");
+        ArrayList<String> settingFeeder = new ArrayList<String>(Arrays.asList(getContext().getResources().getStringArray(R.array.device_setting)));
 
         ArrayAdapter<String> adapter = new ArrayAdapter<>(this.getActivity(), android.R.layout.simple_spinner_item, settingFeeder);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         binding.spinnerFeeder.setAdapter(adapter);
+        binding.spinnerToilet.setAdapter(adapter);
         binding.spinnerFeeder.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
@@ -90,13 +89,41 @@ public class FragmentDevice extends Fragment {
                     case 0:
 
                         break;
-                    case 1:
 
-                        Toast.makeText(getContext(), String.valueOf(mSharedPreferences.getInt(Constants.DOG, 0)), Toast.LENGTH_SHORT).show();
+                    case 1:
+                        Dog dog = dbHelper.getDogById(selectedDogId);
+                        dbHelper.unregisterFeeder(dog.id);
+                        dbHelper.deleteScheduleByFeederId(dog.feederId);
+                        Toast.makeText(getContext(), "급식기 해제 완료", Toast.LENGTH_SHORT).show();
+                        setExistDevice();
+
+                        break;
+                    default:
+                        break;
+                }
+
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
+        binding.spinnerToilet.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+
+                switch (position){
+                    case 0:
+
                         break;
 
-                    case 2:
-                        Toast.makeText(getContext(), "기기 해제", Toast.LENGTH_SHORT).show();
+
+                    case 1:
+                        dbHelper.unregisterToilet(selectedDogId);
+                        Toast.makeText(getContext(), "배변판 해제 완료", Toast.LENGTH_SHORT).show();
+                        setExistDevice();
+
 
                         break;
                     default:

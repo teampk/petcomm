@@ -15,4 +15,9 @@
         <item>Pug</item>
         <item>Yorkshire Terrier</item>
     </string-array>
+
+    <string-array name="device_setting">
+        <item>기기 설정</item>
+        <item>기기 연결 해제</item>
+    </string-array>
 </resources>

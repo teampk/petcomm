@@ -101,6 +101,15 @@ public class DBHelper extends SQLiteOpenHelper {
         db.execSQL("UPDATE DOGLIST SET toiletId='" + toiletId + "' WHERE _id='" + id + "';");
     }
 
+    public void unregisterFeeder(int id){
+        SQLiteDatabase db = getWritableDatabase();
+        db.execSQL("UPDATE DOGLIST SET feederId='" + "" + "' WHERE _id='" + id + "';");
+    }
+    public void unregisterToilet(int id){
+        SQLiteDatabase db = getWritableDatabase();
+        db.execSQL("UPDATE DOGLIST SET toiletId='" + "" + "' WHERE _id='" + id + "';");
+    }
+
     // FEED SCHEDULE LIST
 
     public void addFeederSchedule(String feederId, String feedTime, String feedSchedule){
@@ -123,6 +132,28 @@ public class DBHelper extends SQLiteOpenHelper {
         }
 
         return scheduleData;
+    }
+
+    public ArrayList<FeedSchedule> getScheduleDataByFeederId(String mFeederId){
+        SQLiteDatabase db = getReadableDatabase();
+        ArrayList<FeedSchedule> scheduleData = new ArrayList<>();
+        Cursor cursor = db.rawQuery("SELECT * FROM FEEDSCHEDULE WHERE feederId = '" + mFeederId + "';", null);
+        while (cursor.moveToNext()){
+            FeedSchedule scheduleElement = new FeedSchedule(
+                    Integer.valueOf(cursor.getString(0)),
+                    cursor.getString(1),
+                    cursor.getString(2),
+                    cursor.getString(3)
+            );
+            scheduleData.add(scheduleElement);
+        }
+        return scheduleData;
+    }
+
+    public void deleteScheduleByFeederId(String mFeederId){
+        SQLiteDatabase db = getWritableDatabase();
+        db.execSQL("DELETE FROM FEEDSCHEDULE WHERE feederId = '" + mFeederId + "';");
+        db.close();
     }
 
 

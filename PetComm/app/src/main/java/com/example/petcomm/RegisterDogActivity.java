@@ -74,9 +74,9 @@ public class RegisterDogActivity extends AppCompatActivity {
             public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
                 String monthString, dayString;
                 if (month<10){
-                    monthString = "0"+month;
+                    monthString = "0"+(month+1);
                 }else{
-                    monthString = String.valueOf(month);
+                    monthString = String.valueOf(month+1);
                 }if (dayOfMonth<10){
                     dayString = "0"+dayOfMonth;
                 }else{

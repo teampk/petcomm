@@ -231,7 +231,7 @@
 
                     </LinearLayout>
 
-                    <!-- 급여 계획표 -->
+                    <!-- 배식 계획표 -->
                     <LinearLayout
                         android:id="@+id/ll_feed_plan"
                         android:paddingTop="10dp"

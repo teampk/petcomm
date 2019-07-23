@@ -81,7 +81,7 @@
     <string name="tv_example_birth">19XX년 0월 0일</string>
     <string name="tv_kg">kg</string>
 
-    <string name="tv_feed_plan_for_today">오늘의 급여 계획</string>
+    <string name="tv_feed_plan_for_today">오늘의 배식 계획</string>
     <string name="tv_feed_plan_example_1_time">8:00</string>
     <string name="tv_feed_plan_example_1_amount">100g</string>
     <string name="tv_feed_plan_example_1_status">완료</string>
