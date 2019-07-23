@@ -4,7 +4,7 @@ var bodyParser = require('body-parser');
 var logger = require('morgan');
 var mongoose = require('mongoose');
 
-var routes = require('./server/routes/routes');
+var routes = require('./server/routes/routes_api');
 
 var app = express();
 var router = express.Router();
@@ -15,10 +15,11 @@ app.use(bodyParser.json());
 
 app.use(logger('petcomm'));
 
-// mongoose.Promise = global.Promise;
-// mongoose.connect('mongodb://localhost:27017/petcomm', {useNewUrlParser: true});
+mongoose.Promise = global.Promise;
+mongoose.connect('mongodb://localhost:27017/petcomm', {useNewUrlParser: true});
 
 app.use('/', routes);
+app.use('/api/pk', routes);
 
 module.exports = app;
 
