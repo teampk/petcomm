@@ -157,7 +157,7 @@ public class RegisterDogActivity extends AppCompatActivity {
             Gson gson = new GsonBuilder().create();
             try {
                 String errorBody = ((HttpException) error).response().errorBody().string();
-                Res response = gson.fromJson(errorBody,Res.class);
+                Res response = gson.fromJson(errorBody, Res.class);
                 Toast.makeText(this, response.getMessage(), Toast.LENGTH_SHORT).show();
                 Log.d("PAENGSERVER", response.getMessage());
             } catch (IOException e) {

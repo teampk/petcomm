@@ -1,4 +1,4 @@
-var dog = require('../models/dog');
+var dogdb = require('../models/dog');
 var fs = require('fs');
 
 exports.registerDog = (mDogName, mDogGender, mDogSpecies, mDogBirth, mDogWeight, mUserEmail, mFeederId, mToiletId) =>
@@ -6,7 +6,7 @@ exports.registerDog = (mDogName, mDogGender, mDogSpecies, mDogBirth, mDogWeight,
 	new Promise(
 		function(resolve,reject){
 
-	 	var newDog = new dog({
+	 	var newDog = new dogdb({
 			dogName: mDogName,
 			dogGender: mDogGender,
 			dogBreeds: mDogSpecies,
@@ -20,7 +20,7 @@ exports.registerDog = (mDogName, mDogGender, mDogSpecies, mDogBirth, mDogWeight,
 
 		newDog.save()
 		.then(function(){
-			console.log('register complete');
+			console.log('-- Register Complete --');
 			resolve({ status: 201, message: 'Dog Registered Sucessfully !' });
 		})
 		.catch(function(err){
@@ -30,4 +30,16 @@ exports.registerDog = (mDogName, mDogGender, mDogSpecies, mDogBirth, mDogWeight,
 				reject({ status: 500, message: 'Internal Server Error !' });
 			}
 		});
+	});
+
+exports.loadDogs = userId =>
+	new Promise(function(resolve,reject){
+		dogdb.find({ userEmail: userId })
+		.then(function(dogs){
+			resolve(dogs);
+		})
+		.catch(function(err){
+			reject({ status: 500, message: 'Internal Server Error !' });
+		});
+
 	});

@@ -10,7 +10,7 @@ var dogSchema = mongoose.Schema({
 	dogBreeds   : String,
     dogBirth    : String,
     dogWeight   : String,
-    userEmail       : String,
+    userEmail   : String,
     feederId    : String,
     toiletId    : String,
     created_at  : String

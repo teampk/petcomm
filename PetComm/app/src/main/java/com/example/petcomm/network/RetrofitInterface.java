@@ -16,8 +16,11 @@ import rx.Observable;
 
 public interface RetrofitInterface {
 
-    @POST("dogs")
+    @POST("dog")
     Observable<Res> registerDog(@Body Dog dog);
+
+    @GET("dogs/{userId}")
+    Observable<Dog[]> loadDogs(@Path("userId") String email);
 
     @GET("dog/{dogId}")
     Observable<Dog> getDogProfile(@Path("dogId") String dogId);
