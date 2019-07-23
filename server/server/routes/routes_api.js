@@ -7,25 +7,24 @@ router.get('/', function(req, res) {
 });
 
 router.post('/dogs', function(req, res){
-    var dogId = req.body.dogId;
-    var dogName = req.body.dogName;
-    var dogGender = req.body.dogGender;
-    var dogBreeds = req.body.dogBreeds;
-    var dogBirth = req.body.dogBirth;
-    var dogWeight = req.body.dogWeight;
-    var userEmail = req.body.userEmail;
+    var dogName = req.body.name;
+    var dogGender = req.body.gender;
+    var dogBreeds = req.body.breeds;
+    var dogBirth = req.body.birth;
+    var dogWeight = req.body.weight;
+    var userEmail = req.body.email;
     var feederId = req.body.feederId;
     var toiletId = req.body.toiletId;
     console.log('--register start--');
+    console.log(dogName+'//'+dogGender+'//'+dogBreeds+'//'+dogBirth+'//'+dogWeight+'//'+userEmail+'//'+feederId+'//'+toiletId+'//')
 
-    if (!dogId || !dogName || !dogGender || !dogBreeds || !dogBirth || !dogWeight || !userEmail || !feederId || !toiletId || !dogName.trim() || !dogGender.trim() || !dogBreeds.trim() || !dogBirth.trim() || !dogWeight.trim() || !userEmail.trim() || !feederId.trim() || !toiletId.trim()){
+    if (!dogName || !dogGender || !dogBreeds || !dogBirth || !dogWeight || !userEmail || !dogName.trim() || !dogGender.trim() || !dogBreeds.trim() || !dogBirth.trim() || !dogWeight.trim() || !userEmail.trim()){
         res.status(400).json({
           message: 'Invalid Request !'
         });
     }else{
-        registerDog.registerDog(dogId, dogName, dogGender, dogBreeds, dogBirth, dogWeight, userEmail, feederId, toiletId)
+        registerDog.registerDog(dogName, dogGender, dogBreeds, dogBirth, dogWeight, userEmail, feederId, toiletId)
         .then(function(result) {
-            console.log('post result: ' + result);
             // res.setHeader('Location', '/dogs/' + ownerId);
             res.status(result.status).json({
               message: result.message

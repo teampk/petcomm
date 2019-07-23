@@ -8,7 +8,6 @@ import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
-import android.util.Log;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.Toast;
@@ -16,6 +15,7 @@ import android.widget.Toast;
 import com.example.petcomm.databinding.ActivityAutoFeedBinding;
 import com.example.petcomm.model.Dog;
 import com.example.petcomm.model.FeedSchedule;
+import com.example.petcomm.utils.Constants;
 
 import java.util.ArrayList;
 

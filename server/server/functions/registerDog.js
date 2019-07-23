@@ -1,13 +1,12 @@
 var dog = require('../models/dog');
 var fs = require('fs');
 
-exports.registerDog = (mDogId, mDogName, mDogGender, mDogSpecies, mDogBirth, mDogWeight, mUserEmail, mFeederId, mToiletId) =>
+exports.registerDog = (mDogName, mDogGender, mDogSpecies, mDogBirth, mDogWeight, mUserEmail, mFeederId, mToiletId) =>
 
 	new Promise(
 		function(resolve,reject){
 
 	 	var newDog = new dog({
-      		dogId: mDogId,
 			dogName: mDogName,
 			dogGender: mDogGender,
 			dogBreeds: mDogSpecies,

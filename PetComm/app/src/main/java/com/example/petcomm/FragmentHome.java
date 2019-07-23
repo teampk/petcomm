@@ -18,6 +18,7 @@ import android.widget.Toast;
 
 import com.example.petcomm.databinding.FragmentHomeBinding;
 import com.example.petcomm.model.Dog;
+import com.example.petcomm.utils.Constants;
 
 import java.util.ArrayList;
 

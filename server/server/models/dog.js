@@ -4,7 +4,7 @@ var Schema = mongoose.Schema;
 
 var dogSchema = mongoose.Schema({
 
-    dogId : {type: String, unique: true},
+    // dogId : {type: String, unique: true},
     dogName     : String,
 	dogGender   : String,
 	dogBreeds   : String,

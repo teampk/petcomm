@@ -13,13 +13,13 @@ import android.support.constraint.ConstraintSet;
 import android.support.v7.app.AppCompatActivity;
 import android.transition.ChangeBounds;
 import android.transition.TransitionManager;
-import android.util.Log;
 import android.view.View;
 import android.view.WindowManager;
 import android.view.animation.AnticipateOvershootInterpolator;
 import android.widget.Toast;
 
 import com.example.petcomm.databinding.ActivitySignInBinding;
+import com.example.petcomm.utils.Constants;
 
 public class SignInActivity extends AppCompatActivity {
 

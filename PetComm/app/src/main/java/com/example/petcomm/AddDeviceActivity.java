@@ -1,13 +1,10 @@
 package com.example.petcomm;
 
 import android.content.BroadcastReceiver;
-import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.databinding.DataBindingUtil;
-import android.net.wifi.WifiConfiguration;
-import android.net.wifi.WifiInfo;
 import android.net.wifi.WifiManager;
 import android.net.wifi.p2p.WifiP2pConfig;
 import android.net.wifi.p2p.WifiP2pDevice;
@@ -25,6 +22,7 @@ import android.widget.ArrayAdapter;
 import android.widget.Toast;
 
 import com.example.petcomm.databinding.ActivityAddDeviceBinding;
+import com.example.petcomm.utils.Constants;
 
 import java.net.InetAddress;
 import java.util.ArrayList;

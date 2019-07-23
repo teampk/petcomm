@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.DatePicker;
@@ -14,17 +15,32 @@ import android.widget.RadioGroup;
 import android.widget.Toast;
 
 import com.example.petcomm.databinding.ActivityRegisterDogBinding;
+import com.example.petcomm.model.Dog;
+import com.example.petcomm.model.Res;
+import com.example.petcomm.network.NetworkUtil;
+import com.example.petcomm.utils.Constants;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 
+import java.io.IOException;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.Random;
+
+import retrofit2.adapter.rxjava.HttpException;
+import rx.android.schedulers.AndroidSchedulers;
+import rx.schedulers.Schedulers;
+import rx.subscriptions.CompositeSubscription;
 
 public class RegisterDogActivity extends AppCompatActivity {
 
     ActivityRegisterDogBinding binding;
-    DBHelper dbHelper;
+    private String mEmail;
     private String gender;
     private SharedPreferences mSharedPreferences;
-    private String mEmail;
+    DBHelper dbHelper;
+    private CompositeSubscription mSubscriptions;
+
 
     @Override
     protected void onCreate(@Nullable final Bundle savedInstanceState) {
@@ -34,6 +50,7 @@ public class RegisterDogActivity extends AppCompatActivity {
         dbHelper = new DBHelper(getApplicationContext(), "PetComm.db", null, 1);
         binding = DataBindingUtil.setContentView(this, R.layout.activity_register_dog);
         binding.setSignUpDog(this);
+        mSubscriptions = new CompositeSubscription();
 
         mSharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
         mEmail = mSharedPreferences.getString(Constants.EMAIL, "");
@@ -46,11 +63,14 @@ public class RegisterDogActivity extends AppCompatActivity {
                         gender = "male";
                     case R.id.rb_female:
                         gender = "female";
-
                 }
             }
         });
-
+    }
+    @Override
+    protected void onDestroy(){
+        super.onDestroy();
+        mSubscriptions.unsubscribe();
     }
     public void selectBreedsListener(View view){
         CustomDialog customDialogFeed = new CustomDialog(RegisterDogActivity.this);
@@ -80,35 +100,79 @@ public class RegisterDogActivity extends AppCompatActivity {
                 }if (dayOfMonth<10){
                     dayString = "0"+dayOfMonth;
                 }else{
-                    dayString = String.valueOf(month);
+                    dayString = String.valueOf(dayOfMonth);
                 }
                 binding.tvBirth.setText(String.valueOf(year+"/"+monthString+"/"+dayString));
             }
         }, cal.get(Calendar.YEAR), cal.get(Calendar.MONTH), cal.get(Calendar.DATE));
-        dialog.getDatePicker().setMaxDate(new Date().getTime());
+        //dialog.getDatePicker().setMaxDate(new Date().getTime());
         dialog.show();
 
 
     }
-
-
     public void submitButtonListener(View view){
         if(checkRegister()){
 
+            // 내부 DB
             dbHelper.addDog(binding.etName.getText().toString(), gender, binding.tvBreeds.getText().toString(),
                     binding.tvBirth.getText().toString(), binding.etWeight.getText().toString(), mEmail, "", "");
+
+            // Server DB
+            Dog dogDB = new Dog();
+            dogDB.setName(binding.etName.getText().toString());
+            dogDB.setGender(gender);
+            dogDB.setBreeds(binding.tvBreeds.getText().toString());
+            dogDB.setBirth(binding.tvBirth.getText().toString());
+            dogDB.setWeight(binding.etWeight.getText().toString());
+            dogDB.setEmail(mEmail);
+            dogDB.setFeederId("");
+            dogDB.setToiletId("");
+            registerProgress(dogDB);
+
+
             SharedPreferences.Editor mEditor = mSharedPreferences.edit();
             mEditor.putInt(Constants.DOG, dbHelper.getHightestDogId());
             mEditor.apply();
             Toast.makeText(this, "강아지가 등록되었습니다.", Toast.LENGTH_SHORT).show();
             finish();
         }
-
     }
+    //// SERVER PROCESS
+    private void registerProgress(Dog dogDB) {
+
+        mSubscriptions.add(NetworkUtil.getRetrofit().registerDog(dogDB)
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribeOn(Schedulers.io())
+                .subscribe(this::handleResponse,this::handleError));
+    }
+    private void handleResponse(Res response) {
+
+        Toast.makeText(this, response.getMessage(), Toast.LENGTH_SHORT).show();
+        Log.d("PAENGSERVER", response.getMessage());
+    }
+
+    private void handleError(Throwable error) {
+
+        if (error instanceof HttpException) {
+            Gson gson = new GsonBuilder().create();
+            try {
+                String errorBody = ((HttpException) error).response().errorBody().string();
+                Res response = gson.fromJson(errorBody,Res.class);
+                Toast.makeText(this, response.getMessage(), Toast.LENGTH_SHORT).show();
+                Log.d("PAENGSERVER", response.getMessage());
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        } else {
+            Toast.makeText(this, "NETWORK ERROR :(", Toast.LENGTH_SHORT).show();
+            Log.d("PAENGSERVER", error.toString());
+        }
+    }
+    ////
 
     @Override
     public void onBackPressed() {
-        Toast.makeText(this,"강아지 등록 취소",Toast.LENGTH_SHORT).show();
+        Toast.makeText(this,"강아지 등록이 취소되었습니다.",Toast.LENGTH_SHORT).show();
         finish();
     }
 
