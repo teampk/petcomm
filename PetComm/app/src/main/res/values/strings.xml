@@ -16,6 +16,7 @@
     <string name="bt_register_dog">강아지 등록</string>
     <string name="bt_do_later">나중에 하기</string>
     <string name="bt_register_device">기기 등록</string>
+    <string name="bt_discover">discover</string>
     <string name="bt_register_feeder">급식기 등록</string>
     <string name="bt_register_toilet">배변판 등록</string>
 

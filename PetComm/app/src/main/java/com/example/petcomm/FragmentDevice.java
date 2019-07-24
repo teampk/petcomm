@@ -102,6 +102,7 @@ public class FragmentDevice extends Fragment {
     }
 
     private void handleResponseDog(Dog dog){
+        selectedDog = dog;
         // 급식기가 없을 때
         if(dog.feederId.equals("")){
             binding.clEmptyFeeder.setVisibility(View.VISIBLE);
@@ -140,7 +141,6 @@ public class FragmentDevice extends Fragment {
             Log.d("TESTPAENG", String.valueOf(error));
         }
     }
-
 
     public void setVisible(){
         loadDogInf(selectedDogId);
@@ -207,13 +207,14 @@ public class FragmentDevice extends Fragment {
     public void addFeederListener(View view){
         Intent intentFeeder = new Intent(getContext(), AddDeviceActivity.class);
         intentFeeder.putExtra("mode", 1);
+        intentFeeder.putExtra("dog", selectedDog);
         startActivity(intentFeeder);
-        //// 이건 안해도 되지 않나
     }
     // (배변판) 기기 추가 버튼
     public void addToiletListener(View view){
         Intent intentToilet = new Intent(getContext(), AddDeviceActivity.class);
         intentToilet.putExtra("mode", 2);
+        intentToilet.putExtra("dog", selectedDog);
         startActivity(intentToilet);
 
     }

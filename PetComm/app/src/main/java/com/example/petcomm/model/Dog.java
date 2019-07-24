@@ -1,6 +1,8 @@
 package com.example.petcomm.model;
 
-public class Dog {
+import java.io.Serializable;
+
+public class Dog implements Serializable {
     public int id;
     public String dogId;
     public String dogName;

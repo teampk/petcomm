@@ -46,11 +46,30 @@ exports.getDogsById = userId =>
 
 exports.getDogBydogId = dogId =>
 	new Promise(function(resolve, reject){
-		dogdb.find({ dogId: dogId})
+		dogdb.find({ dogId: dogId })
 		.then(function(dogs){
 			resolve(dogs[0]);
 		})
 		.catch(function(err){
 			reject({status: 500, message: 'Internal Server Error :('});
 		});
+	});
+
+exports.setFeederId = dogId =>
+	new Promise(function(resolve, reject){
+
+		dogdb.find({ dogId: dogId })
+		.then(selectedDog => {
+			let dog = selectedDog[0];
+			dog.feederId = 'f_paeng';
+			return dog.save();
+		})
+		.then(dog => 
+			resolve({ 
+				status: 200, message: 'Feeder Registered Sucessfully!'
+			}))
+		.catch(err => 
+			reject({ 
+				status: 500, message: 'Internal Server Error!'
+			}));
 	});

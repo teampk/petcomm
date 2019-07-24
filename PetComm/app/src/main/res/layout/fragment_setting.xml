@@ -59,7 +59,7 @@
                 android:layout_height="wrap_content"
                 android:text="@string/bt_delete_data_all"
                 android:textStyle="bold"
-                android:background="@color/colorPrimary"
+                android:background="@drawable/layout_rounded_primary"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"

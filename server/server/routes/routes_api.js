@@ -42,6 +42,7 @@ router.post('/dog', function(req, res){
     }
 });
 
+// get Dogs list by user id
 router.get('/dogs/:id', function(req, res){
   console.log("user id = " + req.params.id);
   functionDog.getDogsById(req.params.id)
@@ -58,14 +59,31 @@ router.get('/dogs/:id', function(req, res){
 
 });
 
-router.get('/dog/:id', function(req, res){
-  functionDog.getDogBydogId(req.params.id)
+// get dog profile by dog id
+router.get('/dog/:dogId', function(req, res){
+  functionDog.getDogBydogId(req.params.dogId)
     .then(function(result){
-      console.log('dogID = ' + req.params.id);
+      console.log('dogID = ' + req.params.dogId);
       res.json(result);
     })
     .catch(function(err){
       console.log('dog err : '+err);
+      res.status(err.status).json({
+        message: err.message
+      });
+    });
+});
+
+router.put('/device/feeder/:dogId', function(req, res){
+  functionDog.setFeederId(req.params.dogId)
+    .then(function(result){
+      console.log('device:'+result);
+      res.status(result.status).json({
+        message: result.message
+      });
+    })
+    .catch(function(err){
+      console.log('device error:'+err);
       res.status(err.status).json({
         message: err.message
       });

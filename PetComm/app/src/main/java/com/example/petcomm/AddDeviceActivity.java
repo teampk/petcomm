@@ -15,6 +15,7 @@ import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.AdapterView;
@@ -22,12 +23,23 @@ import android.widget.ArrayAdapter;
 import android.widget.Toast;
 
 import com.example.petcomm.databinding.ActivityAddDeviceBinding;
+import com.example.petcomm.model.Dog;
+import com.example.petcomm.model.Res;
+import com.example.petcomm.network.NetworkUtil;
 import com.example.petcomm.utils.Constants;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 
+import java.io.IOException;
 import java.net.InetAddress;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
+
+import retrofit2.adapter.rxjava.HttpException;
+import rx.android.schedulers.AndroidSchedulers;
+import rx.schedulers.Schedulers;
+import rx.subscriptions.CompositeSubscription;
 
 public class AddDeviceActivity extends AppCompatActivity {
 
@@ -35,8 +47,12 @@ public class AddDeviceActivity extends AppCompatActivity {
 
     private SharedPreferences mSharedPreferences;
     private SharedPreferences.Editor mEditor;
+    private CompositeSubscription mSubscriptions;
+
     private DBHelper dbHelper;
     private int deviceMode;
+
+    private Dog selectedDog;
 
     WifiManager wifiManager;
     WifiP2pManager mManager;
@@ -58,9 +74,13 @@ public class AddDeviceActivity extends AppCompatActivity {
         binding.setAddDevice(this);
         dbHelper = new DBHelper(getApplicationContext(), "PetComm.db", null, 1);
         mSharedPreferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+        mSubscriptions = new CompositeSubscription();
 
         Intent intent = getIntent();
+        // deviceMode=1 : 급식기
+        // deviceMode=2 : 배변판
         deviceMode  = intent.getIntExtra("mode", 1);
+        selectedDog = (Dog) intent.getSerializableExtra("dog");
 
 
 
@@ -99,6 +119,51 @@ public class AddDeviceActivity extends AppCompatActivity {
         super.onPause();
         // unregisterReceiver(mReceiver);
     }
+    @Override
+    public void onDestroy(){
+        super.onDestroy();
+        mSubscriptions.unsubscribe();
+    }
+
+
+    public void registerDeviceListener(View view){
+        if(deviceMode==1){
+            registerFeeder();
+            Toast.makeText(this, "급식기가 등록되었습니다.", Toast.LENGTH_SHORT).show();
+            finish();
+        }
+        else if(deviceMode==2){
+
+            Toast.makeText(this, "배변판이 등록되었습니다.", Toast.LENGTH_SHORT).show();
+            finish();
+        }
+    }
+    // 서버에 급식기 등록
+    private void registerFeeder(){
+        mSubscriptions.add(NetworkUtil.getRetrofit().registerFeeder(selectedDog.dogId, selectedDog)
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribeOn(Schedulers.io())
+                .subscribe(this::handleResponseRegFeeder,this::handleError));
+    }
+    private void handleResponseRegFeeder(Res response){
+        Toast.makeText(this, response.getMessage(), Toast.LENGTH_SHORT).show();
+    }
+    private void handleError(Throwable error) {
+
+        if (error instanceof HttpException) {
+            Gson gson = new GsonBuilder().create();
+            try {
+                String errorBody = ((HttpException) error).response().errorBody().string();
+                Res response = gson.fromJson(errorBody, Res.class);
+                Toast.makeText(this, response.getMessage(), Toast.LENGTH_SHORT).show();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        } else {
+            Toast.makeText(this, "NETWORK ERROR :(", Toast.LENGTH_SHORT).show();
+        }
+    }
+
 
     WifiP2pManager.PeerListListener peerListListener = new WifiP2pManager.PeerListListener() {
         @Override
@@ -195,34 +260,9 @@ public class AddDeviceActivity extends AppCompatActivity {
             }
         });
         */
-        if(deviceMode==1){
-            dbHelper.registerFeeder(mSharedPreferences.getInt(Constants.DOG, 0), getRandomId(1));
-            Toast.makeText(this, "급식기가 등록되었습니다.", Toast.LENGTH_SHORT).show();
-            finish();
-        }
-        else if(deviceMode==2){
-            dbHelper.registerToilet(mSharedPreferences.getInt(Constants.DOG, 0), getRandomId(2));
-            Toast.makeText(this, "배변판이 등록되었습니다.", Toast.LENGTH_SHORT).show();
-            finish();
-        }
+
 
     }
 
-    private String getRandomId(int mode){
-        Random rnd = new Random();
-        String result = "";
-        for (int i=0; i<5; i++){
-            if(rnd.nextBoolean()){
-                result += (char)((int)(Math.random()*26)+65);
-            }
-            else{
-                result += (char)((int)(Math.random()*26)+97);
-            }
-        }
-        if (mode==1){
-            return "F_"+result;
-        }else{
-            return "T_"+result;
-        }
-    }
+
 }
