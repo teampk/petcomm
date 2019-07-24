@@ -18,10 +18,20 @@ import android.widget.Toast;
 import com.example.petcomm.databinding.FragmentDeviceBinding;
 import com.example.petcomm.model.Dog;
 import com.example.petcomm.model.FeedSchedule;
+import com.example.petcomm.model.Res;
+import com.example.petcomm.network.NetworkUtil;
 import com.example.petcomm.utils.Constants;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
+
+import retrofit2.adapter.rxjava.HttpException;
+import rx.android.schedulers.AndroidSchedulers;
+import rx.schedulers.Schedulers;
+import rx.subscriptions.CompositeSubscription;
 
 
 public class FragmentDevice extends Fragment {
@@ -29,7 +39,9 @@ public class FragmentDevice extends Fragment {
     FragmentDeviceBinding binding;
     private DBHelper dbHelper;
     private SharedPreferences mSharedPreferences;
-    private int selectedDogId;
+    private CompositeSubscription mSubscriptions;
+    private String selectedDogId;
+    private Dog selectedDog;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -43,27 +55,30 @@ public class FragmentDevice extends Fragment {
         final View mView = binding.getRoot();
         binding.setFragmentDevice(this);
         dbHelper = new DBHelper(getContext(), "PetComm.db", null, 1);
+        mSubscriptions = new CompositeSubscription();
+
         mSharedPreferences = PreferenceManager.getDefaultSharedPreferences(getContext());
-        selectedDogId = mSharedPreferences.getInt(Constants.DOG, 0);
+        selectedDogId = mSharedPreferences.getString(Constants.DOG, "");
+        Log.d("PAENG_SHARED_DOG", selectedDogId);
 
         // 강아지가 선택되지 않았을 때.
-        if (selectedDogId == 0){
+        if (selectedDogId.equals("")){
             binding.llDogFalse.setVisibility(View.VISIBLE);
             binding.llDogTrue.setVisibility(View.GONE);
-
-        }else{
+        }
+        // 선택된 강아지가 있을 때.
+        else{
             binding.llDogFalse.setVisibility(View.GONE);
             binding.llDogTrue.setVisibility(View.VISIBLE);
             setVisible();
         }
-
         return mView;
     }
 
     @Override
     public void onResume() {
         super.onResume();
-        if (selectedDogId == 0){
+        if (selectedDogId.equals("")){
             binding.llDogFalse.setVisibility(View.VISIBLE);
             binding.llDogTrue.setVisibility(View.GONE);
 
@@ -73,11 +88,64 @@ public class FragmentDevice extends Fragment {
             setVisible();
         }
     }
+    @Override
+    public void onDestroy(){
+        super.onDestroy();
+        mSubscriptions.unsubscribe();
+    }
+
+    private void loadDogInf(String selectedDogId){
+        mSubscriptions.add(NetworkUtil.getRetrofit().getDogByDogId(selectedDogId)
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribeOn(Schedulers.io())
+                .subscribe(this::handleResponseDog,this::handleError));
+    }
+
+    private void handleResponseDog(Dog dog){
+        // 급식기가 없을 때
+        if(dog.feederId.equals("")){
+            binding.clEmptyFeeder.setVisibility(View.VISIBLE);
+            binding.clExistFeeder.setVisibility(View.GONE);
+        }
+        // 급식기가 있을 때
+        else{
+            binding.clEmptyFeeder.setVisibility(View.GONE);
+            binding.clExistFeeder.setVisibility(View.VISIBLE);
+            binding.tvFeederId.setText(dog.feederId);
+        }
+        // 배변판이 없을 때
+        if(dog.toiletId.equals("")){
+            binding.clEmptyToilet.setVisibility(View.VISIBLE);
+            binding.clExistToilet.setVisibility(View.GONE);
+        }
+        // 배변판이 있을 때
+        else{
+            binding.clEmptyToilet.setVisibility(View.GONE);
+            binding.clExistToilet.setVisibility(View.VISIBLE);
+            binding.tvToiletId.setText(dog.toiletId);
+        }
+    }
+    private void handleError(Throwable error) {
+        if (error instanceof HttpException) {
+            Gson gson = new GsonBuilder().create();
+            try {
+                String errorBody = ((HttpException) error).response().errorBody().string();
+                Res response = gson.fromJson(errorBody, Res.class);
+                Toast.makeText(getContext(), response.getMessage(), Toast.LENGTH_SHORT).show();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        } else {
+            Toast.makeText(getContext(), "Network Error :(", Toast.LENGTH_SHORT).show();
+            Log.d("TESTPAENG", String.valueOf(error));
+        }
+    }
+
 
     public void setVisible(){
-        setExistDevice();
-        ArrayList<String> settingFeeder = new ArrayList<String>(Arrays.asList(getContext().getResources().getStringArray(R.array.device_setting)));
+        loadDogInf(selectedDogId);
 
+        ArrayList<String> settingFeeder = new ArrayList<String>(Arrays.asList(getContext().getResources().getStringArray(R.array.device_setting)));
         ArrayAdapter<String> adapter = new ArrayAdapter<>(this.getActivity(), android.R.layout.simple_spinner_item, settingFeeder);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         binding.spinnerFeeder.setAdapter(adapter);
@@ -90,14 +158,14 @@ public class FragmentDevice extends Fragment {
                     case 0:
 
                         break;
-
                     case 1:
+                        /*
                         Dog dog = dbHelper.getDogById(selectedDogId);
                         dbHelper.unregisterFeeder(dog.id);
                         dbHelper.deleteScheduleByFeederId(dog.feederId);
                         Toast.makeText(getContext(), "급식기 해제 완료", Toast.LENGTH_SHORT).show();
                         setExistDevice();
-
+                        */
                         break;
                     default:
                         break;
@@ -116,23 +184,18 @@ public class FragmentDevice extends Fragment {
 
                 switch (position){
                     case 0:
-
                         break;
-
-
                     case 1:
+                        /*
                         dbHelper.unregisterToilet(selectedDogId);
                         Toast.makeText(getContext(), "배변판 해제 완료", Toast.LENGTH_SHORT).show();
                         setExistDevice();
-
-
+                        */
                         break;
                     default:
                         break;
                 }
-
             }
-
             @Override
             public void onNothingSelected(AdapterView<?> parent) {
 
@@ -145,14 +208,14 @@ public class FragmentDevice extends Fragment {
         Intent intentFeeder = new Intent(getContext(), AddDeviceActivity.class);
         intentFeeder.putExtra("mode", 1);
         startActivity(intentFeeder);
-        setExistDevice();
+        //// 이건 안해도 되지 않나
     }
     // (배변판) 기기 추가 버튼
     public void addToiletListener(View view){
         Intent intentToilet = new Intent(getContext(), AddDeviceActivity.class);
         intentToilet.putExtra("mode", 2);
         startActivity(intentToilet);
-        setExistDevice();
+
     }
 
     // (급식기) 수동 배식
@@ -180,25 +243,7 @@ public class FragmentDevice extends Fragment {
 
     }
 
-    public void setExistDevice(){
-        Dog dog = dbHelper.getDogById(selectedDogId);
-        if(dog.feederId.equals("")){
-            binding.clEmptyFeeder.setVisibility(View.VISIBLE);
-            binding.clExistFeeder.setVisibility(View.GONE);
-        }else{
-            binding.clEmptyFeeder.setVisibility(View.GONE);
-            binding.clExistFeeder.setVisibility(View.VISIBLE);
-            binding.tvFeederId.setText(dog.feederId);
-        }
-        if(dog.toiletId.equals("")){
-            binding.clEmptyToilet.setVisibility(View.VISIBLE);
-            binding.clExistToilet.setVisibility(View.GONE);
-        }else{
-            binding.clEmptyToilet.setVisibility(View.GONE);
-            binding.clExistToilet.setVisibility(View.VISIBLE);
-            binding.tvToiletId.setText(dog.toiletId);
-        }
-    }
+
 
     public void testListener(View view){
 

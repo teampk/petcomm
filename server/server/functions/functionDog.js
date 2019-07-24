@@ -33,7 +33,7 @@ exports.registerDog = (mDogId, mDogName, mDogGender, mDogSpecies, mDogBirth, mDo
 		});
 	});
 
-exports.loadDogs = userId =>
+exports.getDogsById = userId =>
 	new Promise(function(resolve,reject){
 		dogdb.find({ userEmail: userId })
 		.then(function(dogs){
@@ -42,5 +42,15 @@ exports.loadDogs = userId =>
 		.catch(function(err){
 			reject({ status: 500, message: 'Internal Server Error !' });
 		});
+	});
 
+exports.getDogBydogId = dogId =>
+	new Promise(function(resolve, reject){
+		dogdb.find({ dogId: dogId})
+		.then(function(dogs){
+			resolve(dogs[0]);
+		})
+		.catch(function(err){
+			reject({status: 500, message: 'Internal Server Error :('});
+		});
 	});

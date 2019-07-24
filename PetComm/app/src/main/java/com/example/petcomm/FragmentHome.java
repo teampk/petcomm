@@ -81,6 +81,7 @@ public class FragmentHome extends Fragment{
     }
 
     // for inner DB
+    /*
     private void setDogList(){
         dbHelper = new DBHelper(getContext(), "PetComm.db", null, 1);
         dogDataArrayList = new ArrayList<>();
@@ -117,12 +118,14 @@ public class FragmentHome extends Fragment{
         }else{
             // Log.d("TESTPAENG", "shared::"+String.valueOf(findDogListIndexById(mSharedPreferences.getInt(Constants.DOG, 0))));
             binding.spinnerDog.setSelection(findDogListIndexById(mSharedPreferences.getInt(Constants.DOG, 0)));
+            binding.spinnerDog.setSelection(findDogListIndexBydogId(mSharedPreferences.getString(Constants.DOG, 0)));
         }
 
     }
+    */
     // for server DB
     private void loadDogList(){
-        mSubscriptions.add(NetworkUtil.getRetrofit().loadDogs(signInEmail)
+        mSubscriptions.add(NetworkUtil.getRetrofit().getDogsById(signInEmail)
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribeOn(Schedulers.io())
                 .subscribe(this::handleResponseDog,this::handleError));
@@ -169,8 +172,7 @@ public class FragmentHome extends Fragment{
             binding.clExistDog.setVisibility(View.GONE);
             binding.tvEmptyDog.setText(getText(R.string.tv_empty_dog));
         }else{
-            // Log.d("TESTPAENG", "shared::"+String.valueOf(findDogListIndexById(mSharedPreferences.getInt(Constants.DOG, 0))));
-            binding.spinnerDog.setSelection(findDogListIndexById(mSharedPreferences.getInt(Constants.DOG, 0)));
+            binding.spinnerDog.setSelection(findDogListIndexByDogId(mSharedPreferences.getString(Constants.DOG, "")));
         }
 
     }
@@ -190,13 +192,6 @@ public class FragmentHome extends Fragment{
         }
     }
 
-    public void registerDeviceListener(View view){
-
-    }
-    public void testListener(View view){
-
-    }
-
     public int findDogListIndexById(int id){
         int index = -1;
 
@@ -208,35 +203,44 @@ public class FragmentHome extends Fragment{
         }
         return index+1;
     }
+    public int findDogListIndexByDogId(String dogId){
+        int index = -1;
+        for (int i=0;i<dogDataArrayList.size();i++) {
+            if(dogDataArrayList.get(i).dogId.equals(dogId)){
+                index = i;
+                break;
+            }
+        }
+        return index+1;
+    }
 
-    private void setDogProfile(int id){
-
-        if(id == -1){
+    private void setDogProfile(int index){
+        if(index == -1){
             binding.clEmptyDog.setVisibility(View.VISIBLE);
             binding.clExistDog.setVisibility(View.GONE);
             binding.tvEmptyDog.setText(getText(R.string.tv_empty_dog));
             mEditor = mSharedPreferences.edit();
-            mEditor.putInt(Constants.DOG, 0);
+            mEditor.putString(Constants.DOG, "");
             mEditor.apply();
         }
         else{
             binding.clEmptyDog.setVisibility(View.GONE);
             binding.clExistDog.setVisibility(View.VISIBLE);
-            binding.tvName.setText(dogDataArrayList.get(id).dogName);
-            if(dogDataArrayList.get(id).feederId.equals("")){
+            binding.tvName.setText(dogDataArrayList.get(index).dogName);
+            if(dogDataArrayList.get(index).feederId.equals("")){
                 binding.tvDevice.setText(getString(R.string.tv_device_empty));
             }else{
-                binding.tvDevice.setText(dogDataArrayList.get(id).feederId);
+                binding.tvDevice.setText(dogDataArrayList.get(index).feederId);
             }
 
-            if(dogDataArrayList.get(id).toiletId.equals("")){
+            if(dogDataArrayList.get(index).toiletId.equals("")){
                 binding.tvDevice2.setText(getString(R.string.tv_device_empty));
             }else{
-                binding.tvDevice2.setText(dogDataArrayList.get(id).toiletId);
+                binding.tvDevice2.setText(dogDataArrayList.get(index).toiletId);
             }
-            selectedDogId = dogDataArrayList.get(id).id;
+            selectedDogId = dogDataArrayList.get(index).id;
             mEditor = mSharedPreferences.edit();
-            mEditor.putInt(Constants.DOG, dogDataArrayList.get(id).id);
+            mEditor.putString(Constants.DOG, dogDataArrayList.get(index).dogId);
             mEditor.apply();
         }
     }
@@ -248,9 +252,16 @@ public class FragmentHome extends Fragment{
 
     public void dogProfileListener(View view){
         Intent intent = new Intent(getContext(), DogProfileActivity.class);
-        intent.putExtra("dogId", mSharedPreferences.getInt(Constants.DOG, -1));
+        intent.putExtra("dogId", mSharedPreferences.getString(Constants.DOG, ""));
         // Log.d("PETCOMMTEST", String.valueOf(selectedDogId));
         startActivity(intent);
+
+    }
+
+    public void registerDeviceListener(View view){
+
+    }
+    public void testListener(View view){
 
     }
 

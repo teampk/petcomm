@@ -67,6 +67,7 @@
         </android.support.constraint.ConstraintLayout>
 
         <LinearLayout
+            android:visibility="gone"
             android:id="@+id/ll_dog_true"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
@@ -110,7 +111,7 @@
                         android:layout_width="200dp"
                         android:layout_height="50dp"
                         android:layout_marginTop="8dp"
-                        android:background="@color/colorPrimary"
+                        android:background="@drawable/layout_rounded_primary"
                         android:onClick="@{fragmentDevice::addFeederListener}"
 
                         android:text="@string/bt_register_feeder"
@@ -128,6 +129,7 @@
 
             <!-- 급식기 있을 때 -->
             <LinearLayout
+                android:visibility="gone"
                 android:paddingTop="20dp"
                 android:paddingBottom="20dp"
                 android:id="@+id/cl_exist_feeder"
@@ -340,8 +342,7 @@
                         android:layout_height="50dp"
                         android:layout_marginTop="10dp"
                         android:text="@string/bt_register_toilet"
-                        android:background="@color/colorPrimary"
-
+                        android:background="@drawable/layout_rounded_primary"
 
                         app:layout_constraintTop_toBottomOf="@+id/tv_empty_toilet"
                         app:layout_constraintLeft_toLeftOf="parent"
@@ -358,6 +359,7 @@
 
             <!-- 배변판 있을 때 -->
             <LinearLayout
+                android:visibility="gone"
                 android:paddingTop="20dp"
                 android:paddingBottom="20dp"
                 android:id="@+id/cl_exist_toilet"

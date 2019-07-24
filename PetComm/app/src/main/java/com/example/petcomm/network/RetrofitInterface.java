@@ -20,10 +20,10 @@ public interface RetrofitInterface {
     Observable<Res> registerDog(@Body Dog dog);
 
     @GET("dogs/{userId}")
-    Observable<Dog[]> loadDogs(@Path("userId") String email);
+    Observable<Dog[]> getDogsById(@Path("userId") String email);
 
     @GET("dog/{dogId}")
-    Observable<Dog> getDogProfile(@Path("dogId") String dogId);
+    Observable<Dog> getDogByDogId(@Path("dogId") String dogId);
 
 
 }

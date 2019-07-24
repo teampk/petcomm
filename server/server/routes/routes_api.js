@@ -9,12 +9,12 @@ router.get('/', function(req, res) {
 // Register Dog
 router.post('/dog', function(req, res){
     var dogId = req.body.dogId;
-    var dogName = req.body.name;
-    var dogGender = req.body.gender;
-    var dogBreeds = req.body.breeds;
-    var dogBirth = req.body.birth;
-    var dogWeight = req.body.weight;
-    var userEmail = req.body.email;
+    var dogName = req.body.dogName;
+    var dogGender = req.body.dogGender;
+    var dogBreeds = req.body.dogBreeds;
+    var dogBirth = req.body.dogBirth;
+    var dogWeight = req.body.dogWeight;
+    var userEmail = req.body.userEmail;
     var feederId = req.body.feederId;
     var toiletId = req.body.toiletId;
     console.log('-- Register Start --');
@@ -44,7 +44,7 @@ router.post('/dog', function(req, res){
 
 router.get('/dogs/:id', function(req, res){
   console.log("user id = " + req.params.id);
-  functionDog.loadDogs(req.params.id)
+  functionDog.getDogsById(req.params.id)
     .then(function(result){
       console.log('dog result : ' + result);
       res.json(result);
@@ -56,6 +56,20 @@ router.get('/dogs/:id', function(req, res){
       });
     });
 
+});
+
+router.get('/dog/:id', function(req, res){
+  functionDog.getDogBydogId(req.params.id)
+    .then(function(result){
+      console.log('dogID = ' + req.params.id);
+      res.json(result);
+    })
+    .catch(function(err){
+      console.log('dog err : '+err);
+      res.status(err.status).json({
+        message: err.message
+      });
+    });
 });
 
 module.exports = router;

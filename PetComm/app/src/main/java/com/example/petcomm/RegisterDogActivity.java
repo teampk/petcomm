@@ -121,7 +121,8 @@ public class RegisterDogActivity extends AppCompatActivity {
 
             // Server DB
             Dog dogDB = new Dog();
-            dogDB.setDogId(getRandomString(8));
+            String newDogId = getRandomString(8);
+            dogDB.setDogId(newDogId);
             dogDB.setDogName(binding.etName.getText().toString());
             dogDB.setDogGender(gender);
             dogDB.setDogBreeds(binding.tvBreeds.getText().toString());
@@ -134,7 +135,7 @@ public class RegisterDogActivity extends AppCompatActivity {
 
 
             SharedPreferences.Editor mEditor = mSharedPreferences.edit();
-            mEditor.putInt(Constants.DOG, dbHelper.getHightestDogId());
+            mEditor.putString(Constants.DOG, newDogId);
             mEditor.apply();
             Toast.makeText(this, "강아지가 등록되었습니다.", Toast.LENGTH_SHORT).show();
             finish();
