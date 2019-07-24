@@ -74,8 +74,26 @@ router.get('/dog/:dogId', function(req, res){
     });
 });
 
+// register Feeder
 router.put('/device/feeder/:dogId', function(req, res){
-  functionDog.setFeederId(req.params.dogId)
+  functionDog.setDeviceId(req.params.dogId, 1)
+    .then(function(result){
+      console.log('device:'+result);
+      res.status(result.status).json({
+        message: result.message
+      });
+    })
+    .catch(function(err){
+      console.log('device error:'+err);
+      res.status(err.status).json({
+        message: err.message
+      });
+    });
+});
+
+// register Toilet
+router.put('/device/toilet/:dogId', function(req, res){
+  functionDog.setDeviceId(req.params.dogId, 2)
     .then(function(result){
       console.log('device:'+result);
       res.status(result.status).json({

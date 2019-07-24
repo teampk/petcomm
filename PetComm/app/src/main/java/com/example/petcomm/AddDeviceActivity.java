@@ -133,7 +133,7 @@ public class AddDeviceActivity extends AppCompatActivity {
             finish();
         }
         else if(deviceMode==2){
-
+            registerToilet();
             Toast.makeText(this, "배변판이 등록되었습니다.", Toast.LENGTH_SHORT).show();
             finish();
         }
@@ -143,11 +143,21 @@ public class AddDeviceActivity extends AppCompatActivity {
         mSubscriptions.add(NetworkUtil.getRetrofit().registerFeeder(selectedDog.dogId, selectedDog)
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribeOn(Schedulers.io())
-                .subscribe(this::handleResponseRegFeeder,this::handleError));
+                .subscribe(this::handleResponse,this::handleError));
     }
-    private void handleResponseRegFeeder(Res response){
+
+    // 서버에 배변판 등록
+    private void registerToilet(){
+        mSubscriptions.add(NetworkUtil.getRetrofit().registerToilet(selectedDog.dogId, selectedDog)
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribeOn(Schedulers.io())
+                .subscribe(this::handleResponse,this::handleError));
+    }
+
+    private void handleResponse(Res response){
         Toast.makeText(this, response.getMessage(), Toast.LENGTH_SHORT).show();
     }
+
     private void handleError(Throwable error) {
 
         if (error instanceof HttpException) {

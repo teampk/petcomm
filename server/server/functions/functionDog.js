@@ -55,13 +55,16 @@ exports.getDogBydogId = dogId =>
 		});
 	});
 
-exports.setFeederId = dogId =>
+exports.setDeviceId = (dogId, deviceMode) =>
 	new Promise(function(resolve, reject){
-
 		dogdb.find({ dogId: dogId })
 		.then(selectedDog => {
 			let dog = selectedDog[0];
-			dog.feederId = 'f_paeng';
+			if (deviceMode == 1){
+				dog.feederId = 'f_FEEDER';
+			}else if (deviceMode == 2){
+				dog.toiletId = 't_TOILET';
+			}
 			return dog.save();
 		})
 		.then(dog => 
