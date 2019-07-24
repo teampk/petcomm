@@ -34,12 +34,12 @@ public class DogProfileActivity extends AppCompatActivity {
         myDog = dbHelper.getDogById(id);
 
         binding.tvId.setText(String.valueOf(myDog.id));
-        binding.tvName.setText(myDog.name);
-        binding.tvGender.setText(myDog.gender);
-        binding.tvBreeds.setText(myDog.breeds);
-        binding.tvAge.setText(getAgeByBirth(myDog.birth));
-        binding.tvBirth.setText(myDog.birth);
-        binding.tvWeight.setText(myDog.weight);
+        binding.tvName.setText(myDog.dogName);
+        binding.tvGender.setText(myDog.dogGender);
+        binding.tvBreeds.setText(myDog.dogBreeds);
+        binding.tvAge.setText(getAgeByBirth(myDog.dogBirth));
+        binding.tvBirth.setText(myDog.dogBirth);
+        binding.tvWeight.setText(myDog.dogWeight);
         if(myDog.feederId.equals("")){
             binding.tvFeederId.setText(getString(R.string.tv_device_empty));
         }else{
@@ -52,7 +52,7 @@ public class DogProfileActivity extends AppCompatActivity {
         }
     }
     public void deleteListener(View view){
-        Log.d("TESTPAENG", myDog.id+"/"+myDog.email+"/"+myDog.feederId+"/"+ myDog.toiletId+"/");
+        Log.d("TESTPAENG", myDog.id+"/"+myDog.userEmail+"/"+myDog.feederId+"/"+ myDog.toiletId+"/");
     }
 
     public String getAgeByBirth(String birth){

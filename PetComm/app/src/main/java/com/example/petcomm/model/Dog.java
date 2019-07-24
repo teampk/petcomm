@@ -2,12 +2,13 @@ package com.example.petcomm.model;
 
 public class Dog {
     public int id;
-    public String name;
-    public String gender;
-    public String breeds;
-    public String birth;
-    public String weight;
-    public String email;
+    public String dogId;
+    public String dogName;
+    public String dogGender;
+    public String dogBreeds;
+    public String dogBirth;
+    public String dogWeight;
+    public String userEmail;
     public String feederId;
     public String toiletId;
 
@@ -18,12 +19,12 @@ public class Dog {
 
     public Dog(int id, String name, String gender, String breeds, String birth, String weight, String email, String feederId, String toiletId){
         this.id = id;
-        this.name = name;
-        this.gender = gender;
-        this.breeds = breeds;
-        this.birth = birth;
-        this.weight = weight;
-        this.email = email;
+        this.dogName = name;
+        this.dogGender = gender;
+        this.dogBreeds = breeds;
+        this.dogBirth = birth;
+        this.dogWeight = weight;
+        this.userEmail = email;
         this.feederId = feederId;
         this.toiletId = toiletId;
     }
@@ -32,28 +33,32 @@ public class Dog {
         this.id = id;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setDogId(String dogId) {
+        this.dogId = dogId;
     }
 
-    public void setGender(String gender) {
-        this.gender = gender;
+    public void setDogName(String dogName) {
+        this.dogName = dogName;
     }
 
-    public void setBreeds(String breeds) {
-        this.breeds = breeds;
+    public void setDogGender(String dogGender) {
+        this.dogGender = dogGender;
     }
 
-    public void setBirth(String birth) {
-        this.birth = birth;
+    public void setDogBreeds(String dogBreeds) {
+        this.dogBreeds = dogBreeds;
     }
 
-    public void setWeight(String weight) {
-        this.weight = weight;
+    public void setDogBirth(String dogBirth) {
+        this.dogBirth = dogBirth;
     }
 
-    public void setEmail(String email) {
-        this.email = email;
+    public void setDogWeight(String dogWeight) {
+        this.dogWeight = dogWeight;
+    }
+
+    public void setUserEmail(String userEmail) {
+        this.userEmail = userEmail;
     }
 
     public void setFeederId(String feederId) {

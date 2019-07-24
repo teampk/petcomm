@@ -38,6 +38,7 @@ public class FragmentHome extends Fragment{
     private DBHelper dbHelper;
     private ArrayList<String> dogList;
     private ArrayList<Dog> dogDataArrayList;
+
     private String signInEmail;
     private int selectedDogId;
     private CompositeSubscription mSubscriptions;
@@ -60,8 +61,8 @@ public class FragmentHome extends Fragment{
         mSharedPreferences = PreferenceManager.getDefaultSharedPreferences(getContext());
         signInEmail = mSharedPreferences.getString(Constants.EMAIL, "");
 
-        setDogList();
-        //loadDogList();
+        // setDogList();
+        loadDogList();
 
         return mView;
     }
@@ -69,8 +70,8 @@ public class FragmentHome extends Fragment{
     @Override
     public void onResume() {
         super.onResume();
-        setDogList();
-        // loadDogList();
+        // setDogList();
+        loadDogList();
     }
 
     @Override
@@ -87,7 +88,7 @@ public class FragmentHome extends Fragment{
         dogList = new ArrayList<>();
         dogList.add(getString(R.string.tv_unselected_dog));
         for (int i=0;i<dogDataArrayList.size();i++){
-            dogList.add(dogDataArrayList.get(i).name);
+            dogList.add(dogDataArrayList.get(i).dogName);
         }
 
         // Spinner 클릭 리스너
@@ -119,16 +120,18 @@ public class FragmentHome extends Fragment{
         }
 
     }
+    // for server DB
     private void loadDogList(){
         mSubscriptions.add(NetworkUtil.getRetrofit().loadDogs(signInEmail)
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribeOn(Schedulers.io())
                 .subscribe(this::handleResponseDog,this::handleError));
     }
+
     private void handleResponseDog(Dog[] dogs) {
 
         // 서버 DB 로부터 Dog Array List 에 추가
-        dogDataArrayList = new ArrayList<>();
+        dogDataArrayList = new ArrayList<Dog>();
         for(Dog dogitem : dogs){
             if(dogitem != null){
                 dogDataArrayList.add(dogitem);
@@ -136,12 +139,39 @@ public class FragmentHome extends Fragment{
         }
 
         // 선택을 위한 Spinner 리스트에 추가
-        dogList = new ArrayList<>();
+        dogList = new ArrayList<String>();
         dogList.add(getString(R.string.tv_unselected_dog));
         for (int i=0;i<dogDataArrayList.size();i++){
-            dogList.add(dogDataArrayList.get(i).name);
+            dogList.add(dogDataArrayList.get(i).dogName);
         }
 
+        // Spinner 클릭 리스너
+        binding.spinnerDog.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                setDogProfile(position-1);
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+                setDogProfile(-1);
+
+            }
+        });
+        // Spinner 설정
+        ArrayAdapter<String> adapter = new ArrayAdapter<>(this.getActivity(), android.R.layout.simple_spinner_item, dogList);
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        binding.spinnerDog.setAdapter(adapter);
+
+        // 화면 이동 시 홈 화면 띄울 모습
+        if(dogList.size()==1){
+            binding.clEmptyDog.setVisibility(View.VISIBLE);
+            binding.clExistDog.setVisibility(View.GONE);
+            binding.tvEmptyDog.setText(getText(R.string.tv_empty_dog));
+        }else{
+            // Log.d("TESTPAENG", "shared::"+String.valueOf(findDogListIndexById(mSharedPreferences.getInt(Constants.DOG, 0))));
+            binding.spinnerDog.setSelection(findDogListIndexById(mSharedPreferences.getInt(Constants.DOG, 0)));
+        }
 
     }
     private void handleError(Throwable error) {
@@ -156,11 +186,11 @@ public class FragmentHome extends Fragment{
             }
         } else {
             Toast.makeText(getContext(), "Network Error :(", Toast.LENGTH_SHORT).show();
+            Log.d("TESTPAENG", String.valueOf(error));
         }
     }
 
     public void registerDeviceListener(View view){
-
 
     }
     public void testListener(View view){
@@ -192,7 +222,7 @@ public class FragmentHome extends Fragment{
         else{
             binding.clEmptyDog.setVisibility(View.GONE);
             binding.clExistDog.setVisibility(View.VISIBLE);
-            binding.tvName.setText(dogDataArrayList.get(id).name);
+            binding.tvName.setText(dogDataArrayList.get(id).dogName);
             if(dogDataArrayList.get(id).feederId.equals("")){
                 binding.tvDevice.setText(getString(R.string.tv_device_empty));
             }else{

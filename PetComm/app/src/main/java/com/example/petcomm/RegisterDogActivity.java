@@ -61,8 +61,10 @@ public class RegisterDogActivity extends AppCompatActivity {
                 switch(checkedId){
                     case R.id.rb_male:
                         gender = "male";
+                        break;
                     case R.id.rb_female:
                         gender = "female";
+                        break;
                 }
             }
         });
@@ -119,12 +121,13 @@ public class RegisterDogActivity extends AppCompatActivity {
 
             // Server DB
             Dog dogDB = new Dog();
-            dogDB.setName(binding.etName.getText().toString());
-            dogDB.setGender(gender);
-            dogDB.setBreeds(binding.tvBreeds.getText().toString());
-            dogDB.setBirth(binding.tvBirth.getText().toString());
-            dogDB.setWeight(binding.etWeight.getText().toString());
-            dogDB.setEmail(mEmail);
+            dogDB.setDogId(getRandomString(8));
+            dogDB.setDogName(binding.etName.getText().toString());
+            dogDB.setDogGender(gender);
+            dogDB.setDogBreeds(binding.tvBreeds.getText().toString());
+            dogDB.setDogBirth(binding.tvBirth.getText().toString());
+            dogDB.setDogWeight(binding.etWeight.getText().toString());
+            dogDB.setUserEmail(mEmail);
             dogDB.setFeederId("");
             dogDB.setToiletId("");
             registerProgress(dogDB);
@@ -197,6 +200,19 @@ public class RegisterDogActivity extends AppCompatActivity {
         else{
             return true;
         }
+    }
+
+    private static String getRandomString(int length) {
+        StringBuffer buffer = new StringBuffer();
+        Random random = new Random();
+
+        String chars[] = "A,B,C,D,E,F,G,H,I,J,K,L,M,N,O,P,Q,R,S,T,U,V,W,X,Y,Z,1,2,3,4,5,6,7,8,9,0".split(",");
+
+        for (int i=0 ; i<length ; i++)
+        {
+            buffer.append(chars[random.nextInt(chars.length)]);
+        }
+        return buffer.toString();
     }
 
 }

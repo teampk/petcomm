@@ -8,6 +8,7 @@ router.get('/', function(req, res) {
 
 // Register Dog
 router.post('/dog', function(req, res){
+    var dogId = req.body.dogId;
     var dogName = req.body.name;
     var dogGender = req.body.gender;
     var dogBreeds = req.body.breeds;
@@ -17,14 +18,14 @@ router.post('/dog', function(req, res){
     var feederId = req.body.feederId;
     var toiletId = req.body.toiletId;
     console.log('-- Register Start --');
-    console.log(dogName+'//'+dogGender+'//'+dogBreeds+'//'+dogBirth+'//'+dogWeight+'//'+userEmail+'//'+feederId+'//'+toiletId+'//')
+    console.log(dogId+"//"+dogName+'//'+dogGender+'//'+dogBreeds+'//'+dogBirth+'//'+dogWeight+'//'+userEmail+'//'+feederId+'//'+toiletId+'//')
 
-    if (!dogName || !dogGender || !dogBreeds || !dogBirth || !dogWeight || !userEmail || !dogName.trim() || !dogGender.trim() || !dogBreeds.trim() || !dogBirth.trim() || !dogWeight.trim() || !userEmail.trim()){
+    if (!dogId || !dogName || !dogGender || !dogBreeds || !dogBirth || !dogWeight || !userEmail || !dogName.trim() || !dogGender.trim() || !dogBreeds.trim() || !dogBirth.trim() || !dogWeight.trim() || !userEmail.trim()){
         res.status(400).json({
           message: 'Invalid Request !'
         });
     }else{
-      functionDog.registerDog(dogName, dogGender, dogBreeds, dogBirth, dogWeight, userEmail, feederId, toiletId)
+      functionDog.registerDog(dogId, dogName, dogGender, dogBreeds, dogBirth, dogWeight, userEmail, feederId, toiletId)
         .then(function(result) {
             // res.setHeader('Location', '/dogs/' + ownerId);
             res.status(result.status).json({
