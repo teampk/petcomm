@@ -129,12 +129,10 @@ public class AddDeviceActivity extends AppCompatActivity {
     public void registerDeviceListener(View view){
         if(deviceMode==1){
             registerFeeder();
-            Toast.makeText(this, "급식기가 등록되었습니다.", Toast.LENGTH_SHORT).show();
             finish();
         }
         else if(deviceMode==2){
             registerToilet();
-            Toast.makeText(this, "배변판이 등록되었습니다.", Toast.LENGTH_SHORT).show();
             finish();
         }
     }
@@ -155,11 +153,11 @@ public class AddDeviceActivity extends AppCompatActivity {
     }
 
     private void handleResponse(Res response){
-        Toast.makeText(this, response.getMessage(), Toast.LENGTH_SHORT).show();
+        // Toast.makeText(this, response.getMessage(), Toast.LENGTH_SHORT).show();
+        Toast.makeText(this, "기기가 등록되었습니다.", Toast.LENGTH_SHORT).show();
     }
 
     private void handleError(Throwable error) {
-
         if (error instanceof HttpException) {
             Gson gson = new GsonBuilder().create();
             try {
@@ -174,6 +172,8 @@ public class AddDeviceActivity extends AppCompatActivity {
         }
     }
 
+
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
     WifiP2pManager.PeerListListener peerListListener = new WifiP2pManager.PeerListListener() {
         @Override

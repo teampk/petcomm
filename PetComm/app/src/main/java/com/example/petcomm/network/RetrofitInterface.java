@@ -25,9 +25,15 @@ public interface RetrofitInterface {
     @GET("dog/{dogId}")
     Observable<Dog> getDogByDogId(@Path("dogId") String dogId);
 
-    @PUT("device/feeder/{dogId}")
+    @PUT("register/feeder/{dogId}")
     Observable<Res> registerFeeder(@Path("dogId") String dogId, @Body Dog dog);
 
-    @PUT("device/toilet/{dogId}")
+    @PUT("register/toilet/{dogId}")
     Observable<Res> registerToilet(@Path("dogId") String dogId, @Body Dog dog);
+
+    @PUT("unregister/feeder/{dogId}")
+    Observable<Res> unregisterFeeder(@Path("dogId") String dogId, @Body Dog dog);
+
+    @PUT("unregister/toilet/{dogId}")
+    Observable<Res> unregisterToilet(@Path("dogId") String dogId, @Body Dog dog);
 }

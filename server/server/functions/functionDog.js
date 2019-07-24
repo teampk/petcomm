@@ -64,6 +64,10 @@ exports.setDeviceId = (dogId, deviceMode) =>
 				dog.feederId = 'f_FEEDER';
 			}else if (deviceMode == 2){
 				dog.toiletId = 't_TOILET';
+			}else if (deviceMode == 11){
+				dog.feederId = '';
+			}else if (deviceMode == 22){
+				dog.toiletId = '';
 			}
 			return dog.save();
 		})

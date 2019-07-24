@@ -94,7 +94,7 @@ public class FragmentDevice extends Fragment {
         mSubscriptions.unsubscribe();
     }
 
-    private void loadDogInf(String selectedDogId){
+    private void loadDogInf(){
         mSubscriptions.add(NetworkUtil.getRetrofit().getDogByDogId(selectedDogId)
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribeOn(Schedulers.io())
@@ -137,13 +137,12 @@ public class FragmentDevice extends Fragment {
                 e.printStackTrace();
             }
         } else {
-            Toast.makeText(getContext(), "Network Error :(", Toast.LENGTH_SHORT).show();
-            Log.d("TESTPAENG", String.valueOf(error));
+            Toast.makeText(getContext(), "NETWORK ERROR :(", Toast.LENGTH_SHORT).show();
         }
     }
 
     public void setVisible(){
-        loadDogInf(selectedDogId);
+        loadDogInf();
 
         ArrayList<String> settingFeeder = new ArrayList<String>(Arrays.asList(getContext().getResources().getStringArray(R.array.device_setting)));
         ArrayAdapter<String> adapter = new ArrayAdapter<>(this.getActivity(), android.R.layout.simple_spinner_item, settingFeeder);
@@ -159,13 +158,7 @@ public class FragmentDevice extends Fragment {
 
                         break;
                     case 1:
-                        /*
-                        Dog dog = dbHelper.getDogById(selectedDogId);
-                        dbHelper.unregisterFeeder(dog.id);
-                        dbHelper.deleteScheduleByFeederId(dog.feederId);
-                        Toast.makeText(getContext(), "급식기 해제 완료", Toast.LENGTH_SHORT).show();
-                        setExistDevice();
-                        */
+                        unregisterFeeder();
                         break;
                     default:
                         break;
@@ -186,11 +179,7 @@ public class FragmentDevice extends Fragment {
                     case 0:
                         break;
                     case 1:
-                        /*
-                        dbHelper.unregisterToilet(selectedDogId);
-                        Toast.makeText(getContext(), "배변판 해제 완료", Toast.LENGTH_SHORT).show();
-                        setExistDevice();
-                        */
+                        unregisterToilet();
                         break;
                     default:
                         break;
@@ -201,6 +190,25 @@ public class FragmentDevice extends Fragment {
 
             }
         });
+    }
+
+    private void unregisterFeeder(){
+        mSubscriptions.add(NetworkUtil.getRetrofit().unregisterFeeder(selectedDog.dogId, selectedDog)
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribeOn(Schedulers.io())
+                .subscribe(this::handleResponse,this::handleError));
+
+    }
+    private void unregisterToilet(){
+        mSubscriptions.add(NetworkUtil.getRetrofit().unregisterToilet(selectedDog.dogId, selectedDog)
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribeOn(Schedulers.io())
+                .subscribe(this::handleResponse,this::handleError));
+    }
+    private void handleResponse(Res response){
+        //Toast.makeText(getContext(), response.getMessage(), Toast.LENGTH_SHORT).show();
+        Toast.makeText(getContext(), "기기 해제 완료", Toast.LENGTH_SHORT).show();
+        loadDogInf();
     }
 
     // (급식기) 기기 추가 버튼
@@ -216,7 +224,6 @@ public class FragmentDevice extends Fragment {
         intentToilet.putExtra("mode", 2);
         intentToilet.putExtra("dog", selectedDog);
         startActivity(intentToilet);
-
     }
 
     // (급식기) 수동 배식
@@ -230,8 +237,6 @@ public class FragmentDevice extends Fragment {
         // customDialogFeed.callFunction(2, "자동 배식 설정", "설정", "취소", binding.pbFuncFeederAutoFeed);
 
         startActivity(new Intent(getContext(), AutoFeedActivity.class));
-
-
     }
     // (급식기) 카메라
     public void feederCameraListener(View view){
@@ -246,18 +251,9 @@ public class FragmentDevice extends Fragment {
 
 
 
+
     public void testListener(View view){
 
-        ArrayList<FeedSchedule> scheduleArrayList = dbHelper.getScheduleData();
-        Log.d("TestPaeng", "size:"+scheduleArrayList.size());
-
-        for(int i=0;i<scheduleArrayList.size();i++){
-            Log.d("TestPaeng", String.valueOf(scheduleArrayList.get(i).getmId()));
-            Log.d("TestPaeng", String.valueOf(scheduleArrayList.get(i).getmFeederId()));
-            Log.d("TestPaeng", String.valueOf(scheduleArrayList.get(i).getmFeedTime()));
-            Log.d("TestPaeng", String.valueOf(scheduleArrayList.get(i).getmFeedAmount()));
-        }
-        Toast.makeText(getContext(), String.valueOf(selectedDogId), Toast.LENGTH_SHORT).show();
     }
 
 
