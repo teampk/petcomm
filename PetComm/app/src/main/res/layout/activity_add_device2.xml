@@ -3,12 +3,12 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    tools:context=".AddDeviceActivity">
+    tools:context=".AddDeviceActivity2">
 
     <data>
         <variable
-            name="addDevice"
-            type="com.example.petcomm.AddDeviceActivity"/>
+            name="addDevice2"
+            type="com.example.petcomm.AddDeviceActivity2"/>
     </data>
 
     <LinearLayout
@@ -31,33 +31,43 @@
             app:layout_constraintTop_toTopOf="parent"
             app:srcCompat="@drawable/img_feeder" />
 
-
         <TextView
             android:layout_marginTop="20dp"
-
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/tv_device_connect_explain1"
+            android:text="@string/tv_device_connect_explain3"
             android:textColor="@color/colorBlack"
             android:textSize="@dimen/text_size_small"
-            android:gravity="center"
             android:textStyle="bold"
-
-            app:layout_constraintBottom_toTopOf="@+id/et_name"
+            android:gravity="center"
             />
 
-
-
-
-        <android.support.v7.widget.RecyclerView
-            android:layout_marginTop="20dp"
-            android:id="@+id/recycler_device"
+        <com.rengwuxian.materialedittext.MaterialEditText
+            android:layout_marginTop="30dp"
+            android:id="@+id/et_wifi_id"
             android:layout_width="match_parent"
-            android:layout_height="150dp"
-            android:background="@color/colorWhite"
-            >
+            android:layout_height="@dimen/height_edit_text"
+            android:textColor="@color/colorBlack"
+            android:textSize="@dimen/text_size"
 
-        </android.support.v7.widget.RecyclerView>
+            android:hint="Wifi Name"
+            app:met_floatingLabel="highlight" />
+
+        <com.rengwuxian.materialedittext.MaterialEditText
+
+            android:id="@+id/et_wifi_pw"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/height_edit_text"
+            android:textColor="@color/colorBlack"
+            android:textSize="@dimen/text_size"
+
+            android:hint="Wifi Password"
+            app:met_floatingLabel="highlight" />
+
+
+
+
+
 
 
 
@@ -66,35 +76,6 @@
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="1">
-
-            <TextView
-                android:layout_marginBottom="10dp"
-
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="@string/tv_device_connect_explain2"
-                android:textColor="@color/colorBlack"
-                android:textSize="@dimen/text_size_small"
-                android:textStyle="bold"
-                android:gravity="center"
-
-                app:layout_constraintBottom_toTopOf="@+id/et_name"
-                />
-
-            <com.rengwuxian.materialedittext.MaterialEditText
-                android:layout_marginBottom="30dp"
-
-                android:id="@+id/et_name"
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/height_edit_text"
-                android:textColor="@color/colorBlack"
-                android:textSize="@dimen/text_size"
-
-                android:hint="password"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintBottom_toTopOf="@+id/bt_register"
-                app:met_floatingLabel="highlight" />
 
 
             <Button
@@ -105,9 +86,9 @@
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/height_button"
                 android:background="@drawable/layout_rounded_primary"
-                android:text="@string/bt_connect"
+                android:text="@string/bt_register_device"
                 android:textSize="@dimen/text_size"
-                android:onClick="@{addDevice::registerDeviceListener}"
+                android:onClick="@{addDevice2::registerDeviceListener}"
 
                 app:layout_constraintBottom_toTopOf="@+id/pb_device"
                 app:layout_constraintStart_toStartOf="parent"
@@ -128,8 +109,6 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 />
 
-
-
         </android.support.constraint.ConstraintLayout>
 
 
@@ -137,10 +116,7 @@
 
 
 
-
-
     </LinearLayout>
-
 
 
 </layout>
