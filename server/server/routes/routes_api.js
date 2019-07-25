@@ -78,7 +78,7 @@ router.get('/dog/:dogId', function(req, res){
 });
 
 
-
+// register 할 때 앱으로부터 기기 이름도 받아와서 저장하자
 // register Feeder
 router.put('/register/feeder/:dogId', function(req, res){
   functionDog.setDeviceId(req.params.dogId, 1)
@@ -157,6 +157,7 @@ router.post('/schedule', function(req, res){
   }else{
     functionSchedule.registerSchedule(feederId, feedTime, feedAmount)
       .then(function(result){
+        res.setHeader('Location', )
         res.status(result.status).json({
           message: result.message
         });
