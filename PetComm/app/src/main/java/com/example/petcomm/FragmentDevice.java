@@ -230,6 +230,19 @@ public class FragmentDevice extends Fragment {
     public void feederFeedListener(View view){
         CustomDialog customDialogFeed = new CustomDialog(getContext());
         customDialogFeed.callFunction(1, "배식할 양을 설정해주세요.", "배식", "취소");
+        customDialogFeed.setDialoglistener(new CustomDialog.CustomDialogListener() {
+            @Override
+            public void onPositiveClicked(String feedTime, String feedAmount) {
+                feedScheduleList.add(new FeedSchedule(0, selectedDog.feederId, feedTime, feedAmount));
+                isEdited = true;
+                initRecyclerView();
+            }
+
+            @Override
+            public void onNegativeClicked() {
+
+            }
+        });
     }
     // (급식기) 자동 배식
     public void feederFeedAutoListener(View view){
