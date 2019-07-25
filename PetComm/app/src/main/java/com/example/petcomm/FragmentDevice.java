@@ -232,10 +232,8 @@ public class FragmentDevice extends Fragment {
         customDialogFeed.callFunction(1, "배식할 양을 설정해주세요.", "배식", "취소");
         customDialogFeed.setDialoglistener(new CustomDialog.CustomDialogListener() {
             @Override
-            public void onPositiveClicked(String feedTime, String feedAmount) {
-                feedScheduleList.add(new FeedSchedule(0, selectedDog.feederId, feedTime, feedAmount));
-                isEdited = true;
-                initRecyclerView();
+            public void onPositiveClicked(String feedAmount, String a) {
+                Toast.makeText(getContext(), feedAmount+"g 배식되었습니다.", Toast.LENGTH_SHORT).show();
             }
 
             @Override

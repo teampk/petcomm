@@ -100,7 +100,6 @@
 
                 <!-- 선택된 강아지가 있을 때 -->
                 <android.support.constraint.ConstraintLayout
-                    android:visibility="gone"
                     android:id="@+id/cl_exist_dog"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -267,126 +266,24 @@
                             android:orientation="horizontal"
                             android:layout_marginTop="10dp"
                             >
-
                             <TextView
-                                android:id="@+id/tv_row1_time"
-                                android:layout_width="0dp"
-                                android:layout_height="wrap_content"
-                                android:layout_weight="1"
-                                android:gravity="start"
-                                android:text="-"
-                                android:textSize="@dimen/text_size_small"
-                                android:textColor="@color/colorBlack"
-
-                                />
-
-                            <TextView
-                                android:id="@+id/tv_row1_amount"
-                                android:layout_width="0dp"
-                                android:layout_height="wrap_content"
-                                android:layout_weight="1"
+                                android:visibility="gone"
+                                android:id="@+id/tv_plan_empty"
+                                android:layout_width="match_parent"
+                                android:layout_height="100dp"
+                                android:text="급식기를 등록해주세요."
                                 android:gravity="center"
-                                android:text="-"
-                                android:textSize="@dimen/text_size_small"
-                                android:textColor="@color/colorBlack"
                                 />
 
-                            <TextView
-                                android:id="@+id/tv_row1_status"
-                                android:layout_width="0dp"
+                            <android.support.v7.widget.RecyclerView
+                                android:visibility="gone"
+                                android:id="@+id/tv_plan_recycler"
+                                android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:layout_weight="1"
-                                android:gravity="end"
-                                android:text="-"
-                                android:textSize="@dimen/text_size_small"
-                                android:textColor="@color/colorBlack"
-                                />
+                                >
 
-                        </LinearLayout>
-                        <LinearLayout
-                            android:id="@+id/ll_row_2"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:orientation="horizontal"
-                            android:layout_marginTop="10dp"
-                            >
 
-                            <TextView
-                                android:id="@+id/tv_row2_time"
-                                android:layout_width="0dp"
-                                android:layout_height="wrap_content"
-                                android:layout_weight="1"
-                                android:gravity="start"
-                                android:text="-"
-                                android:textSize="@dimen/text_size_small"
-                                android:textColor="@color/colorBlack"
-
-                                />
-
-                            <TextView
-                                android:id="@+id/tv_row2_amount"
-                                android:layout_width="0dp"
-                                android:layout_height="wrap_content"
-                                android:layout_weight="1"
-                                android:gravity="center"
-                                android:text="-"
-                                android:textSize="@dimen/text_size_small"
-                                android:textColor="@color/colorBlack"
-                                />
-
-                            <TextView
-                                android:id="@+id/tv_row2_status"
-                                android:layout_width="0dp"
-                                android:layout_height="wrap_content"
-                                android:layout_weight="1"
-                                android:gravity="end"
-                                android:text="-"
-                                android:textSize="@dimen/text_size_small"
-                                android:textColor="@color/colorBlack"
-                                />
-
-                        </LinearLayout>
-                        <LinearLayout
-                            android:id="@+id/ll_row_3"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:orientation="horizontal"
-                            android:layout_marginTop="10dp"
-                            >
-
-                            <TextView
-                                android:id="@+id/tv_row3_time"
-                                android:layout_width="0dp"
-                                android:layout_height="wrap_content"
-                                android:layout_weight="1"
-                                android:gravity="start"
-                                android:text="-"
-                                android:textSize="@dimen/text_size_small"
-                                android:textColor="@color/colorBlack"
-
-                                />
-
-                            <TextView
-                                android:id="@+id/tv_row3_amount"
-                                android:layout_width="0dp"
-                                android:layout_height="wrap_content"
-                                android:layout_weight="1"
-                                android:gravity="center"
-                                android:text="-"
-                                android:textSize="@dimen/text_size_small"
-                                android:textColor="@color/colorBlack"
-                                />
-
-                            <TextView
-                                android:id="@+id/tv_row3_status"
-                                android:layout_width="0dp"
-                                android:layout_height="wrap_content"
-                                android:layout_weight="1"
-                                android:gravity="end"
-                                android:text="-"
-                                android:textSize="@dimen/text_size_small"
-                                android:textColor="@color/colorBlack"
-                                />
+                            </android.support.v7.widget.RecyclerView>
 
                         </LinearLayout>
 

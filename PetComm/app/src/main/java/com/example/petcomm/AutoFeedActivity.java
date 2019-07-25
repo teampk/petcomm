@@ -105,7 +105,7 @@ public class AutoFeedActivity extends AppCompatActivity {
             binding.recyclerSchedule.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
             binding.recyclerSchedule.scrollToPosition(0);
 
-            RecyclerCustomAdapter mAdapter = new RecyclerCustomAdapter(getApplicationContext(), listSorting(feedScheduleList));
+            RecyclerCustomAdapter mAdapter = new RecyclerCustomAdapter(getApplicationContext(), listSorting(feedScheduleList), 1);
             binding.recyclerSchedule.setAdapter(mAdapter);
             binding.recyclerSchedule.setItemAnimator(new DefaultItemAnimator());
         }

@@ -5,10 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="40dp"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:orientation="horizontal"
-    android:background="@color/colorPrimary"
-
-    >
+    android:orientation="horizontal">
 
     <TextView
         android:id="@+id/tv_recycler_feed_time"

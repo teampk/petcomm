@@ -8,6 +8,8 @@ import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.DefaultItemAnimator;
+import android.support.v7.widget.LinearLayoutManager;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -18,6 +20,7 @@ import android.widget.Toast;
 
 import com.example.petcomm.databinding.FragmentHomeBinding;
 import com.example.petcomm.model.Dog;
+import com.example.petcomm.model.FeedSchedule;
 import com.example.petcomm.model.Res;
 import com.example.petcomm.network.NetworkUtil;
 import com.example.petcomm.utils.Constants;
@@ -38,6 +41,7 @@ public class FragmentHome extends Fragment{
     private DBHelper dbHelper;
     private ArrayList<String> dogList;
     private ArrayList<Dog> dogDataArrayList;
+    private ArrayList<FeedSchedule> feedScheduleList;
 
     private String signInEmail;
     private int selectedDogId;
@@ -50,7 +54,6 @@ public class FragmentHome extends Fragment{
         super.onCreate(savedInstanceState);
     }
 
-
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
@@ -60,8 +63,6 @@ public class FragmentHome extends Fragment{
         mSubscriptions = new CompositeSubscription();
         mSharedPreferences = PreferenceManager.getDefaultSharedPreferences(getContext());
         signInEmail = mSharedPreferences.getString(Constants.EMAIL, "");
-
-        // setDogList();
         loadDogList();
 
         return mView;
@@ -70,7 +71,6 @@ public class FragmentHome extends Fragment{
     @Override
     public void onResume() {
         super.onResume();
-        // setDogList();
         loadDogList();
     }
 
@@ -80,49 +80,6 @@ public class FragmentHome extends Fragment{
         mSubscriptions.unsubscribe();
     }
 
-    // for inner DB
-    /*
-    private void setDogList(){
-        dbHelper = new DBHelper(getContext(), "PetComm.db", null, 1);
-        dogDataArrayList = new ArrayList<>();
-        dogDataArrayList = dbHelper.getDogData();
-        dogList = new ArrayList<>();
-        dogList.add(getString(R.string.tv_unselected_dog));
-        for (int i=0;i<dogDataArrayList.size();i++){
-            dogList.add(dogDataArrayList.get(i).dogName);
-        }
-
-        // Spinner 클릭 리스너
-        binding.spinnerDog.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                setDogProfile(position-1);
-            }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> parent) {
-                setDogProfile(-1);
-
-            }
-        });
-        // Spinner 설정
-        ArrayAdapter<String> adapter = new ArrayAdapter<>(this.getActivity(), android.R.layout.simple_spinner_item, dogList);
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        binding.spinnerDog.setAdapter(adapter);
-
-        // 화면 이동 시 홈 화면 띄울 모습
-        if(dogList.size()==1){
-            binding.clEmptyDog.setVisibility(View.VISIBLE);
-            binding.clExistDog.setVisibility(View.GONE);
-            binding.tvEmptyDog.setText(getText(R.string.tv_empty_dog));
-        }else{
-            // Log.d("TESTPAENG", "shared::"+String.valueOf(findDogListIndexById(mSharedPreferences.getInt(Constants.DOG, 0))));
-            binding.spinnerDog.setSelection(findDogListIndexById(mSharedPreferences.getInt(Constants.DOG, 0)));
-            binding.spinnerDog.setSelection(findDogListIndexBydogId(mSharedPreferences.getString(Constants.DOG, 0)));
-        }
-
-    }
-    */
     // for server DB
     private void loadDogList(){
         mSubscriptions.add(NetworkUtil.getRetrofit().getDogsById(signInEmail)
@@ -227,10 +184,16 @@ public class FragmentHome extends Fragment{
             binding.clEmptyDog.setVisibility(View.GONE);
             binding.clExistDog.setVisibility(View.VISIBLE);
             binding.tvName.setText(dogDataArrayList.get(index).dogName);
+            binding.tvPlanEmpty.setVisibility(View.VISIBLE);
+            binding.tvPlanRecycler.setVisibility(View.GONE);
             if(dogDataArrayList.get(index).feederId.equals("")){
                 binding.tvDevice.setText(getString(R.string.tv_device_empty));
+                binding.tvPlanEmpty.setText("급식기를 등록해주세요.");
             }else{
                 binding.tvDevice.setText(dogDataArrayList.get(index).feederId);
+
+                // 배식 계획 불러오기
+                loadSchedule(dogDataArrayList.get(index).feederId);
             }
 
             if(dogDataArrayList.get(index).toiletId.equals("")){
@@ -244,7 +207,63 @@ public class FragmentHome extends Fragment{
             mEditor.apply();
         }
     }
+    // >>>>>>>>>>>>>>>>>>>>>>>>> 스케줄 불러오기
+    private void loadSchedule(String feederId){
+        mSubscriptions.add(NetworkUtil.getRetrofit().getFeedSchedule(feederId)
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribeOn(Schedulers.io())
+                .subscribe(this::handleResponseFeeder,this::handleError));
+    }
+    private void handleResponseFeeder(FeedSchedule[] feedSchedules){
 
+        if(feedSchedules.length == 0){
+            binding.tvPlanEmpty.setVisibility(View.VISIBLE);
+            binding.tvPlanEmpty.setText("등록된 배식 계획이 없습니다.");
+            binding.tvPlanRecycler.setVisibility(View.GONE);
+        }else{
+            feedScheduleList = new ArrayList<>();
+            binding.tvPlanEmpty.setVisibility(View.GONE);
+            binding.tvPlanRecycler.setVisibility(View.VISIBLE);
+            for(FeedSchedule sitem : feedSchedules){
+                if(sitem != null){
+                    feedScheduleList.add(sitem);
+                }
+            }
+            binding.tvPlanRecycler.setHasFixedSize(true);
+            binding.tvPlanRecycler.setLayoutManager(new LinearLayoutManager(getContext()));
+            binding.tvPlanRecycler.scrollToPosition(0);
+
+            RecyclerCustomAdapter mAdapter = new RecyclerCustomAdapter(getContext(), listSorting(feedScheduleList), 2);
+            binding.tvPlanRecycler.setAdapter(mAdapter);
+            binding.tvPlanRecycler.setItemAnimator(new DefaultItemAnimator());
+        }
+    }
+
+    public ArrayList<FeedSchedule> listSorting(ArrayList<FeedSchedule> inputAl){
+        ArrayList<FeedSchedule> outputAl = new ArrayList<>();
+        for (int i=0; i<inputAl.size();i++){
+            outputAl.add(inputAl.get(i));
+        }
+
+        //시간 순으로 정렬
+        int element1, element2;
+        for(int i=0;i<outputAl.size();i++){
+            for(int j=0;j<outputAl.size()-1;j++){
+                element1 = Integer.valueOf(outputAl.get(j).getmFeedTime().replace(":",""));
+                element2 = Integer.valueOf(outputAl.get(j+1).getmFeedTime().replace(":",""));
+                if(element1>element2){
+                    FeedSchedule buffer1, buffer2;
+                    buffer1 = outputAl.get(j);
+                    buffer2 = outputAl.get(j+1);
+                    outputAl.set(j, buffer2);
+                    outputAl.set(j+1, buffer1);
+                }
+            }
+        }
+        return outputAl;
+    }
+
+    // >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 
     public void addDogListener(View view){
         startActivity(new Intent(getContext(), RegisterDogActivity.class));
@@ -253,7 +272,6 @@ public class FragmentHome extends Fragment{
     public void dogProfileListener(View view){
         Intent intent = new Intent(getContext(), DogProfileActivity.class);
         intent.putExtra("dogId", mSharedPreferences.getString(Constants.DOG, ""));
-        // Log.d("PETCOMMTEST", String.valueOf(selectedDogId));
         startActivity(intent);
 
     }
