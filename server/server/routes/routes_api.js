@@ -181,13 +181,13 @@ router.post('/schedule', function(req, res){
         }
         request.post({
             headers: {'content-type': 'application/json'},
-            url: 'http://220.71.91.185:10000',
+            url: 'http://220.71.91.185:1111',
             body : jsonDataSchedule,
             json : true
           }, function(error, response, body){
-            console.log('body:', body);
-            console.log('response:', response);
-            console.log('error', error)
+            // console.log('body:', body);
+            // console.log('response:', response);
+            // console.log('error', error)
         });
         res.status(result.status).json({
           message: result.message

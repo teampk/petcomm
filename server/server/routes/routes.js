@@ -9,9 +9,11 @@ router.get('/', function(req, res){
 
 router.post('/', function(req, res){
     const ip = req.headers['x-forwarded-for'] ||  req.connection.remoteAddress;
-    var data1 = req.body.data1;
-    var data2 = req.body.data2;
-    console.log('post connected complete in :'+ip);
+    var data1 = req.body.feederId;
+    var data2 = req.body.feedTime;
+    var data3 = req.body.feedAmount;
+    console.log()
+    console.log(data1);
     console.log(data1);
     console.log(data2);
     res.status(200).json({
