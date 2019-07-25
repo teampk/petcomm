@@ -233,10 +233,9 @@ public class FragmentDevice extends Fragment {
     }
     // (급식기) 자동 배식
     public void feederFeedAutoListener(View view){
-        // CustomDialog customDialogFeed = new CustomDialog(getContext());
-        // customDialogFeed.callFunction(2, "자동 배식 설정", "설정", "취소", binding.pbFuncFeederAutoFeed);
-
-        startActivity(new Intent(getContext(), AutoFeedActivity.class));
+        Intent intentAuto = new Intent(getContext(), AutoFeedActivity.class);
+        intentAuto.putExtra("dog", selectedDog);
+        startActivity(intentAuto);
     }
     // (급식기) 카메라
     public void feederCameraListener(View view){

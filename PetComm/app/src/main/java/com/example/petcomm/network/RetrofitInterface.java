@@ -1,6 +1,7 @@
 package com.example.petcomm.network;
 
 import com.example.petcomm.model.Dog;
+import com.example.petcomm.model.FeedSchedule;
 import com.example.petcomm.model.Res;
 
 import retrofit2.Call;
@@ -36,4 +37,15 @@ public interface RetrofitInterface {
 
     @PUT("unregister/toilet/{dogId}")
     Observable<Res> unregisterToilet(@Path("dogId") String dogId, @Body Dog dog);
+
+
+    @POST("schedule/delete")
+    Observable<Res> removeSchedule(@Body Dog dog);
+
+    @POST("schedule")
+    Observable<Res> registerSchedule(@Body FeedSchedule feedSchedule);
+
+    @GET("schedule/{feederId}")
+    Observable<FeedSchedule[]> getFeedSchedule(@Path("feederId") String feederId);
+
 }

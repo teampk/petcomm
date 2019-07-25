@@ -112,6 +112,8 @@
     <string name="tv_recycler_header_time">배식 시간</string>
     <string name="tv_recycler_header_amount">배식 양</string>
 
+    <string name="tv_schedule_empty">등록된 배식 스케줄이 없습니다.</string>
+
     <string name="desc_lang_kor">Language Korean</string>
     <string name="desc_icon">Icon PetComm</string>
     <string name="desc_splash">Splash Image</string>

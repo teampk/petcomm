@@ -43,6 +43,11 @@ public class DogProfileActivity extends AppCompatActivity {
         loadDogInf(intent.getStringExtra("dogId"));
 
     }
+    @Override
+    public void onDestroy(){
+        super.onDestroy();
+        mSubscriptions.unsubscribe();
+    }
 
     private void loadDogInf(String selectedDogId){
         mSubscriptions.add(NetworkUtil.getRetrofit().getDogByDogId(selectedDogId)

@@ -1,4 +1,5 @@
 var dogdb = require('../models/dog');
+var util = require('./util.js');
 var fs = require('fs');
 
 exports.registerDog = (mDogId, mDogName, mDogGender, mDogSpecies, mDogBirth, mDogWeight, mUserEmail, mFeederId, mToiletId) =>
@@ -61,9 +62,9 @@ exports.setDeviceId = (dogId, deviceMode) =>
 		.then(selectedDog => {
 			let dog = selectedDog[0];
 			if (deviceMode == 1){
-				dog.feederId = 'f_FEEDER';
+				dog.feederId = 'f_' + util.randomString(6);
 			}else if (deviceMode == 2){
-				dog.toiletId = 't_TOILET';
+				dog.toiletId = 't_' + util.randomString(6);
 			}else if (deviceMode == 11){
 				dog.feederId = '';
 			}else if (deviceMode == 22){

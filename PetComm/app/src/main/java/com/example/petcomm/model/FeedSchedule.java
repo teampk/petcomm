@@ -1,31 +1,31 @@
 package com.example.petcomm.model;
 
 public class FeedSchedule{
-    private int mId;
-    private String mFeederId;
-    private String mFeedTime;
-    private String mFeedAmount;
+    private int id;
+    private String feederId;
+    private String feedTime;
+    private String feedAmount;
 
 
     public FeedSchedule(int id, String feederId, String feedTime, String feedAmount){
-        this.mId = id;
-        this.mFeederId = feederId;
-        this.mFeedTime = feedTime;
-        this.mFeedAmount = feedAmount;
+        this.id = id;
+        this.feederId = feederId;
+        this.feedTime = feedTime;
+        this.feedAmount = feedAmount;
 
     }
 
     public int getmId(){
-        return this.mId;
+        return this.id;
     }
 
     public String getmFeederId() {
-        return this.mFeederId;
+        return this.feederId;
     }
     public String getmFeedTime() {
-        return this.mFeedTime;
+        return this.feedTime;
     }
     public String getmFeedAmount() {
-        return this.mFeedAmount;
+        return this.feedAmount;
     }
 }

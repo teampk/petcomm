@@ -1,5 +1,6 @@
 package com.example.petcomm;
 
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
@@ -8,6 +9,7 @@ import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
+import android.util.Log;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.Toast;
@@ -15,18 +17,29 @@ import android.widget.Toast;
 import com.example.petcomm.databinding.ActivityAutoFeedBinding;
 import com.example.petcomm.model.Dog;
 import com.example.petcomm.model.FeedSchedule;
+import com.example.petcomm.model.Res;
+import com.example.petcomm.network.NetworkUtil;
 import com.example.petcomm.utils.Constants;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 
+import java.io.IOException;
 import java.util.ArrayList;
+
+import retrofit2.adapter.rxjava.HttpException;
+import rx.android.schedulers.AndroidSchedulers;
+import rx.schedulers.Schedulers;
+import rx.subscriptions.CompositeSubscription;
 
 public class AutoFeedActivity extends AppCompatActivity {
 
     ActivityAutoFeedBinding binding;
-    private DBHelper dbHelper;
     private SharedPreferences mSharedPreferences;
     private Dog selectedDog;
     private ArrayList<FeedSchedule> feedScheduleList;
     private boolean isEdited = false;
+
+    private CompositeSubscription mSubscriptions;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -35,31 +48,67 @@ public class AutoFeedActivity extends AppCompatActivity {
                 WindowManager.LayoutParams.FLAG_FULLSCREEN);
         binding = DataBindingUtil.setContentView(this, R.layout.activity_auto_feed);
         binding.setAutoFeed(this);
-        dbHelper = new DBHelper(getApplicationContext(), "PetComm.db", null, 1);
+
         mSharedPreferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
-        selectedDog = dbHelper.getDogById(mSharedPreferences.getInt(Constants.DOG, 0));
+
+        mSubscriptions = new CompositeSubscription();
+
         isEdited = false;
-
-
         feedScheduleList = new ArrayList<>();
-        feedScheduleList = dbHelper.getScheduleDataByFeederId(selectedDog.feederId);
 
-        initRecyclerView();
+        Intent intent = getIntent();
+        selectedDog = (Dog) intent.getSerializableExtra("dog");
+        loadSchedule(selectedDog.feederId);
     }
     @Override
     public void onResume(){
         super.onResume();
-        initRecyclerView();
+    }
+
+    @Override
+    public void onDestroy(){
+        super.onDestroy();
+        mSubscriptions.unsubscribe();
+    }
+
+    private void loadSchedule(String feederId){
+        mSubscriptions.add(NetworkUtil.getRetrofit().getFeedSchedule(feederId)
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribeOn(Schedulers.io())
+                .subscribe(this::handleResponseFeeder,this::handleError));
+    }
+    private void handleResponseFeeder(FeedSchedule[] feedSchedules){
+
+        if(feedSchedules.length == 0){
+            binding.tvScheduleEmpty.setVisibility(View.VISIBLE);
+            binding.recyclerSchedule.setVisibility(View.GONE);
+        }else{
+            binding.tvScheduleEmpty.setVisibility(View.GONE);
+            binding.recyclerSchedule.setVisibility(View.VISIBLE);
+            for(FeedSchedule sitem : feedSchedules){
+                if(sitem != null){
+                    feedScheduleList.add(sitem);
+                }
+            }
+            initRecyclerView();
+        }
     }
 
     private void initRecyclerView(){
-        binding.recyclerSchedule.setHasFixedSize(true);
-        binding.recyclerSchedule.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
-        binding.recyclerSchedule.scrollToPosition(0);
+        if (feedScheduleList.size()==0){
+            binding.tvScheduleEmpty.setVisibility(View.VISIBLE);
+            binding.recyclerSchedule.setVisibility(View.GONE);
+        }else{
+            binding.tvScheduleEmpty.setVisibility(View.GONE);
+            binding.recyclerSchedule.setVisibility(View.VISIBLE);
+            binding.recyclerSchedule.setHasFixedSize(true);
+            binding.recyclerSchedule.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
+            binding.recyclerSchedule.scrollToPosition(0);
 
-        RecyclerCustomAdapter mAdapter = new RecyclerCustomAdapter(getApplicationContext(), listSorting(feedScheduleList));
-        binding.recyclerSchedule.setAdapter(mAdapter);
-        binding.recyclerSchedule.setItemAnimator(new DefaultItemAnimator());
+            RecyclerCustomAdapter mAdapter = new RecyclerCustomAdapter(getApplicationContext(), listSorting(feedScheduleList));
+            binding.recyclerSchedule.setAdapter(mAdapter);
+            binding.recyclerSchedule.setItemAnimator(new DefaultItemAnimator());
+        }
     }
 
     public ArrayList<FeedSchedule> listSorting(ArrayList<FeedSchedule> inputAl){
@@ -94,7 +143,6 @@ public class AutoFeedActivity extends AppCompatActivity {
         customDialogFeed.setDialoglistener(new CustomDialog.CustomDialogListener() {
             @Override
             public void onPositiveClicked(String feedTime, String feedAmount) {
-                // dbHelper.addFeederSchedule(selectedDog.feederId, feedTime, feedAmount);
                 feedScheduleList.add(new FeedSchedule(0, selectedDog.feederId, feedTime, feedAmount));
                 isEdited = true;
                 initRecyclerView();
@@ -108,19 +156,70 @@ public class AutoFeedActivity extends AppCompatActivity {
     }
 
     public void testListener(View view){
-
+        for (int i=0;i<feedScheduleList.size();i++){
+            Log.d("TESTPAENGSCHEDULE", feedScheduleList.get(i).getmFeederId());
+            Log.d("TESTPAENGSCHEDULE", feedScheduleList.get(i).getmFeedTime());
+            Log.d("TESTPAENGSCHEDULE", feedScheduleList.get(i).getmFeedAmount());
+        }
     }
 
     public void submitListener(View view){
 
         if(isEdited){
+            // 지우고 새로 다 추가
+            /*
             dbHelper.deleteScheduleByFeederId(selectedDog.feederId);
             for(FeedSchedule fsItem:feedScheduleList){
                 dbHelper.addFeederSchedule(selectedDog.feederId, fsItem.getmFeedTime(), fsItem.getmFeedAmount());
             }
-            Toast.makeText(this, "수정 되었습니다.", Toast.LENGTH_SHORT).show();
+            */
+            setFeedScheduleList(selectedDog);
         }
 
         finish();
     }
+    private void setFeedScheduleList(Dog dog){
+        mSubscriptions.add(NetworkUtil.getRetrofit().removeSchedule(dog)
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribeOn(Schedulers.io())
+                .subscribe(this::handleResponseRemove,this::handleError));
+    }
+
+    private void handleResponseRemove(Res response) {
+        Toast.makeText(this, response.getMessage(), Toast.LENGTH_SHORT).show();
+
+        //Register
+        for(FeedSchedule fsItem:feedScheduleList){
+            registerFeedScheduleList(fsItem);
+        }
+
+    }
+    private void registerFeedScheduleList(FeedSchedule feedSchedule){
+        mSubscriptions.add(NetworkUtil.getRetrofit().registerSchedule(feedSchedule)
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribeOn(Schedulers.io())
+                .subscribe(this::handleResponseRegister,this::handleError));
+    }
+    private void handleResponseRegister(Res response) {
+        Toast.makeText(this, response.getMessage(), Toast.LENGTH_SHORT).show();
+
+        // Toast.makeText(this, "수정 되었습니다.", Toast.LENGTH_SHORT).show();
+    }
+
+
+    private void handleError(Throwable error) {
+        if (error instanceof HttpException) {
+            Gson gson = new GsonBuilder().create();
+            try {
+                String errorBody = ((HttpException) error).response().errorBody().string();
+                Res response = gson.fromJson(errorBody, Res.class);
+                Toast.makeText(getApplicationContext(), response.getMessage(), Toast.LENGTH_SHORT).show();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        } else {
+            Toast.makeText(getApplicationContext(), "Network Error :(", Toast.LENGTH_SHORT).show();
+        }
+    }
+
 }
