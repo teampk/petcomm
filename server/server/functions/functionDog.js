@@ -2,7 +2,7 @@ var dogdb = require('../models/dog');
 var util = require('./util.js');
 var fs = require('fs');
 
-exports.registerDog = (mDogId, mDogName, mDogGender, mDogSpecies, mDogBirth, mDogWeight, mUserEmail, mFeederId, mToiletId) =>
+exports.registerDog = (mDogId, mDogName, mDogGender, mDogSpecies, mDogBirth, mDogWeight, mUserEmail, mFeederId, mToiletId, mFeederIP, mToiletIP) =>
 
 	new Promise(
 		function(resolve,reject){
@@ -17,6 +17,8 @@ exports.registerDog = (mDogId, mDogName, mDogGender, mDogSpecies, mDogBirth, mDo
 			userEmail : mUserEmail,
 			feederId : mFeederId,
 			toiletId : mToiletId,
+			feederIP : mFeederIP,
+			toiletIP : mToiletIP,
 			created_at: new Date()
 		});
 

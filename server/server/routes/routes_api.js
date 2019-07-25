@@ -17,17 +17,19 @@ router.post('/dog', function(req, res){
   var dogBirth = req.body.dogBirth;
   var dogWeight = req.body.dogWeight;
   var userEmail = req.body.userEmail;
-  var feederId = req.body.feederId;
-  var toiletId = req.body.toiletId;
+  var feederId = "";
+  var toiletId = "";
+  var feederIP = "";
+  var toiletIP = "";
   console.log('-- Register Start --');
-  console.log(dogId+"//"+dogName+'//'+dogGender+'//'+dogBreeds+'//'+dogBirth+'//'+dogWeight+'//'+userEmail+'//'+feederId+'//'+toiletId+'//')
+  console.log(dogId+"//"+dogName+'//'+dogGender+'//'+dogBreeds)
 
   if (!dogId || !dogName || !dogGender || !dogBreeds || !dogBirth || !dogWeight || !userEmail || !dogName.trim() || !dogGender.trim() || !dogBreeds.trim() || !dogBirth.trim() || !dogWeight.trim() || !userEmail.trim()){
       res.status(400).json({
         message: 'Invalid Request !'
       });
   }else{
-    functionDog.registerDog(dogId, dogName, dogGender, dogBreeds, dogBirth, dogWeight, userEmail, feederId, toiletId)
+    functionDog.registerDog(dogId, dogName, dogGender, dogBreeds, dogBirth, dogWeight, userEmail, feederId, toiletId, feederIP, toiletIP)
       .then(function(result) {
           // res.setHeader('Location', '/dogs/' + ownerId);
           res.status(result.status).json({
