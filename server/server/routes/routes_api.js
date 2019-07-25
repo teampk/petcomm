@@ -2,6 +2,7 @@ var express = require('express');
 var router = express.Router();
 var functionDog = require('../functions/functionDog');
 var functionSchedule = require('../functions/functionAutoSchedule');
+var request = require('request');
 
 router.get('/', function(req, res) {
     res.end('This is for pk server');
@@ -144,6 +145,22 @@ router.put('/unregister/toilet/:dogId', function(req, res){
     });
 });
 
+// Remove Feed Schedule 
+router.post('/schedule/delete', function(req, res){
+  var feederId = req.body.feederId;
+  functionSchedule.removeScheduleByFeederId(feederId)
+    .then(function(result){
+      res.status(result.status).json({
+        message: result.message
+      });
+    })
+    .catch(function(err){
+      res.status(err.status).json({
+        message: err.message
+      });
+    });
+})
+
 // Register Auto Feed Schedule
 router.post('/schedule', function(req, res){
   var feederId = req.body.feederId;
@@ -157,7 +174,21 @@ router.post('/schedule', function(req, res){
   }else{
     functionSchedule.registerSchedule(feederId, feedTime, feedAmount)
       .then(function(result){
-        res.setHeader('Location', )
+        var jsonDataSchedule = {
+          'feederId' : feederId,
+          'feedTime' : feedTime,
+          'feedAmount' : feedAmount
+        }
+        request.post({
+            headers: {'content-type': 'application/json'},
+            url: 'http://220.71.91.185:10000',
+            body : jsonDataSchedule,
+            json : true
+          }, function(error, response, body){
+            console.log('body:', body);
+            console.log('response:', response);
+            console.log('error', error)
+        });
         res.status(result.status).json({
           message: result.message
         });
@@ -183,22 +214,7 @@ router.get('/schedule/:feederId', function(req, res){
     });
 });
 
-// Remove Feed Schedule 
-router.post('/schedule/delete', function(req, res){
-  var feederId = req.body.feederId;
-  functionSchedule.removeScheduleByFeederId(feederId)
-    .then(function(result){
-      res.status(result.status).json({
-        message: result.message
-      });
-    })
-    .catch(function(err){
-      console.log('fucking err:' + err);
-      res.status(err.status).json({
-        message: err.message
-      });
-    });
-})
+
 
 
 

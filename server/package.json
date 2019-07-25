@@ -20,6 +20,7 @@
     "nodemailer": "^4.6.8",
     "nodemon": "^1.19.1",
     "python-shell": "^1.0.6",
-    "randomstring": "^1.1.5"
+    "randomstring": "^1.1.5",
+    "request": "^2.88.0"
   }
 }
