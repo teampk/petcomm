@@ -214,4 +214,18 @@ public class AutoFeedActivity extends AppCompatActivity {
         }
     }
 
+    public void resetListener(View view){
+        resetScheduleList(selectedDog);
+    }
+    private void resetScheduleList(Dog dog){
+        mSubscriptions.add(NetworkUtil.getRetrofit().removeSchedule(dog)
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribeOn(Schedulers.io())
+                .subscribe(this::handleResponseReset,this::handleError));
+    }
+    private void handleResponseReset(Res response) {
+        Toast.makeText(this, "초기화 되었습니다", Toast.LENGTH_SHORT).show();
+        loadSchedule(selectedDog.feederId);
+    }
+
 }

@@ -9,6 +9,7 @@
     <color name="colorWhite">#FFFFFF</color>
 
     <color name="colorDivider">#90E0E3DA</color>
+    <color name="colorRed">#CC0000</color>
 
     <color name="colorBackgroundGray">#11000000</color>
 </resources>

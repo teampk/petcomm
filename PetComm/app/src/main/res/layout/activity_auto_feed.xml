@@ -32,6 +32,7 @@
             >
 
             <TextView
+
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:gravity="center"
@@ -96,6 +97,7 @@
             </LinearLayout>
 
             <TextView
+                android:visibility="gone"
                 android:id="@+id/tv_schedule_empty"
                 android:layout_marginTop="10dp"
                 android:layout_width="match_parent"
@@ -116,27 +118,37 @@
             </android.support.v7.widget.RecyclerView>
 
 
-            <android.support.constraint.ConstraintLayout
+
+
+
+
+            <Button
+                android:layout_marginTop="20dp"
+                android:layout_marginBottom="20dp"
                 android:layout_width="match_parent"
-                android:layout_height="150dp">
+                android:layout_height="@dimen/height_button"
+                android:background="@drawable/layout_rounded_primary"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                android:text="설정"
+                android:textColor="@color/colorBlack"
+                android:textSize="28sp"
+                android:onClick="@{autoFeed::submitListener}"
 
-                <Button
-                    android:layout_width="match_parent"
-                    android:layout_height="@dimen/height_button"
-                    android:background="@drawable/layout_rounded_primary"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    android:text="설정"
-                    android:textColor="@color/colorBlack"
-                    android:textSize="28sp"
-                    android:onClick="@{autoFeed::submitListener}"
+                />
 
-                    />
-
-
-            </android.support.constraint.ConstraintLayout>
+            <TextView
+                android:layout_marginBottom="30dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/tv_schedule_reset"
+                android:textSize="20sp"
+                android:textColor="@color/colorRed"
+                android:gravity="center"
+                android:onClick="@{autoFeed::resetListener}"
+                />
 
 
         </LinearLayout>
