@@ -48,4 +48,7 @@ public interface RetrofitInterface {
     @GET("schedule/{feederId}")
     Observable<FeedSchedule[]> getFeedSchedule(@Path("feederId") String feederId);
 
+    @POST("feed")
+    Observable<Res> feedManually(@Body FeedSchedule feedSchedule);
+
 }

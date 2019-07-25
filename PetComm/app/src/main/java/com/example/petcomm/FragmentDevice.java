@@ -135,6 +135,7 @@ public class FragmentDevice extends Fragment {
                 e.printStackTrace();
             }
         } else {
+            Log.d("NetworkERROR", String.valueOf(error));
             Toast.makeText(getContext(), "NETWORK ERROR :(", Toast.LENGTH_SHORT).show();
         }
     }
@@ -243,7 +244,14 @@ public class FragmentDevice extends Fragment {
         customDialogFeed.setDialoglistener(new CustomDialog.CustomDialogListener() {
             @Override
             public void onPositiveClicked(String feedAmount, String a) {
+
+
                 Toast.makeText(getContext(), feedAmount+"g 배식되었습니다.", Toast.LENGTH_SHORT).show();
+                FeedSchedule feedManually = new FeedSchedule(0, selectedDog.feederId, "99:99", feedAmount);
+
+                feedManually(feedManually);
+
+
             }
 
             @Override
@@ -252,6 +260,17 @@ public class FragmentDevice extends Fragment {
             }
         });
     }
+    private void feedManually(FeedSchedule feedManually){
+        mSubscriptions.add(NetworkUtil.getRetrofit().feedManually(feedManually)
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribeOn(Schedulers.io())
+                .subscribe(this::handleFeedResponse,this::handleError));
+    }
+
+    private void handleFeedResponse(Res response){
+
+    }
+
     // (급식기) 자동 배식
     public void feederFeedAutoListener(View view){
         Intent intentAuto = new Intent(getContext(), AutoFeedActivity.class);
