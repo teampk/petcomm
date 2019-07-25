@@ -167,12 +167,6 @@ public class AutoFeedActivity extends AppCompatActivity {
 
         if(isEdited){
             // 지우고 새로 다 추가
-            /*
-            dbHelper.deleteScheduleByFeederId(selectedDog.feederId);
-            for(FeedSchedule fsItem:feedScheduleList){
-                dbHelper.addFeederSchedule(selectedDog.feederId, fsItem.getmFeedTime(), fsItem.getmFeedAmount());
-            }
-            */
             setFeedScheduleList(selectedDog);
         }
 

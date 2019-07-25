@@ -12,10 +12,10 @@
         android:layout_width="0dp"
         android:layout_weight="1"
         android:layout_height="match_parent"
-        android:text="13:30"
+        android:text="00:00"
         android:gravity="center"
         android:textColor="@color/colorBlack"
-        android:textSize="@dimen/text_size_recycler"
+        android:textSize="@dimen/text_size_recycler_home"
 
         />
 
@@ -39,16 +39,16 @@
                 android:id="@+id/tv_recycler_feed_amount"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
-                android:textSize="@dimen/text_size_recycler"
+                android:textSize="@dimen/text_size_recycler_home"
                 android:textColor="@color/colorBlack"
-                android:text="60"
+                android:text="00"
                 android:gravity="center"
                 />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
-                android:textSize="@dimen/text_size_recycler"
+                android:textSize="@dimen/text_size_recycler_home"
                 android:textColor="@color/colorBlack"
                 android:text="g"
                 android:gravity="center"

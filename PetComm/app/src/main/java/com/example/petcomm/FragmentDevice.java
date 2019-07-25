@@ -208,7 +208,19 @@ public class FragmentDevice extends Fragment {
     private void handleResponse(Res response){
         //Toast.makeText(getContext(), response.getMessage(), Toast.LENGTH_SHORT).show();
         Toast.makeText(getContext(), "기기 해제 완료", Toast.LENGTH_SHORT).show();
+        // 해당 기기의 배식 스케줄도 모두 삭제
+        setFeedScheduleList(selectedDog);
         loadDogInf();
+    }
+    private void setFeedScheduleList(Dog dog){
+        mSubscriptions.add(NetworkUtil.getRetrofit().removeSchedule(dog)
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribeOn(Schedulers.io())
+                .subscribe(this::handleResponseRemove,this::handleError));
+    }
+    private void handleResponseRemove(Res response) {
+        // Toast.makeText(this, response.getMessage(), Toast.LENGTH_SHORT).show();
+
     }
 
     // (급식기) 기기 추가 버튼
