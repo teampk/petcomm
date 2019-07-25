@@ -163,6 +163,25 @@ router.post('/schedule/delete', function(req, res){
     });
 })
 
+router.post('/feed', function(req, res){
+  var feederId = req.body.feederId;
+  var feedTime = req.body.feedTime;
+  var feedAmount = req.body.feedAmount;
+  if (!feederId || !feedTime || !feedAmount){
+    res.status(400).json({
+      message: 'Invalid Request!'
+    });
+  }else{
+    console.log(feederId);
+    console.log(feedTime);
+    console.log(feedAmount);
+    res.status(200).json({
+      message: 'Good!'
+    });
+  }
+
+})
+
 // Register Auto Feed Schedule
 router.post('/schedule', function(req, res){
   var feederId = req.body.feederId;
