@@ -91,7 +91,6 @@ public class CustomDialog {
                     if(checkFeedMode1()){
                         String feedAmount = tvFeedAmount.getText().toString();
                         customDialogListener.onPositiveClicked(feedAmount, feedAmount);
-                        Toast.makeText(context, feedAmount+"gram 배식 완료", Toast.LENGTH_SHORT).show();
                         dlg.dismiss();
                     }
                 }

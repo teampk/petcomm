@@ -142,13 +142,29 @@ public class AutoFeedActivity extends AppCompatActivity {
 
     public void addListListener(View view){
         CustomDialog customDialogFeed = new CustomDialog(AutoFeedActivity.this);
-        customDialogFeed.callFunction(2, "배식 일정 추가", "설정", "취소");
+        customDialogFeed.callFunction(2, "배식 일정 추가", "추가", "취소");
         customDialogFeed.setDialoglistener(new CustomDialog.CustomDialogListener() {
             @Override
             public void onPositiveClicked(String feedTime, String feedAmount) {
-                feedScheduleList.add(new FeedSchedule(0, selectedDog.feederId, feedTime, feedAmount));
-                isEdited = true;
-                initRecyclerView();
+                int canAdd = 1;
+                for(FeedSchedule scheduleElement:feedScheduleList){
+                    if(feedTime.equals(scheduleElement.getmFeedTime())){
+                        canAdd = 2;
+                    }
+                }
+                if(feedScheduleList.size()>=10){
+                    canAdd = 3;
+                }
+                if(canAdd == 1){
+                    feedScheduleList.add(new FeedSchedule(0, selectedDog.feederId, feedTime, feedAmount));
+                    isEdited = true;
+                    initRecyclerView();
+                }else if(canAdd == 2){
+                    Toast.makeText(AutoFeedActivity.this, "동일한 시간에 여러번의 배식은 불가능합니다.", Toast.LENGTH_SHORT).show();
+                }else if(canAdd == 3){
+                    Toast.makeText(AutoFeedActivity.this, "배식 스케줄은 10개까지 가능합니다.", Toast.LENGTH_SHORT).show();
+
+                }
             }
 
             @Override
@@ -224,6 +240,7 @@ public class AutoFeedActivity extends AppCompatActivity {
                 .subscribe(this::handleResponseReset,this::handleError));
     }
     private void handleResponseReset(Res response) {
+        feedScheduleList.clear();
         Toast.makeText(this, "초기화 되었습니다", Toast.LENGTH_SHORT).show();
         loadSchedule(selectedDog.feederId);
     }
