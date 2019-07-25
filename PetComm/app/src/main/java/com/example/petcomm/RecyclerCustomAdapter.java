@@ -32,10 +32,12 @@ class MyViewHolderScheduleList extends RecyclerView.ViewHolder {
 public class RecyclerCustomAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     private Context mContext;
     private ArrayList<FeedSchedule> mDataSet = new ArrayList<>();
+    private int mode;
 
-    public RecyclerCustomAdapter(Context context, ArrayList<FeedSchedule> feedScheduleList){
+    public RecyclerCustomAdapter(Context context, ArrayList<FeedSchedule> feedScheduleList, int mode){
         this.mContext = context;
         this.mDataSet = feedScheduleList;
+        this.mode = mode;
     }
 
     @NonNull
@@ -43,7 +45,14 @@ public class RecyclerCustomAdapter extends RecyclerView.Adapter<RecyclerView.Vie
     public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int viewType) {
         this.mContext = viewGroup.getContext();
         LayoutInflater inflater = LayoutInflater.from(mContext);
-        View view = inflater.inflate(R.layout.recycler_item_feed_schedule, viewGroup, false);
+        View view;
+        if (mode == 1){
+            view = inflater.inflate(R.layout.recycler_item_feed_schedule, viewGroup, false);
+        }else if (mode == 2){
+            view = inflater.inflate(R.layout.recycler_item_feed_schedule_home, viewGroup, false);
+        }else{
+            view = inflater.inflate(R.layout.recycler_item_feed_schedule, viewGroup, false);
+        }
         return new MyViewHolderScheduleList(view);
     }
 
@@ -58,7 +67,10 @@ public class RecyclerCustomAdapter extends RecyclerView.Adapter<RecyclerView.Vie
         viewHolder.itemParent.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View view){
-                Toast.makeText(mContext, selectedData.getmFeedTime(), Toast.LENGTH_SHORT).show();
+                if (mode == 1){
+                    Toast.makeText(mContext, "삭제하시겠습니까?", Toast.LENGTH_SHORT).show();
+                    // Toast.makeText(mContext, selectedData.getmFeedTime(), Toast.LENGTH_SHORT).show();
+                }
             }
         });
     }

@@ -13,6 +13,8 @@ public class Dog implements Serializable {
     public String userEmail;
     public String feederId;
     public String toiletId;
+    public String feederIP;
+    public String toiletIP;
 
 
     public Dog(){
@@ -69,5 +71,13 @@ public class Dog implements Serializable {
 
     public void setToiletId(String toiletId) {
         this.toiletId = toiletId;
+    }
+
+    public void setFeederIP(String feederIP) {
+        this.feederIP = feederIP;
+    }
+
+    public void setToiletIP(String toiletIP) {
+        this.toiletIP = toiletIP;
     }
 }

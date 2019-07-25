@@ -129,8 +129,6 @@ public class RegisterDogActivity extends AppCompatActivity {
             dogDB.setDogBirth(binding.tvBirth.getText().toString());
             dogDB.setDogWeight(binding.etWeight.getText().toString());
             dogDB.setUserEmail(mEmail);
-            dogDB.setFeederId("");
-            dogDB.setToiletId("");
             registerProgress(dogDB);
 
 
