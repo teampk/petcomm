@@ -59,6 +59,7 @@
                 android:layout_height="wrap_content"
                 android:paddingStart="15dp"
                 android:paddingEnd="15dp"
+                android:paddingBottom="30dp"
                 >
 
 
@@ -100,7 +101,6 @@
 
                 <!-- 선택된 강아지가 있을 때 -->
                 <android.support.constraint.ConstraintLayout
-                    android:visibility="gone"
                     android:id="@+id/cl_exist_dog"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -277,10 +277,9 @@
                                 />
 
                             <android.support.v7.widget.RecyclerView
-                                android:visibility="gone"
                                 android:id="@+id/tv_plan_recycler"
                                 android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
+                                android:layout_height="80dp"
                                 >
 
 
@@ -298,7 +297,6 @@
                         android:contentDescription="@string/desc_divider"
                         android:id="@+id/divider"
                         android:layout_marginTop="20dp"
-                        android:layout_marginBottom="20dp"
                         android:layout_width="match_parent"
                         android:layout_height="1dp"
                         android:background="@color/colorBackgroundGray"
@@ -308,15 +306,17 @@
 
                     <!-- 사용자 추천 서비스 -->
                     <LinearLayout
-                        android:layout_marginTop="10dp"
+                        android:id="@+id/ll_recommend"
+                        android:layout_marginTop="20dp"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:orientation="horizontal"
                         app:layout_constraintTop_toBottomOf="@id/divider"
                         >
                         <android.support.constraint.ConstraintLayout
+
                             android:layout_width="60dp"
-                            android:layout_height="200dp">
+                            android:layout_height="wrap_content">
 
                             <de.hdodenhof.circleimageview.CircleImageView
                                 android:id="@+id/iv_petcomm"
@@ -333,7 +333,7 @@
 
                         <LinearLayout
                             android:layout_width="match_parent"
-                            android:layout_height="match_parent"
+                            android:layout_height="wrap_content"
                             android:orientation="vertical">
 
                             <TextView
@@ -350,7 +350,7 @@
                             <android.support.constraint.ConstraintLayout
                                 android:layout_marginTop="10dp"
                                 android:layout_marginStart="15dp"
-                                android:layout_marginBottom="20dp"
+                                android:layout_marginBottom="15dp"
 
 
                                 android:paddingStart="15dp"
@@ -363,7 +363,7 @@
                                 >
 
                                 <TextView
-                                    android:id="@+id/tv_petcomm_said"
+                                    android:id="@+id/tv_recommend"
                                     android:paddingBottom="30dp"
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
@@ -375,21 +375,82 @@
                                     app:layout_constraintStart_toStartOf="parent"
                                     />
 
-                                <TextView
-                                    android:id="@+id/bt_go_add_device"
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    app:layout_constraintTop_toBottomOf="@+id/tv_petcomm_said"
-                                    app:layout_constraintStart_toStartOf="parent"
-                                    app:layout_constraintEnd_toEndOf="parent"
-                                    android:text="@string/bt_go_add_device"
-                                    android:textColor="@color/colorWhite"
-                                    android:textStyle="bold"
-                                    android:textSize="@dimen/text_size"
-                                    android:background="@color/colorAccent"
-                                    android:onClick="@{fragmentHome::registerDeviceListener}"
 
-                                    />
+                            </android.support.constraint.ConstraintLayout>
+
+
+                        </LinearLayout>
+
+                    </LinearLayout>
+
+
+                    <!-- Divider -->
+                    <ImageView
+                        android:contentDescription="@string/desc_divider"
+                        android:id="@+id/divider2"
+                        android:layout_marginTop="20dp"
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:background="@color/colorBackgroundGray"
+                        app:layout_constraintTop_toBottomOf="@+id/ll_recommend"
+
+                        />
+                    <!-- 건강 데이터 -->
+                    <LinearLayout
+                        android:id="@+id/ll_data"
+                        android:layout_marginTop="20dp"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        app:layout_constraintTop_toBottomOf="@id/divider2"
+                        >
+                        <android.support.constraint.ConstraintLayout
+
+                            android:layout_width="60dp"
+                            android:layout_height="wrap_content">
+
+                            <de.hdodenhof.circleimageview.CircleImageView
+                                android:layout_width="60dp"
+                                android:layout_height="60dp"
+                                android:src="@drawable/ic_data"
+                                app:layout_constraintTop_toTopOf="parent"
+                                app:layout_constraintStart_toStartOf="parent"
+                                />
+
+
+                        </android.support.constraint.ConstraintLayout>
+
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical">
+
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="10dp"
+                                android:layout_marginStart="15dp"
+                                android:text="@string/tv_petcomm_health_data"
+                                android:textColor="@color/colorBlack"
+                                android:textSize="@dimen/text_size"
+                                android:textStyle="bold"
+                                />
+
+                            <android.support.constraint.ConstraintLayout
+                                android:layout_marginTop="10dp"
+                                android:layout_marginStart="15dp"
+                                android:layout_marginBottom="15dp"
+
+
+                                android:paddingStart="15dp"
+                                android:paddingEnd="15dp"
+                                android:paddingTop="15dp"
+                                android:paddingBottom="15dp"
+                                android:layout_width="match_parent"
+                                android:layout_height="200dp"
+                                android:background="@color/colorAccent"
+                                >
 
 
                             </android.support.constraint.ConstraintLayout>
@@ -397,9 +458,19 @@
 
                         </LinearLayout>
 
-
-
                     </LinearLayout>
+
+                    <!-- Divider -->
+                    <ImageView
+                        android:contentDescription="@string/desc_divider"
+                        android:id="@+id/divider3"
+                        android:layout_marginTop="20dp"
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:background="@color/colorBackgroundGray"
+                        app:layout_constraintTop_toBottomOf="@+id/ll_data"
+
+                        />
 
 
                 </android.support.constraint.ConstraintLayout>
