@@ -37,7 +37,6 @@ import rx.subscriptions.CompositeSubscription;
 public class FragmentDevice extends Fragment {
 
     FragmentDeviceBinding binding;
-    private DBHelper dbHelper;
     private SharedPreferences mSharedPreferences;
     private CompositeSubscription mSubscriptions;
     private String selectedDogId;
@@ -54,7 +53,6 @@ public class FragmentDevice extends Fragment {
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_device, container, false);
         final View mView = binding.getRoot();
         binding.setFragmentDevice(this);
-        dbHelper = new DBHelper(getContext(), "PetComm.db", null, 1);
         mSubscriptions = new CompositeSubscription();
 
         mSharedPreferences = PreferenceManager.getDefaultSharedPreferences(getContext());

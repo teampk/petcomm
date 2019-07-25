@@ -38,7 +38,6 @@ public class RegisterDogActivity extends AppCompatActivity {
     private String mEmail;
     private String gender;
     private SharedPreferences mSharedPreferences;
-    DBHelper dbHelper;
     private CompositeSubscription mSubscriptions;
 
 
@@ -47,7 +46,6 @@ public class RegisterDogActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
                 WindowManager.LayoutParams.FLAG_FULLSCREEN);
-        dbHelper = new DBHelper(getApplicationContext(), "PetComm.db", null, 1);
         binding = DataBindingUtil.setContentView(this, R.layout.activity_register_dog);
         binding.setSignUpDog(this);
         mSubscriptions = new CompositeSubscription();
@@ -115,9 +113,6 @@ public class RegisterDogActivity extends AppCompatActivity {
     public void submitButtonListener(View view){
         if(checkRegister()){
 
-            // 내부 DB
-            dbHelper.addDog(binding.etName.getText().toString(), gender, binding.tvBreeds.getText().toString(),
-                    binding.tvBirth.getText().toString(), binding.etWeight.getText().toString(), mEmail, "", "");
 
             // Server DB
             Dog dogDB = new Dog();

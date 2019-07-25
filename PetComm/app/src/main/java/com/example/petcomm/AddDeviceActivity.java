@@ -49,7 +49,6 @@ public class AddDeviceActivity extends AppCompatActivity {
     private SharedPreferences.Editor mEditor;
     private CompositeSubscription mSubscriptions;
 
-    private DBHelper dbHelper;
     private int deviceMode;
 
     private Dog selectedDog;
@@ -72,7 +71,6 @@ public class AddDeviceActivity extends AppCompatActivity {
                 WindowManager.LayoutParams.FLAG_FULLSCREEN);
         binding = DataBindingUtil.setContentView(this, R.layout.activity_add_device);
         binding.setAddDevice(this);
-        dbHelper = new DBHelper(getApplicationContext(), "PetComm.db", null, 1);
         mSharedPreferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
         mSubscriptions = new CompositeSubscription();
 

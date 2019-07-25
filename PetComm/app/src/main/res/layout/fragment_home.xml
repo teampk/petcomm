@@ -100,7 +100,6 @@
 
                 <!-- 선택된 강아지가 있을 때 -->
                 <android.support.constraint.ConstraintLayout
-                    android:visibility="gone"
                     android:id="@+id/cl_exist_dog"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -113,8 +112,8 @@
                         android:layout_height="@dimen/length_image_profile"
                         android:layout_marginTop="15dp"
 
-                        app:civ_border_width="2dp"
-                        app:civ_border_color="@color/colorDivider"
+                        app:civ_border_width="1dp"
+                        app:civ_border_color="@color/colorBlack"
                         app:civ_circle_background_color="@color/colorWhite"
                         android:src="@drawable/ic_dog_small"
 

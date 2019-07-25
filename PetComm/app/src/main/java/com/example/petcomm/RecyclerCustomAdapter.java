@@ -70,6 +70,7 @@ public class RecyclerCustomAdapter extends RecyclerView.Adapter<RecyclerView.Vie
                 if (mode == 1){
                     Toast.makeText(mContext, "삭제하시겠습니까?", Toast.LENGTH_SHORT).show();
                     // Toast.makeText(mContext, selectedData.getmFeedTime(), Toast.LENGTH_SHORT).show();
+
                 }
             }
         });

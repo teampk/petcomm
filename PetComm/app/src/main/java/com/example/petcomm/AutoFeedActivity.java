@@ -38,6 +38,7 @@ public class AutoFeedActivity extends AppCompatActivity {
     private Dog selectedDog;
     private ArrayList<FeedSchedule> feedScheduleList;
     private boolean isEdited = false;
+    private DBHelper dbHelper;
 
     private CompositeSubscription mSubscriptions;
 
@@ -48,6 +49,8 @@ public class AutoFeedActivity extends AppCompatActivity {
                 WindowManager.LayoutParams.FLAG_FULLSCREEN);
         binding = DataBindingUtil.setContentView(this, R.layout.activity_auto_feed);
         binding.setAutoFeed(this);
+
+        dbHelper = new DBHelper(getApplicationContext(), "PetComm.db", null, 1);
 
         mSharedPreferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
 
@@ -156,11 +159,7 @@ public class AutoFeedActivity extends AppCompatActivity {
     }
 
     public void testListener(View view){
-        for (int i=0;i<feedScheduleList.size();i++){
-            Log.d("TESTPAENGSCHEDULE", feedScheduleList.get(i).getmFeederId());
-            Log.d("TESTPAENGSCHEDULE", feedScheduleList.get(i).getmFeedTime());
-            Log.d("TESTPAENGSCHEDULE", feedScheduleList.get(i).getmFeedAmount());
-        }
+
     }
 
     public void submitListener(View view){

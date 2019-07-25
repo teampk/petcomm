@@ -38,7 +38,6 @@ import rx.subscriptions.CompositeSubscription;
 public class FragmentHome extends Fragment{
 
     FragmentHomeBinding binding;
-    private DBHelper dbHelper;
     private ArrayList<String> dogList;
     private ArrayList<Dog> dogDataArrayList;
     private ArrayList<FeedSchedule> feedScheduleList;
