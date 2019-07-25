@@ -186,7 +186,7 @@ public class AutoFeedActivity extends AppCompatActivity {
     }
 
     private void handleResponseRemove(Res response) {
-        Toast.makeText(this, response.getMessage(), Toast.LENGTH_SHORT).show();
+        // Toast.makeText(this, response.getMessage(), Toast.LENGTH_SHORT).show();
 
         //Register
         for(FeedSchedule fsItem:feedScheduleList){
@@ -201,9 +201,8 @@ public class AutoFeedActivity extends AppCompatActivity {
                 .subscribe(this::handleResponseRegister,this::handleError));
     }
     private void handleResponseRegister(Res response) {
-        Toast.makeText(this, response.getMessage(), Toast.LENGTH_SHORT).show();
-
-        // Toast.makeText(this, "수정 되었습니다.", Toast.LENGTH_SHORT).show();
+        // Toast.makeText(this, response.getMessage(), Toast.LENGTH_SHORT).show();
+        Toast.makeText(this, "수정 되었습니다.", Toast.LENGTH_SHORT).show();
     }
 
 

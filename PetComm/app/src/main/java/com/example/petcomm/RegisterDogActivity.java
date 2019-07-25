@@ -151,7 +151,8 @@ public class RegisterDogActivity extends AppCompatActivity {
     }
     private void handleResponse(Res response) {
 
-        Toast.makeText(this, response.getMessage(), Toast.LENGTH_SHORT).show();
+        //Toast.makeText(this, response.getMessage(), Toast.LENGTH_SHORT).show();
+        Toast.makeText(this, "등록이 완료되었습니다.", Toast.LENGTH_SHORT).show();
         Log.d("PAENGSERVER", response.getMessage());
     }
 

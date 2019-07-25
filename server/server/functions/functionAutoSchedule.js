@@ -26,16 +26,6 @@ exports.registerSchedule = (mFeederId, mFeedTime, mFeedAmount) =>
 exports.removeScheduleByFeederId = feederId =>
     new Promise(
         function(resolve, reject){
-            /*
-            var newSchedule = new scheduledb({
-                feederId : feederId,
-                feedTime : '03:00',
-                feedAmount : '40',
-                created_at : new Date()
-            });
-            newSchedule.save()
-            */
-        
             scheduledb.deleteMany({feederId : feederId})
             .then(function(){
                 resolve({status:201, message: 'Remove Complete'});
