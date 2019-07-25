@@ -185,8 +185,8 @@ router.post('/schedule', function(req, res){
             body : jsonDataSchedule,
             json : true
           }, function(error, response, body){
-            // console.log('body:', body);
-            // console.log('response:', response);
+            console.log('body:', body);
+            //console.log('response:', response);
             // console.log('error', error)
         });
         res.status(result.status).json({
