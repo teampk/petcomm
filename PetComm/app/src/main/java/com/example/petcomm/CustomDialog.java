@@ -90,6 +90,7 @@ public class CustomDialog {
                 public void onClick(View view){
                     if(checkFeedMode1()){
                         String feedAmount = tvFeedAmount.getText().toString();
+                        customDialogListener.onPositiveClicked(feedAmount, feedAmount);
                         Toast.makeText(context, feedAmount+"gram 배식 완료", Toast.LENGTH_SHORT).show();
                         dlg.dismiss();
                     }
@@ -136,8 +137,6 @@ public class CustomDialog {
                 }
             });
 
-
-
             timePicker.setOnTimeChangedListener(new TimePicker.OnTimeChangedListener() {
                 @Override
                 public void onTimeChanged(TimePicker view, int hourOfDay, int minute) {
@@ -152,7 +151,6 @@ public class CustomDialog {
                     }else{
                         minuteString = String.valueOf(minute);
                     }
-
 
                     tvFeedTime.setText(hourString+":"+minuteString);
                 }
