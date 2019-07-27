@@ -52,8 +52,6 @@ public class CameraActivity extends AppCompatActivity {
         setView();
 
 
-
-
     }
     public void setView(){
         binding.tvDogName.setText(selectedDog.dogName);
