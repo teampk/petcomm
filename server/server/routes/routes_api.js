@@ -163,6 +163,7 @@ router.post('/schedule/delete', function(req, res){
     });
 })
 
+// Feed Manually
 router.post('/feed', function(req, res){
   var feederId = req.body.feederId;
   var feedTime = req.body.feedTime;
