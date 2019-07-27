@@ -37,6 +37,7 @@
         <activity android:name=".AddDeviceActivity2"/>
         <activity android:name=".DogProfileActivity"/>
         <activity android:name=".AutoFeedActivity"/>
+        <activity android:name=".CameraActivity"/>
 
 
 

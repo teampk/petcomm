@@ -26,6 +26,8 @@
     <dimen name="text_size_recycler_home">16sp</dimen>
     <dimen name="text_size_recycler_header">24sp</dimen>
 
+    <dimen name="text_size_tv_camera">16sp</dimen>
+
 
 
 

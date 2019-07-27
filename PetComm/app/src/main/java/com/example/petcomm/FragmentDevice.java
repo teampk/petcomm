@@ -279,7 +279,9 @@ public class FragmentDevice extends Fragment {
     }
     // (급식기) 카메라
     public void feederCameraListener(View view){
-        Toast.makeText(getContext(), "camera", Toast.LENGTH_SHORT).show();
+        Intent intentCamera = new Intent(getContext(), CameraActivity.class);
+        intentCamera.putExtra("dog", selectedDog);
+        startActivity(intentCamera);
 
     }
 
