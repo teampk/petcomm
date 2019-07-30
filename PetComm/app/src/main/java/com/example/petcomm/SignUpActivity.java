@@ -43,6 +43,8 @@ public class SignUpActivity extends AppCompatActivity {
     @Override
     public void onBackPressed() {
         Toast.makeText(this,"회원가입 취소",Toast.LENGTH_SHORT).show();
+        overridePendingTransition(R.anim.anim_slide_in_top, R.anim.anim_slide_out_bottom);
+        finish();
 
     }
 

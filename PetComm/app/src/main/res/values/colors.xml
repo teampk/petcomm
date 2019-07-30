@@ -11,5 +11,9 @@
     <color name="colorDivider">#90E0E3DA</color>
     <color name="colorRed">#CC0000</color>
 
+    <color name="colorChart1">#EE7785</color>
+    <color name="colorChart2">#67D5B5</color>
+    <color name="colorChart3">#84B1ED</color>
+
     <color name="colorBackgroundGray">#11000000</color>
 </resources>

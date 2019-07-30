@@ -55,6 +55,7 @@
             >
 
             <android.support.constraint.ConstraintLayout
+                android:visibility="gone"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:paddingStart="15dp"
@@ -279,7 +280,7 @@
                             <android.support.v7.widget.RecyclerView
                                 android:id="@+id/tv_plan_recycler"
                                 android:layout_width="match_parent"
-                                android:layout_height="80dp"
+                                android:layout_height="wrap_content"
                                 >
 
 
@@ -450,6 +451,8 @@
                                 android:layout_width="match_parent"
                                 android:layout_height="200dp"
                                 android:background="@color/colorAccent"
+                                android:onClick="@{fragmentHome::dataListener}"
+
                                 >
 
 

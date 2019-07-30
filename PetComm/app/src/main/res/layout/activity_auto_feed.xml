@@ -31,16 +31,30 @@
 
             >
 
+            <ImageView
+                android:layout_width="35dp"
+                android:layout_height="35dp"
+                android:layout_marginStart="10dp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:srcCompat="@drawable/ic_nav_device"
+                android:onClick="@{autoFeed::checkProperFeedListener}"
+                />
+
             <TextView
 
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:gravity="center"
                 android:text="자동 배식 설정"
                 android:textStyle="bold"
                 android:textSize="24sp"
                 android:textColor="@color/colorBlack"
+
                 android:onClick="@{autoFeed::testListener}"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
                 />
 
             <ImageView
@@ -118,37 +132,50 @@
             </android.support.v7.widget.RecyclerView>
 
 
-
-
-
-
-            <Button
-                android:layout_marginTop="20dp"
-                android:layout_marginBottom="20dp"
+            <android.support.constraint.ConstraintLayout
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/height_button"
-                android:background="@drawable/layout_rounded_primary"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                android:text="설정"
-                android:textColor="@color/colorBlack"
-                android:textSize="28sp"
-                android:onClick="@{autoFeed::submitListener}"
+                android:layout_height="wrap_content">
 
-                />
+                <Button
+                    android:layout_marginBottom="20dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/height_button"
+                    android:background="@drawable/layout_rounded_primary"
+                    app:layout_constraintBottom_toTopOf="@+id/tv_reset"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    android:text="설정"
+                    android:textColor="@color/colorBlack"
+                    android:textSize="28sp"
+                    android:onClick="@{autoFeed::submitListener}"
 
-            <TextView
-                android:layout_marginBottom="30dp"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="@string/tv_schedule_reset"
-                android:textSize="20sp"
-                android:textColor="@color/colorRed"
-                android:gravity="center"
-                android:onClick="@{autoFeed::resetListener}"
-                />
+                    />
+
+                <TextView
+                    android:layout_marginBottom="20dp"
+                    android:id="@+id/tv_reset"
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:text="@string/tv_schedule_reset"
+                    android:textSize="20sp"
+                    android:textColor="@color/colorRed"
+                    android:gravity="center"
+                    android:onClick="@{autoFeed::resetListener}"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    />
+
+
+            </android.support.constraint.ConstraintLayout>
+
+
+
+
+
+
+
+
 
 
         </LinearLayout>

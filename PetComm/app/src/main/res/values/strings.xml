@@ -117,6 +117,7 @@
     <string name="tv_schedule_empty">등록된 배식 스케줄이 없습니다.</string>
 
     <string name="tv_schedule_reset">스케줄 초기화</string>
+    <string name="tv_schedule_check_proper_amount">몸무게별 적정량\n확인하러 가기!</string>
 
     <string name="tv_device_connect_explain1">1. Petcomm 기기 전면의 Bluetooth 버튼을 5초 이상 누른 후\n아래 리스트에서 "PETCOMM_F"가 생성되면 선택해주세요!</string>
     <string name="tv_device_connect_explain2">2. 설명서 뒷 면에 적힌 password를 입력하여\n기기와 연결을 진행해 주세요!</string>

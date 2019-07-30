@@ -21,6 +21,8 @@ import android.widget.Toast;
 import com.example.petcomm.databinding.ActivitySignInBinding;
 import com.example.petcomm.utils.Constants;
 
+import de.mateware.snacky.Snacky;
+
 public class SignInActivity extends AppCompatActivity {
 
     ActivitySignInBinding binding;
@@ -86,9 +88,9 @@ public class SignInActivity extends AppCompatActivity {
 
 
             if(binding.cbAutoSignIn.isChecked()){
-                Toast.makeText(this, "로그인 되었습니다 (자동로그인)", Toast.LENGTH_SHORT).show();
+                showSnackBarMessage("로그인 되었습니다 (자동로그인)");
             }else{
-                Toast.makeText(this, "로그인 되었습니다", Toast.LENGTH_SHORT).show();
+                showSnackBarMessage("로그인 되었습니다");
             }
             startActivity(new Intent(getApplicationContext(), MainActivity.class));
             finish();
@@ -101,18 +103,19 @@ public class SignInActivity extends AppCompatActivity {
     }
 
     public void findPwButtonListener(View view){
-        Toast.makeText(this, "준비 중입니다...", Toast.LENGTH_SHORT).show();
+        showSnackBarMessage("준비 중입니다...");
+
     }
 
     public void languageButtonListener(View view){
-        Toast.makeText(this, "Korean", Toast.LENGTH_SHORT).show();
+        showSnackBarMessage("KOREAN");
 
     }
 
     private boolean checkSignIn(){
 
         if (binding.etId.length() == 0){
-            Toast.makeText(this, "아이디를 입력해주세요.", Toast.LENGTH_SHORT).show();
+            showSnackBarMessage("아이디를 입력해주세요.");
             return false;
         }/*
         else if (binding.etPw.length() == 0){
@@ -122,5 +125,16 @@ public class SignInActivity extends AppCompatActivity {
         */
 
         return true;
+    }
+    private void showSnackBarMessage(String message){
+        Snacky.builder()
+                .setActivity(this)
+                .setBackgroundColor(getColor(R.color.colorPrimary))
+                .setText(message)
+                .setTextColor(getColor(R.color.colorBlack))
+                .centerText()
+                .setDuration(Snacky.LENGTH_LONG)
+                .build()
+                .show();
     }
 }

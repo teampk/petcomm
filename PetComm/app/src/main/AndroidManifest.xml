@@ -38,6 +38,8 @@
         <activity android:name=".DogProfileActivity"/>
         <activity android:name=".AutoFeedActivity"/>
         <activity android:name=".CameraActivity"/>
+        <activity android:name=".DataActivity"/>
+        <activity android:name=".CheckProperFeedActivity"/>
 
 
 

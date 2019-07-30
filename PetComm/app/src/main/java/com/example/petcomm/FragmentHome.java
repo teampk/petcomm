@@ -275,6 +275,10 @@ public class FragmentHome extends Fragment{
 
     }
 
+    public void dataListener(View view){
+        startActivity(new Intent(getContext(), DataActivity.class));
+    }
+
     public void registerDeviceListener(View view){
 
     }

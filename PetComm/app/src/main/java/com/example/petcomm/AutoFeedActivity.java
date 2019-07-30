@@ -244,5 +244,9 @@ public class AutoFeedActivity extends AppCompatActivity {
         Toast.makeText(this, "초기화 되었습니다", Toast.LENGTH_SHORT).show();
         loadSchedule(selectedDog.feederId);
     }
+    public void checkProperFeedListener(View view){
+        Toast.makeText(this, "clicked", Toast.LENGTH_SHORT).show();
+        startActivity(new Intent(AutoFeedActivity.this, CheckProperFeedActivity.class));
+    }
 
 }

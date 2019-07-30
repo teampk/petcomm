@@ -51,4 +51,6 @@ public interface RetrofitInterface {
     @POST("feed")
     Observable<Res> feedManually(@Body FeedSchedule feedSchedule);
 
+
+
 }
