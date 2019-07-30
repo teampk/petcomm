@@ -49,9 +49,9 @@ public class DataActivity extends AppCompatActivity {
 
         ArrayList<ChartItem> list = new ArrayList<>();
 
-        list.add(new LineChartItem(generateDataLine(1), getApplicationContext()));
-        list.add(new LineChartItem(generateDataLine(2), getApplicationContext()));
-        list.add(new LineChartItem(generateDataLine(3), getApplicationContext()));
+        list.add(new LineChartItem(1, generateDataLine(1), getApplicationContext()));
+        list.add(new LineChartItem(2, generateDataLine(2), getApplicationContext()));
+        list.add(new LineChartItem(3, generateDataLine(3), getApplicationContext()));
         ChartDataAdapter cda = new ChartDataAdapter(getApplicationContext(), list);
         binding.lvData.setAdapter(cda);
 
@@ -64,27 +64,28 @@ public class DataActivity extends AppCompatActivity {
 
         LineDataSet d1;
         if (mode == 1) {
-            for (int i = 0; i < 10; i++) {
-                dataVals.add(new Entry(i, (int) (Math.random() * 65) + 40));
+            for (int i = 1; i <= 10; i++) {
+                dataVals.add(new Entry((float)(7+(i*0.01)), (float)(Math.random() * 10) + 40));
             }
-            d1 = new LineDataSet(dataVals, "먹은 사료 양 ");
+            d1 = new LineDataSet(dataVals, "먹은 사료 양 (g)");
             d1.setHighLightColor(getColor(R.color.colorChart1));
             d1.setCircleColor(getColor(R.color.colorChart1));
             d1.setColor(getColor(R.color.colorChart1));
         }else if (mode==2){
-            for (int i = 0; i < 10; i++) {
-                dataVals.add(new Entry(i, (int) (Math.random() * 65) + 40));
+            for (int i = 1; i <= 10; i++) {
+                dataVals.add(new Entry((float)(7+(i*0.01)), (float)(Math.random() * 5) + 10));
+
             }
-            d1 = new LineDataSet(dataVals, "체중");
+            d1 = new LineDataSet(dataVals, "체중 (kg)");
             d1.setHighLightColor(getColor(R.color.colorChart2));
             d1.setCircleColor(getColor(R.color.colorChart2));
             d1.setColor(getColor(R.color.colorChart2));
         }else{
-            for (int i = 0; i < 10; i++) {
-                dataVals.add(new Entry(i, (int) (Math.random() * 65) + 40));
+            for (int i = 1; i <= 10; i++) {
+                dataVals.add(new Entry((float)(7+(i*0.01)), (float)(Math.random() * 10) + 30));
             }
-            d1 = new LineDataSet(dataVals, "배변 양");
-            d1.setColor(getColor(R.color.colorChart3));
+            d1 = new LineDataSet(dataVals, "배변 양 (g)");
+            d1.setHighLightColor(getColor(R.color.colorChart3));
             d1.setCircleColor(getColor(R.color.colorChart3));
             d1.setColor(getColor(R.color.colorChart3));
         }

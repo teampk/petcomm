@@ -23,9 +23,11 @@ import java.util.ArrayList;
 public class LineChartItem extends ChartItem {
 
     private final Typeface mTf;
+    private int mode;
 
-    public LineChartItem(ChartData<?> cd, Context c) {
+    public LineChartItem(int mode, ChartData<?> cd, Context c) {
         super(cd);
+        this.mode = mode;
         this.mTf = Typeface.createFromAsset(c.getAssets(), "OpenSans-Regular.ttf");
     }
 
@@ -64,11 +66,20 @@ public class LineChartItem extends ChartItem {
         XAxis xAxis = holder.chart.getXAxis();
         xAxis.setPosition(XAxis.XAxisPosition.BOTTOM);
         xAxis.setTypeface(mTf);
-        // xAxis.setValueFormatter()
+        xAxis.setAxisMinValue(7.01f); //experiment with these values
+        xAxis.setAxisMaxValue(7.10f);
+        xAxis.setLabelCount(5);
         xAxis.setDrawGridLines(false);
         xAxis.setDrawAxisLine(true);
 
         YAxis leftAxis = holder.chart.getAxisLeft();
+        if (mode == 1){
+            leftAxis.setAxisMaximum(100f);
+        }else if (mode == 2){
+            leftAxis.setAxisMaximum(50f);
+        }else if (mode == 3){
+            leftAxis.setAxisMaximum(100f);
+        }
         leftAxis.setTypeface(mTf);
         leftAxis.setLabelCount(5, false);
         leftAxis.setAxisMinimum(0f); // this replaces setStartAtZero(true)
