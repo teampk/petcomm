@@ -69,6 +69,7 @@
 
         <!-- 강아지 있을 때 -->
         <LinearLayout
+            android:visibility="gone"
             android:id="@+id/ll_dog_true"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
@@ -130,6 +131,7 @@
 
             <!-- 급식기 있을 때 -->
             <LinearLayout
+                android:visibility="gone"
                 android:paddingTop="20dp"
                 android:paddingBottom="20dp"
                 android:id="@+id/cl_exist_feeder"
@@ -384,6 +386,8 @@
 
             <!-- 배변판 있을 때 -->
             <LinearLayout
+                android:visibility="gone"
+
                 android:paddingTop="20dp"
                 android:paddingBottom="20dp"
                 android:id="@+id/cl_exist_toilet"

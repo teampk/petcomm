@@ -57,7 +57,6 @@ public class FragmentDevice extends Fragment {
 
         mSharedPreferences = PreferenceManager.getDefaultSharedPreferences(getContext());
         selectedDogId = mSharedPreferences.getString(Constants.DOG, "");
-        Log.d("PAENG_SHARED_DOG", selectedDogId);
 
         // 강아지가 선택되지 않았을 때.
         if (selectedDogId.equals("")){
