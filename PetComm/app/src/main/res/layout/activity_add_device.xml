@@ -24,7 +24,8 @@
             android:id="@+id/iv_device"
             android:layout_marginTop="10dp"
             android:layout_width="match_parent"
-            android:layout_height="150dp"
+            android:layout_height="0dp"
+            android:layout_weight="1"
             android:contentDescription="@string/desc_device"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
@@ -53,11 +54,41 @@
             android:layout_marginTop="20dp"
             android:id="@+id/recycler_device"
             android:layout_width="match_parent"
-            android:layout_height="150dp"
+            android:layout_height="0dp"
+            android:layout_weight="1"
             android:background="@color/colorWhite"
             >
 
         </android.support.v7.widget.RecyclerView>
+
+        <TextView
+            android:layout_marginTop="20dp"
+            android:layout_marginBottom="10dp"
+
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/tv_device_connect_explain2"
+            android:textColor="@color/colorBlack"
+            android:textSize="@dimen/text_size_small"
+            android:textStyle="bold"
+            android:gravity="center"
+
+            app:layout_constraintBottom_toTopOf="@+id/et_name"
+            />
+
+        <com.rengwuxian.materialedittext.MaterialEditText
+            android:layout_marginTop="10dp"
+            android:id="@+id/et_name"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/height_edit_text"
+            android:textColor="@color/colorBlack"
+            android:textSize="@dimen/text_size"
+
+            android:hint="password"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintBottom_toTopOf="@+id/bt_register"
+            app:met_floatingLabel="highlight" />
 
 
 
@@ -67,34 +98,9 @@
             android:layout_height="0dp"
             android:layout_weight="1">
 
-            <TextView
-                android:layout_marginBottom="10dp"
 
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="@string/tv_device_connect_explain2"
-                android:textColor="@color/colorBlack"
-                android:textSize="@dimen/text_size_small"
-                android:textStyle="bold"
-                android:gravity="center"
 
-                app:layout_constraintBottom_toTopOf="@+id/et_name"
-                />
 
-            <com.rengwuxian.materialedittext.MaterialEditText
-                android:layout_marginBottom="30dp"
-
-                android:id="@+id/et_name"
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/height_edit_text"
-                android:textColor="@color/colorBlack"
-                android:textSize="@dimen/text_size"
-
-                android:hint="password"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintBottom_toTopOf="@+id/bt_register"
-                app:met_floatingLabel="highlight" />
 
 
             <Button

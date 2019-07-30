@@ -246,12 +246,15 @@ public class FragmentDevice extends Fragment {
             public void onPositiveClicked(String feedAmount, String a) {
 
 
-                Toast.makeText(getContext(), feedAmount+"g 배식되었습니다.", Toast.LENGTH_SHORT).show();
-                FeedSchedule feedManually = new FeedSchedule(0, selectedDog.feederId, "99:99", feedAmount);
+                String feedTime;
+                if(binding.cbSpeker.isChecked()){
+                    feedTime = "88:88";
 
+                }else{
+                    feedTime = "99:99";
+                }
+                FeedSchedule feedManually = new FeedSchedule(0, selectedDog.feederId, feedTime, feedAmount);
                 feedManually(feedManually);
-
-
             }
 
             @Override
@@ -267,8 +270,8 @@ public class FragmentDevice extends Fragment {
                 .subscribe(this::handleFeedResponse,this::handleError));
     }
 
-    private void handleFeedResponse(Res response){
-
+    private void handleFeedResponse(Res res){
+        Toast.makeText(getContext(), res.getMessage()+"g 배식되었습니다.", Toast.LENGTH_SHORT).show();
     }
 
     // (급식기) 자동 배식

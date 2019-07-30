@@ -101,7 +101,6 @@
 
                 <!-- 선택된 강아지가 있을 때 -->
                 <android.support.constraint.ConstraintLayout
-                    android:visibility="gone"
                     android:id="@+id/cl_exist_dog"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -438,25 +437,22 @@
                                 android:textStyle="bold"
                                 />
 
-                            <android.support.constraint.ConstraintLayout
+                            <Button
+                                android:layout_width="match_parent"
+                                android:layout_height="50dp"
                                 android:layout_marginTop="10dp"
                                 android:layout_marginStart="15dp"
                                 android:layout_marginBottom="15dp"
-
-
-                                android:paddingStart="15dp"
-                                android:paddingEnd="15dp"
-                                android:paddingTop="15dp"
-                                android:paddingBottom="15dp"
-                                android:layout_width="match_parent"
-                                android:layout_height="200dp"
-                                android:background="@color/colorAccent"
+                                android:background="@drawable/layout_rounded_primary"
+                                android:text="확인하러가기!"
+                                android:textColor="@color/colorBlack"
+                                android:textSize="18sp"
+                                android:textStyle="bold"
                                 android:onClick="@{fragmentHome::dataListener}"
 
-                                >
 
+                                />
 
-                            </android.support.constraint.ConstraintLayout>
 
 
                         </LinearLayout>
