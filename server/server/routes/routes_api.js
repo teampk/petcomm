@@ -2,6 +2,7 @@ var express = require('express');
 var router = express.Router();
 var functionDog = require('../functions/functionDog');
 var functionSchedule = require('../functions/functionAutoSchedule');
+var functionHealth = require('../functions/functionHealth');
 var request = require('request');
 
 router.get('/', function(req, res) {
@@ -176,9 +177,17 @@ router.post('/feed', function(req, res){
     console.log(feederId);
     console.log(feedTime);
     console.log(feedAmount);
-    res.status(200).json({
-      message: 'Good!'
-    });
+    functionHealth.registerHealthEat(feederId, feedAmount)
+      .then(function(result){
+        res.status(result.status).json({
+          message: result.message
+        });
+      })
+      .catch(function(err){
+        res.status(err.status).json({
+          message: err.message
+        });
+      });
   }
 
 })
