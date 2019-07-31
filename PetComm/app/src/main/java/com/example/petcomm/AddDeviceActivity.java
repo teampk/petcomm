@@ -231,18 +231,23 @@ public class AddDeviceActivity extends AppCompatActivity {
         intent.putExtra("mode", deviceMode);
         binding.pbDevice.setVisibility(View.VISIBLE);
         if(binding.etPassword.getText().toString().equals(Constants.WIFI_PW)){
-
+            Log.d("PAENG_1_Conect_to", Constants.WIFI_ID+"/"+Constants.WIFI_PW);
             connectToWifi(Constants.WIFI_ID, Constants.WIFI_PW);
+
+            binding.pbDevice.setVisibility(View.INVISIBLE);
+            Toast.makeText(AddDeviceActivity.this, "기기와 연결되었습니다.", Toast.LENGTH_SHORT).show();
+            startActivity(intent);
+            finish();
+
+/*
 
             final Handler handler = new Handler();
             handler.postDelayed(new Runnable() {
                 @Override
                 public void run() {
+                    Log.d("PAENGWifi", getConnectedWiFiSSID());
                     if(String.valueOf(getConnectedWiFiSSID()).equals('"'+Constants.WIFI_ID+'"')){
-                        binding.pbDevice.setVisibility(View.INVISIBLE);
-                        Toast.makeText(AddDeviceActivity.this, "기기와 연결되었습니다.", Toast.LENGTH_SHORT).show();
-                        startActivity(intent);
-                        finish();
+
 
                     }else{
                         handler.postDelayed(this,1000);
@@ -250,7 +255,7 @@ public class AddDeviceActivity extends AppCompatActivity {
                     }
                 }
             }, 1000);
-
+*/
 
 
 
@@ -282,7 +287,7 @@ public class AddDeviceActivity extends AppCompatActivity {
 
         conf.preSharedKey = "\"" + pw +"\"";
         conf.allowedKeyManagement.set(WifiConfiguration.KeyMgmt.NONE);
-        WifiManager wifiManager = (WifiManager)getApplicationContext().getSystemService(Context.WIFI_SERVICE);
+        wifiManager = (WifiManager)getApplicationContext().getSystemService(Context.WIFI_SERVICE);
         wifiManager.addNetwork(conf);
         List<WifiConfiguration> list = wifiManager.getConfiguredNetworks();
         for(WifiConfiguration i : list){

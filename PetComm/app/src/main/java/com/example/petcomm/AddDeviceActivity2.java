@@ -96,7 +96,7 @@ public class AddDeviceActivity2 extends AppCompatActivity {
             generatedDeviceId = "f_"+getRandomString(8);
         }
         ////// 지워
-        binding.etWifiId.setText("Trojan.proxy.42141.2.4");
+        binding.etWifiId.setText("Trojan.proxy.41241.5");
         //////
 
 
@@ -138,7 +138,8 @@ public class AddDeviceActivity2 extends AppCompatActivity {
                 Log.d("PAENGUDP", "receive");
                 Log.d("PAENGUDP", msg);
                 Log.d("PAENGUDP", "--- wifi direct finished ---");
-                connectToWifi(binding.etWifiId.getText().toString(), binding.etWifiPw.getText().toString());
+                Log.d("PAENGUDP", "connect to " + connectWifiId + connectWifiPw);
+                connectToWifi(connectWifiId, connectWifiPw);
 
 
 
