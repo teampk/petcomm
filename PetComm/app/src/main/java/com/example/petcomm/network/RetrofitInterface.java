@@ -51,6 +51,9 @@ public interface RetrofitInterface {
     @POST("feed")
     Observable<Res> feedManually(@Body FeedSchedule feedSchedule);
 
+    @POST("voice")
+    Observable<Res> playVoice(@Body Dog dog);
+
 
 
 }

@@ -75,6 +75,10 @@ public class CameraActivity extends AppCompatActivity {
 
     public void speakerListener(View view){
         Toast.makeText(this, "speaker button clicked", Toast.LENGTH_SHORT).show();
+        mSubscriptions.add(NetworkUtil.getRetrofit().playVoice(selectedDog)
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribeOn(Schedulers.io())
+                .subscribe(this::handleFeedResponseVoice,this::handleError));
     }
     public void feedListener(View view){
 
@@ -83,11 +87,8 @@ public class CameraActivity extends AppCompatActivity {
         customDialogFeed.setDialoglistener(new CustomDialog.CustomDialogListener() {
             @Override
             public void onPositiveClicked(String feedAmount, String a) {
-                Toast.makeText(CameraActivity.this, feedAmount+"g 배식되었습니다.", Toast.LENGTH_SHORT).show();
                 FeedSchedule feedManually = new FeedSchedule(0, selectedDog.feederId, "99:99", feedAmount);
-
                 feedManually(feedManually);
-
 
             }
 
@@ -103,11 +104,14 @@ public class CameraActivity extends AppCompatActivity {
         mSubscriptions.add(NetworkUtil.getRetrofit().feedManually(feedManually)
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribeOn(Schedulers.io())
-                .subscribe(this::handleFeedResponse,this::handleError));
+                .subscribe(this::handleFeedResponseFeed,this::handleError));
     }
 
-    private void handleFeedResponse(Res response){
-
+    private void handleFeedResponseFeed(Res res){
+        Toast.makeText(CameraActivity.this, res.getMessage()+"g 배식되었습니다.", Toast.LENGTH_SHORT).show();
+    }
+    private void handleFeedResponseVoice(Res res){
+        Toast.makeText(CameraActivity.this, "재생되었습니다.", Toast.LENGTH_SHORT).show();
     }
 
     private void handleError(Throwable error) {
