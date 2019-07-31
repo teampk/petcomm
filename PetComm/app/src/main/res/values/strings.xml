@@ -16,6 +16,7 @@
     <string name="bt_register_dog">강아지 등록</string>
     <string name="bt_do_later">나중에 하기</string>
     <string name="bt_connect">연결하기</string>
+    <string name="bt_choose_complete">선택 완료</string>
     <string name="bt_register_device">기기 등록</string>
     <string name="bt_discover">discover</string>
     <string name="bt_register_feeder">급식기 등록</string>
@@ -119,7 +120,7 @@
     <string name="tv_schedule_reset">스케줄 초기화</string>
     <string name="tv_schedule_check_proper_amount">몸무게별 적정량\n확인하러 가기!</string>
 
-    <string name="tv_device_connect_explain1">1. Petcomm 기기 전면의 Bluetooth 버튼을\n5초 이상 누른 후\n아래 리스트에서 "PETCOMM_F"가 생성되면 선택해주세요!</string>
+    <string name="tv_device_connect_explain1">1. Petcomm 기기 전면의 Bluetooth 버튼을\n5초 이상 누른 후\n아래 리스트에서 "PETCOMM"가 생성되면 선택해주세요!</string>
     <string name="tv_device_connect_explain2">2. 설명서 뒷 면에 적힌 password를 입력하여\n기기와 연결을 진행해 주세요!</string>
     <string name="tv_device_connect_explain3">3. Petcomm 기기와 연결하고자 하는\nWifi의 이름과 패스워드를 입력해주세요.\n\nWifi는 2.4GHz환경이어야 하고\n현재 모바일 폰도 해당 Wifi에 연결되어 있는 상태여야합니다.</string>
 

@@ -10,6 +10,7 @@ import android.content.pm.PackageManager;
 import android.databinding.DataBindingUtil;
 import android.location.LocationManager;
 import android.net.wifi.ScanResult;
+import android.net.wifi.WifiConfiguration;
 import android.net.wifi.WifiManager;
 import android.net.wifi.p2p.WifiP2pConfig;
 import android.net.wifi.p2p.WifiP2pDevice;
@@ -68,6 +69,8 @@ public class AddDeviceActivity extends AppCompatActivity {
     List<ScanResult> scanResult;
     ActivityAddDeviceBinding binding;
 
+    private SharedPreferences mSharedPreferences;
+
     public static final int MULTIPLE_PERMISSIONS = 10;
     String[] permissions = new String[]{
             Manifest.permission.ACCESS_COARSE_LOCATION
@@ -89,6 +92,8 @@ public class AddDeviceActivity extends AppCompatActivity {
                 WindowManager.LayoutParams.FLAG_FULLSCREEN);
         binding = DataBindingUtil.setContentView(this, R.layout.activity_add_device);
         binding.setAddDevice(this);
+
+        mSharedPreferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
 
         Intent intent = getIntent();
         // deviceMode=1 : 급식기
@@ -200,22 +205,66 @@ public class AddDeviceActivity extends AppCompatActivity {
     }
 
 
+    public void chooseCompleteListener(View view){
+        String selected = "";
+        selected = mSharedPreferences.getString(Constants.WIFI, "");
+        if(selected.split("/")[0].equals(Constants.WIFI_ID)){
+            Toast.makeText(this, "선택이 완료되었습니다.", Toast.LENGTH_SHORT).show();
+            binding.accessPointRecyclerView.setVisibility(View.GONE);
+            binding.btChoose.setBackgroundResource(R.drawable.layout_rounded_gray);
+            binding.btChoose.setClickable(false);
+        }else{
+            Toast.makeText(this, "위 리스트에서 PETCOMM을 찾아 선택해주세요!", Toast.LENGTH_SHORT).show();
+        }
+
+    }
+
     public void registerDeviceListener(View view){
         Intent intent = new Intent(getApplicationContext(), AddDeviceActivity2.class);
         intent.putExtra("dog", selectedDog);
         intent.putExtra("mode", deviceMode);
         binding.pbDevice.setVisibility(View.VISIBLE);
-        new Handler().postDelayed(new Runnable(){
-            @Override
-            public void run() {
-                startActivity(intent);
-                binding.pbDevice.setVisibility(View.INVISIBLE);
-                finish();
+        if(binding.etPassword.getText().toString().equals(Constants.WIFI_PW)){
+            String networkSSID = Constants.WIFI_ID;
+            String networkPass = Constants.WIFI_PW;
+            WifiConfiguration conf = new WifiConfiguration();
+            conf.SSID = "\"" + networkSSID + "\"";
+            conf.wepTxKeyIndex = 0;
+            conf.allowedKeyManagement.set(WifiConfiguration.KeyMgmt.NONE);
+            conf.allowedGroupCiphers.set(WifiConfiguration.GroupCipher.WEP40);
+
+            conf.preSharedKey = "\"" + networkPass +"\"";
+            conf.allowedKeyManagement.set(WifiConfiguration.KeyMgmt.NONE);
+            WifiManager wifiManager = (WifiManager)getApplicationContext().getSystemService(Context.WIFI_SERVICE);
+            wifiManager.addNetwork(conf);
+            List<WifiConfiguration> list = wifiManager.getConfiguredNetworks();
+            for(WifiConfiguration i : list){
+                if(i.SSID != null && i.SSID.equals("\"" + networkSSID + "\"")){
+                    wifiManager.disconnect();
+                    wifiManager.enableNetwork(i.networkId, true);
+                    wifiManager.reconnect();
+
+                    break;
+                }
             }
-        }, DISPLAY_LENGTH);
+            new Handler().postDelayed(new Runnable(){
+                @Override
+                public void run() {
+                    startActivity(intent);
+                    binding.pbDevice.setVisibility(View.INVISIBLE);
+                    Toast.makeText(AddDeviceActivity.this, "기기와 연결되었습니다.", Toast.LENGTH_SHORT).show();
+                    finish();
+                }
+            }, DISPLAY_LENGTH);
+        }else{
+            Toast.makeText(this, "비밀번호를 확인해주세요.", Toast.LENGTH_SHORT).show();
+        }
+
     }
+
     public void testListener(View view){
-        Log.d("PAENGSelected", String.valueOf(accessPointAdapter.getSelectedWifi().size()));
+
+        Log.d("PAENGSelected", String.valueOf(mSharedPreferences.getString(Constants.WIFI, "")));
     }
 
 

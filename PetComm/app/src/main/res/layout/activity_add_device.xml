@@ -67,11 +67,23 @@
                 android:layout_width="match_parent"
                 android:layout_height="40dp"
 
-                android:layout_marginBottom="20dp"
+                />
+
+            <Button
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="10dp"
+
+                android:id="@+id/bt_choose"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/height_button"
+                android:background="@drawable/layout_rounded_primary"
+                android:text="@string/bt_choose_complete"
+                android:textSize="@dimen/text_size"
+                android:onClick="@{addDevice::chooseCompleteListener}"
                 />
 
             <TextView
-                android:layout_marginTop="20dp"
+                android:layout_marginTop="30dp"
 
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -85,7 +97,7 @@
                 />
 
             <com.rengwuxian.materialedittext.MaterialEditText
-                android:id="@+id/et_name"
+                android:id="@+id/et_password"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/height_edit_text"
                 android:textColor="@color/colorBlack"

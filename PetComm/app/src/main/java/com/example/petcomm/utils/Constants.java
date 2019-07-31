@@ -12,5 +12,9 @@ public class Constants {
 
     public static final String EMAIL = "email";
     public static final String DOG = "selectedDog";
+    public static final String WIFI = "selectedWifi";
+
+    public static final String WIFI_ID = "Trojan.proxy.41241.2.4";
+    public static final String WIFI_PW = "pkpk9596";
 
 }
