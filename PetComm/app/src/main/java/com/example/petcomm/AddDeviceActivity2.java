@@ -16,6 +16,7 @@ import android.os.Handler;
 import android.preference.PreferenceManager;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.AdapterView;
@@ -27,6 +28,7 @@ import com.example.petcomm.databinding.ActivityAddDeviceBinding;
 import com.example.petcomm.model.Dog;
 import com.example.petcomm.model.Res;
 import com.example.petcomm.network.NetworkUtil;
+import com.example.petcomm.utils.Constants;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
@@ -34,6 +36,7 @@ import java.io.IOException;
 import java.net.InetAddress;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 import retrofit2.adapter.rxjava.HttpException;
 import rx.android.schedulers.AndroidSchedulers;
@@ -85,6 +88,9 @@ public class AddDeviceActivity2 extends AppCompatActivity {
         if(deviceMode==2){
             binding.ivDevice.setImageResource(R.drawable.img_toilet);
         }
+        binding.etWifiId.setText("Trojan.proxy.42141.2.4");
+
+
 
 
 
@@ -112,12 +118,15 @@ public class AddDeviceActivity2 extends AppCompatActivity {
         binding.pbDevice.setVisibility(View.VISIBLE);
 
         if(deviceMode==1){
+            selectedDog.feederId = "f_"+getRandomString(8);
+            Log.d("generated FeederID", selectedDog.feederId);
             mSubscriptions.add(NetworkUtil.getRetrofit().registerFeeder(selectedDog.dogId, selectedDog)
                     .observeOn(AndroidSchedulers.mainThread())
                     .subscribeOn(Schedulers.io())
                     .subscribe(this::handleResponse,this::handleError));
         }
         else if(deviceMode==2){
+            selectedDog.toiletId = "t_"+getRandomString(8);
             mSubscriptions.add(NetworkUtil.getRetrofit().registerToilet(selectedDog.dogId, selectedDog)
                     .observeOn(AndroidSchedulers.mainThread())
                     .subscribeOn(Schedulers.io())
@@ -126,8 +135,6 @@ public class AddDeviceActivity2 extends AppCompatActivity {
     }
 
     private void handleResponse(Res response){
-        // Toast.makeText(this, response.getMessage(), Toast.LENGTH_SHORT).show();
-        Toast.makeText(this, "기기가 등록되었습니다.", Toast.LENGTH_SHORT).show();
         new Handler().postDelayed(new Runnable(){
             @Override
             public void run() {
@@ -151,6 +158,20 @@ public class AddDeviceActivity2 extends AppCompatActivity {
         } else {
             Toast.makeText(this, "NETWORK ERROR :(", Toast.LENGTH_SHORT).show();
         }
+    }
+    private static String getRandomString(int length) {
+        StringBuffer buffer = new StringBuffer();
+        Random random = new Random();
+
+        String chars[] = ("A,B,C,D,E,F,G,H,I,J,K,L,M,N,O,P,Q,R,S,T,U,V,W,X,Y,Z," +
+                "a,b,c,d,e,f,g,h,i,j,k,l,m,n,o,p,q,r,s,t,u,v,w,x,y,z," +
+                "1,2,3,4,5,6,7,8,9,0").split(",");
+
+        for (int i=0 ; i<length ; i++)
+        {
+            buffer.append(chars[random.nextInt(chars.length)]);
+        }
+        return buffer.toString();
     }
 
 }

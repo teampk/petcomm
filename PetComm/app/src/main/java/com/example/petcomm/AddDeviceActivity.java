@@ -60,7 +60,7 @@ public class AddDeviceActivity extends AppCompatActivity {
 
     private int deviceMode;
     private Dog selectedDog;
-    private static final int DISPLAY_LENGTH = 1000;
+    private static final int DISPLAY_LENGTH = 3000;
 
     Vector<AccessPoint> accessPoints;
     LinearLayoutManager linearLayoutManager;

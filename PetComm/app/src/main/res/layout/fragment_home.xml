@@ -101,6 +101,7 @@
 
                 <!-- 선택된 강아지가 있을 때 -->
                 <android.support.constraint.ConstraintLayout
+                    android:visibility="gone"
                     android:id="@+id/cl_exist_dog"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
