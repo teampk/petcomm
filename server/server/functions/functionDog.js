@@ -58,15 +58,15 @@ exports.getDogBydogId = dogId =>
 		});
 	});
 
-exports.setDeviceId = (dogId, deviceMode) =>
+exports.setDeviceId = (dogId, deviceId, deviceMode) =>
 	new Promise(function(resolve, reject){
 		dogdb.find({ dogId: dogId })
 		.then(selectedDog => {
 			let dog = selectedDog[0];
 			if (deviceMode == 1){
-				dog.feederId = 'f_' + util.randomString(6);
+				dog.feederId = deviceId;
 			}else if (deviceMode == 2){
-				dog.toiletId = 't_' + util.randomString(6);
+				dog.toiletId = deviceId;
 			}else if (deviceMode == 11){
 				dog.feederId = '';
 			}else if (deviceMode == 22){
@@ -76,7 +76,7 @@ exports.setDeviceId = (dogId, deviceMode) =>
 		})
 		.then(dog => 
 			resolve({ 
-				status: 200, message: 'Feeder Registered Sucessfully!'
+				status: 200, message: dog.feederId+'/'+dog.toiletId
 			}))
 		.catch(err => 
 			reject({ 

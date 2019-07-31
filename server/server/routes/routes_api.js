@@ -81,11 +81,9 @@ router.get('/dog/:dogId', function(req, res){
     });
 });
 
-
-// register 할 때 앱으로부터 기기 이름도 받아와서 저장하자
 // register Feeder
 router.put('/register/feeder/:dogId', function(req, res){
-  functionDog.setDeviceId(req.params.dogId, 1)
+  functionDog.setDeviceId(req.params.dogId, req.body.feederId, 1)
     .then(function(result){
       res.status(result.status).json({
         message: result.message
@@ -101,7 +99,7 @@ router.put('/register/feeder/:dogId', function(req, res){
 
 // register Toilet
 router.put('/register/toilet/:dogId', function(req, res){
-  functionDog.setDeviceId(req.params.dogId, 2)
+  functionDog.setDeviceId(req.params.dogId, req.body.toiletId, 2)
     .then(function(result){
       res.status(result.status).json({
         message: result.message
@@ -117,7 +115,7 @@ router.put('/register/toilet/:dogId', function(req, res){
 
 // unregister Feeder
 router.put('/unregister/feeder/:dogId', function(req, res){
-  functionDog.setDeviceId(req.params.dogId, 11)
+  functionDog.setDeviceId(req.params.dogId, '', 11)
     .then(function(result){
       res.status(result.status).json({
         message: result.message
@@ -133,7 +131,7 @@ router.put('/unregister/feeder/:dogId', function(req, res){
 
 // unregister Toilet
 router.put('/unregister/toilet/:dogId', function(req, res){
-  functionDog.setDeviceId(req.params.dogId, 22)
+  functionDog.setDeviceId(req.params.dogId, '', 22)
     .then(function(result){
       console.log('device:'+result);
       res.status(result.status).json({
@@ -180,7 +178,7 @@ router.post('/feed', function(req, res){
     functionHealth.registerHealthEat(feederId, feedAmount)
       .then(function(result){
         res.status(result.status).json({
-          message: result.message
+          message: feedAmount
         });
       })
       .catch(function(err){
