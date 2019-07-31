@@ -32,7 +32,10 @@ import com.example.petcomm.utils.Constants;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
+import java.io.EOFException;
 import java.io.IOException;
+import java.net.DatagramPacket;
+import java.net.DatagramSocket;
 import java.net.InetAddress;
 import java.util.ArrayList;
 import java.util.List;
@@ -58,6 +61,8 @@ public class AddDeviceActivity2 extends AppCompatActivity {
 
     private Dog selectedDog;
 
+    private String generatedDeviceId;
+
     WifiManager wifiManager;
     WifiP2pManager mManager;
     WifiP2pManager.Channel mChannel;
@@ -67,6 +72,10 @@ public class AddDeviceActivity2 extends AppCompatActivity {
     List<WifiP2pDevice> peers = new ArrayList<WifiP2pDevice>();
     String[] deviceNameArray;
     WifiP2pDevice[] deviceArray;
+
+
+    public SendData mSendData;
+
 
 
     @Override
@@ -79,6 +88,7 @@ public class AddDeviceActivity2 extends AppCompatActivity {
         mSharedPreferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
         mSubscriptions = new CompositeSubscription();
 
+
         Intent intent = getIntent();
         // deviceMode=1 : 급식기
         // deviceMode=2 : 배변판
@@ -87,24 +97,23 @@ public class AddDeviceActivity2 extends AppCompatActivity {
 
         if(deviceMode==2){
             binding.ivDevice.setImageResource(R.drawable.img_toilet);
+            generatedDeviceId = "t_"+getRandomString(8);
+        }else if (deviceMode==1){
+            generatedDeviceId = "f_"+getRandomString(8);
         }
+        ////// 지워
         binding.etWifiId.setText("Trojan.proxy.42141.2.4");
+        //////
 
 
 
 
 
-    }
-    @Override
-    public void onResume(){
-        super.onResume();
-        //registerReceiver(mReceiver, mIntentFilter);
-    }
 
-    @Override
-    public void onPause(){
-        super.onPause();
-        // unregisterReceiver(mReceiver);
+
+
+
+
     }
     @Override
     public void onDestroy(){
@@ -112,21 +121,54 @@ public class AddDeviceActivity2 extends AppCompatActivity {
         mSubscriptions.unsubscribe();
     }
 
+    class SendData extends Thread{
+        public void run(){
+            try{
+                DatagramSocket socket = new DatagramSocket();
+                InetAddress serverAddr = InetAddress.getByName(Constants.DEVICE_IP);
+                String data = binding.etWifiId.getText().toString()+"/"+binding.etWifiPw.getText().toString()+"/"+generatedDeviceId;
+                byte[] buf = (data).getBytes();
+                DatagramPacket packet = new DatagramPacket(buf, buf.length, serverAddr, Constants.DEVICE_PORT);
+                socket.send(packet);
+                socket.receive(packet);
+                String msg = new String(packet.getData());
 
-    // 서버에 기기 등록
+                Log.d("PAENGUDP", "receive");
+                Log.d("PAENGUDP", msg);
+
+
+            }catch (Exception e){
+                Log.d("PAENGUDP", String.valueOf(e));
+
+            }
+        }
+    }
+
+
+    // 기기 등록 버튼
     public void registerDeviceListener(View view){
         binding.pbDevice.setVisibility(View.VISIBLE);
 
+        mSendData = new SendData();
+        mSendData.start();
+
+        registerDeviceInServer();
+    }
+
+
+
+
+    // 서버에 기기 등록
+    public void registerDeviceInServer(){
         if(deviceMode==1){
-            selectedDog.feederId = "f_"+getRandomString(8);
-            Log.d("generated FeederID", selectedDog.feederId);
+            selectedDog.feederId = generatedDeviceId;
             mSubscriptions.add(NetworkUtil.getRetrofit().registerFeeder(selectedDog.dogId, selectedDog)
                     .observeOn(AndroidSchedulers.mainThread())
                     .subscribeOn(Schedulers.io())
                     .subscribe(this::handleResponse,this::handleError));
         }
         else if(deviceMode==2){
-            selectedDog.toiletId = "t_"+getRandomString(8);
+            selectedDog.toiletId = generatedDeviceId;
             mSubscriptions.add(NetworkUtil.getRetrofit().registerToilet(selectedDog.dogId, selectedDog)
                     .observeOn(AndroidSchedulers.mainThread())
                     .subscribeOn(Schedulers.io())

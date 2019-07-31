@@ -94,6 +94,10 @@ public class AddDeviceActivity extends AppCompatActivity {
         binding.setAddDevice(this);
 
         mSharedPreferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+        SharedPreferences.Editor mEditor = mSharedPreferences.edit();
+        mEditor.putString(Constants.WIFI, "");
+        mEditor.apply();
+
 
         Intent intent = getIntent();
         // deviceMode=1 : 급식기

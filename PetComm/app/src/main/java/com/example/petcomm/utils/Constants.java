@@ -20,4 +20,7 @@ public class Constants {
     public static final String WIFI_ID = "PETCOMM";
     public static final String WIFI_PW = "12345678";
 
+    public static final String DEVICE_IP = "10.0.0.5";
+    public static final int DEVICE_PORT = 1000;
+
 }
