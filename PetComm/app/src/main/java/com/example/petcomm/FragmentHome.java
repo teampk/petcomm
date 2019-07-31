@@ -117,6 +117,7 @@ public class FragmentHome extends Fragment{
 
             }
         });
+
         // Spinner 설정
         ArrayAdapter<String> adapter = new ArrayAdapter<>(this.getActivity(), android.R.layout.simple_spinner_item, dogList);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
@@ -185,11 +186,14 @@ public class FragmentHome extends Fragment{
             binding.tvName.setText(dogDataArrayList.get(index).dogName);
             binding.tvPlanEmpty.setVisibility(View.VISIBLE);
             binding.tvPlanRecycler.setVisibility(View.GONE);
-            if(dogDataArrayList.get(index).feederId.equals("")){
+            if(dogDataArrayList.get(index).feederId.equals("")) {
                 binding.tvDevice.setText(getString(R.string.tv_device_empty));
                 binding.tvPlanEmpty.setText("급식기를 등록해주세요.");
-            }else{
+                binding.tvRecommend.setText(getString(R.string.tv_recommend_empty));
+            }
+            else{
                 binding.tvDevice.setText(dogDataArrayList.get(index).feederId);
+                binding.tvRecommend.setText(getString(R.string.tv_recommend_normal));
 
                 // 배식 계획 불러오기
                 loadSchedule(dogDataArrayList.get(index).feederId);

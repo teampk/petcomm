@@ -11,6 +11,7 @@ import android.databinding.DataBindingUtil;
 import android.location.LocationManager;
 import android.net.wifi.ScanResult;
 import android.net.wifi.WifiConfiguration;
+import android.net.wifi.WifiInfo;
 import android.net.wifi.WifiManager;
 import android.net.wifi.p2p.WifiP2pConfig;
 import android.net.wifi.p2p.WifiP2pDevice;
@@ -66,6 +67,7 @@ public class AddDeviceActivity extends AppCompatActivity {
     LinearLayoutManager linearLayoutManager;
     AccessPointAdapter accessPointAdapter;
     WifiManager wifiManager;
+    WifiInfo wifiInfo;
     List<ScanResult> scanResult;
     ActivityAddDeviceBinding binding;
 
@@ -172,7 +174,7 @@ public class AddDeviceActivity extends AppCompatActivity {
         }
         for(int i =0; i<scanResult.size();i++){
             ScanResult result = scanResult.get(i);
-            if(result.frequency < 3000){
+            if(result.frequency < 6000){
                 Log.d("SSID:"+result.SSID, result.level + ","+result.BSSID);
                 accessPoints.add(new AccessPoint(result.SSID, result.BSSID, String.valueOf(result.level)));
             }
@@ -229,46 +231,68 @@ public class AddDeviceActivity extends AppCompatActivity {
         intent.putExtra("mode", deviceMode);
         binding.pbDevice.setVisibility(View.VISIBLE);
         if(binding.etPassword.getText().toString().equals(Constants.WIFI_PW)){
-            String networkSSID = Constants.WIFI_ID;
-            String networkPass = Constants.WIFI_PW;
-            WifiConfiguration conf = new WifiConfiguration();
-            conf.SSID = "\"" + networkSSID + "\"";
-            conf.wepTxKeyIndex = 0;
-            conf.allowedKeyManagement.set(WifiConfiguration.KeyMgmt.NONE);
-            conf.allowedGroupCiphers.set(WifiConfiguration.GroupCipher.WEP40);
 
-            conf.preSharedKey = "\"" + networkPass +"\"";
-            conf.allowedKeyManagement.set(WifiConfiguration.KeyMgmt.NONE);
-            WifiManager wifiManager = (WifiManager)getApplicationContext().getSystemService(Context.WIFI_SERVICE);
-            wifiManager.addNetwork(conf);
-            List<WifiConfiguration> list = wifiManager.getConfiguredNetworks();
-            for(WifiConfiguration i : list){
-                if(i.SSID != null && i.SSID.equals("\"" + networkSSID + "\"")){
-                    wifiManager.disconnect();
-                    wifiManager.enableNetwork(i.networkId, true);
-                    wifiManager.reconnect();
+            connectToWifi(Constants.WIFI_ID, Constants.WIFI_PW);
 
-                    break;
-                }
-            }
-            new Handler().postDelayed(new Runnable(){
+            final Handler handler = new Handler();
+            handler.postDelayed(new Runnable() {
                 @Override
                 public void run() {
-                    startActivity(intent);
-                    binding.pbDevice.setVisibility(View.INVISIBLE);
-                    Toast.makeText(AddDeviceActivity.this, "기기와 연결되었습니다.", Toast.LENGTH_SHORT).show();
-                    finish();
+                    if(String.valueOf(getConnectedWiFiSSID()).equals('"'+Constants.WIFI_ID+'"')){
+                        binding.pbDevice.setVisibility(View.INVISIBLE);
+                        Toast.makeText(AddDeviceActivity.this, "기기와 연결되었습니다.", Toast.LENGTH_SHORT).show();
+                        startActivity(intent);
+                        finish();
+
+                    }else{
+                        handler.postDelayed(this,1000);
+
+                    }
                 }
-            }, DISPLAY_LENGTH);
+            }, 1000);
+
+
+
+
+
         }else{
             Toast.makeText(this, "비밀번호를 확인해주세요.", Toast.LENGTH_SHORT).show();
+            binding.pbDevice.setVisibility(View.INVISIBLE);
         }
 
     }
 
     public void testListener(View view){
+        Toast.makeText(this, getConnectedWiFiSSID(), Toast.LENGTH_SHORT).show();
 
-        Log.d("PAENGSelected", String.valueOf(mSharedPreferences.getString(Constants.WIFI, "")));
+    }
+
+    public String getConnectedWiFiSSID() {
+        WifiManager wifiManager = (WifiManager)getApplicationContext().getSystemService(Context.WIFI_SERVICE);
+        wifiInfo = wifiManager.getConnectionInfo();
+        return wifiInfo.getSSID();
+    }
+
+    public void connectToWifi(String id, String pw){
+        WifiConfiguration conf = new WifiConfiguration();
+        conf.SSID = "\"" + id + "\"";
+        conf.wepTxKeyIndex = 0;
+        conf.allowedKeyManagement.set(WifiConfiguration.KeyMgmt.NONE);
+        conf.allowedGroupCiphers.set(WifiConfiguration.GroupCipher.WEP40);
+
+        conf.preSharedKey = "\"" + pw +"\"";
+        conf.allowedKeyManagement.set(WifiConfiguration.KeyMgmt.NONE);
+        WifiManager wifiManager = (WifiManager)getApplicationContext().getSystemService(Context.WIFI_SERVICE);
+        wifiManager.addNetwork(conf);
+        List<WifiConfiguration> list = wifiManager.getConfiguredNetworks();
+        for(WifiConfiguration i : list){
+            if(i.SSID != null && i.SSID.equals("\"" + id + "\"")){
+                wifiManager.disconnect();
+                wifiManager.enableNetwork(i.networkId, true);
+                wifiManager.reconnect();
+                break;
+            }
+        }
     }
 
 

@@ -98,8 +98,11 @@
     <string name="tv_device">DEVICE</string>
     <string name="tv_petcomm_doctor">펫콤 펫닥터</string>
     <string name="tv_petcomm_health_data">반려동물 건강 데이터</string>
-    <string name="tv_petcomm_said_empty">등록된 기기가 없습니다.\n아래 기기 추가 번튼을 통해 주 기기를 등록해주세요.</string>
+    <string name="tv_petcomm_said_empty">등록된 기기가 없습니다.\n아래 기기 추가 버튼을 통해 주 기기를 등록해주세요.</string>
     <string name="tv_petcomm_said_example">초코는 3일간 규칙적인 식습관을 유지하고 있습니다.\n다만 체중이 지난 일주일간 증가하고 있어\n간식을 줄여주시는 것이 좋을 것 같습니다!</string>
+
+    <string name="tv_recommend_empty">등록된 기기가 없어요..\n아래 기기 버튼을 통해 주 기기를 등록해주세요!</string>
+    <string name="tv_recommend_normal">모인 데이터가 아직 부족해요 ㅠㅠ\n조금 더 사용하시면 데이터 분석을 해드릴게요!</string>
 
     <string name="tv_empty_feeder">등록된 급식기가 없습니다.\n아래 버튼을 통해 기기를 추가해주세요.</string>
     <string name="tv_empty_toilet">등록된 배변판이 없습니다.\n아래 버튼을 통해 기기를 추가해주세요.</string>

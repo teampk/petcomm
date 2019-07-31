@@ -1,10 +1,13 @@
 package com.example.petcomm;
 
 import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.databinding.DataBindingUtil;
+import android.net.wifi.WifiConfiguration;
+import android.net.wifi.WifiInfo;
 import android.net.wifi.WifiManager;
 import android.net.wifi.p2p.WifiP2pConfig;
 import android.net.wifi.p2p.WifiP2pDevice;
@@ -63,19 +66,10 @@ public class AddDeviceActivity2 extends AppCompatActivity {
 
     private String generatedDeviceId;
 
-    WifiManager wifiManager;
-    WifiP2pManager mManager;
-    WifiP2pManager.Channel mChannel;
-    BroadcastReceiver mReceiver;
-    IntentFilter mIntentFilter;
-
-    List<WifiP2pDevice> peers = new ArrayList<WifiP2pDevice>();
-    String[] deviceNameArray;
-    WifiP2pDevice[] deviceArray;
-
 
     public SendData mSendData;
 
+    private String connectWifiId, connectWifiPw;
 
 
     @Override
@@ -107,13 +101,6 @@ public class AddDeviceActivity2 extends AppCompatActivity {
 
 
 
-
-
-
-
-
-
-
     }
     @Override
     public void onDestroy(){
@@ -124,17 +111,36 @@ public class AddDeviceActivity2 extends AppCompatActivity {
     class SendData extends Thread{
         public void run(){
             try{
+                Log.d("PAENGUDP", "start");
                 DatagramSocket socket = new DatagramSocket();
                 InetAddress serverAddr = InetAddress.getByName(Constants.DEVICE_IP);
-                String data = binding.etWifiId.getText().toString()+"/"+binding.etWifiPw.getText().toString()+"/"+generatedDeviceId;
-                byte[] buf = (data).getBytes();
-                DatagramPacket packet = new DatagramPacket(buf, buf.length, serverAddr, Constants.DEVICE_PORT);
-                socket.send(packet);
-                socket.receive(packet);
-                String msg = new String(packet.getData());
+                connectWifiId = binding.etWifiId.getText().toString();
+                connectWifiPw = binding.etWifiPw.getText().toString();
+                //String data = binding.etWifiId.getText().toString()+"/"+binding.etWifiPw.getText().toString()+"/"+generatedDeviceId;
+                String data = connectWifiId+"/"+connectWifiPw;
+
+                // Send
+                byte[] bufSend = (data).getBytes();
+                DatagramPacket packetSend = new DatagramPacket(bufSend, bufSend.length, serverAddr, Constants.DEVICE_PORT);
+
+                socket.send(packetSend);
+                Log.d("PAENGUDP", "send");
+
+                // Receive
+                byte[] bufReceive = new byte[1024];
+                DatagramPacket packetReceive = new DatagramPacket(bufReceive, bufReceive.length, serverAddr, Constants.DEVICE_PORT);
+
+                socket.receive(packetReceive);
+                Log.d("PAENGUDP", String.valueOf(packetReceive.getLength()));
+
+                String msg = new String(packetReceive.getData());
 
                 Log.d("PAENGUDP", "receive");
                 Log.d("PAENGUDP", msg);
+                Log.d("PAENGUDP", "--- wifi direct finished ---");
+                connectToWifi(binding.etWifiId.getText().toString(), binding.etWifiPw.getText().toString());
+
+
 
 
             }catch (Exception e){
@@ -148,11 +154,22 @@ public class AddDeviceActivity2 extends AppCompatActivity {
     // 기기 등록 버튼
     public void registerDeviceListener(View view){
         binding.pbDevice.setVisibility(View.VISIBLE);
+        Log.d("PAENGUDP", "--- wifi direct ---");
 
         mSendData = new SendData();
         mSendData.start();
+        final Handler handler = new Handler();
+        handler.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                if(String.valueOf(getConnectedWiFiSSID()).equals('"'+connectWifiId+'"')){
+                    registerDeviceInServer();
 
-        registerDeviceInServer();
+                }else{
+                    handler.postDelayed(this,1000);
+                }
+            }
+        }, 1000);
     }
 
 
@@ -160,6 +177,8 @@ public class AddDeviceActivity2 extends AppCompatActivity {
 
     // 서버에 기기 등록
     public void registerDeviceInServer(){
+        Log.d("PAENGWIFI", "--- Registering Start ---");
+
         if(deviceMode==1){
             selectedDog.feederId = generatedDeviceId;
             mSubscriptions.add(NetworkUtil.getRetrofit().registerFeeder(selectedDog.dogId, selectedDog)
@@ -214,6 +233,34 @@ public class AddDeviceActivity2 extends AppCompatActivity {
             buffer.append(chars[random.nextInt(chars.length)]);
         }
         return buffer.toString();
+    }
+
+    public String getConnectedWiFiSSID() {
+        WifiManager wifiManager = (WifiManager)getApplicationContext().getSystemService(Context.WIFI_SERVICE);
+        WifiInfo wifiInfo = wifiManager.getConnectionInfo();
+        return wifiInfo.getSSID();
+    }
+
+    public void connectToWifi(String id, String pw){
+        WifiConfiguration conf = new WifiConfiguration();
+        conf.SSID = "\"" + id + "\"";
+        conf.wepTxKeyIndex = 0;
+        conf.allowedKeyManagement.set(WifiConfiguration.KeyMgmt.NONE);
+        conf.allowedGroupCiphers.set(WifiConfiguration.GroupCipher.WEP40);
+
+        conf.preSharedKey = "\"" + pw +"\"";
+        conf.allowedKeyManagement.set(WifiConfiguration.KeyMgmt.NONE);
+        WifiManager wifiManager = (WifiManager)getApplicationContext().getSystemService(Context.WIFI_SERVICE);
+        wifiManager.addNetwork(conf);
+        List<WifiConfiguration> list = wifiManager.getConfiguredNetworks();
+        for(WifiConfiguration i : list){
+            if(i.SSID != null && i.SSID.equals("\"" + id + "\"")){
+                wifiManager.disconnect();
+                wifiManager.enableNetwork(i.networkId, true);
+                wifiManager.reconnect();
+                break;
+            }
+        }
     }
 
 }
