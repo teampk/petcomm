@@ -50,10 +50,10 @@ public class AccessPointAdapter extends RecyclerView.Adapter {
         final String bSsid = accessPoints.get(position).getBssid();
         final String rssi = accessPoints.get(position).getRssi();
         binding.ssidTextView.setText(ssid);
+        binding.rssiTextView.setText(rssi);
         binding.cardView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Log.d("PAENGSelected", ssid+"/"+bSsid+"/"+rssi);
                 binding.cardLayout.setBackgroundColor(context.getResources().getColor(R.color.colorBackgroundGray));
                 mEditor = mSharedPreferences.edit();
                 mEditor.putString(Constants.WIFI, ssid+"/"+bSsid+"/"+rssi);

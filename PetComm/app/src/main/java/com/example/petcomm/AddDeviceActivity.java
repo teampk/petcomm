@@ -90,8 +90,7 @@ public class AddDeviceActivity extends AppCompatActivity {
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
-                WindowManager.LayoutParams.FLAG_FULLSCREEN);
+        // getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
         binding = DataBindingUtil.setContentView(this, R.layout.activity_add_device);
         binding.setAddDevice(this);
 
@@ -127,7 +126,6 @@ public class AddDeviceActivity extends AppCompatActivity {
         accessPoints = new Vector<>();
 
         if(wifiManager != null){
-            Log.d("PAENGWifi", String.valueOf(wifiManager.isWifiEnabled()));
             if(!wifiManager.isWifiEnabled()){
                 wifiManager.setWifiEnabled(true);
             }
@@ -175,7 +173,6 @@ public class AddDeviceActivity extends AppCompatActivity {
         for(int i =0; i<scanResult.size();i++){
             ScanResult result = scanResult.get(i);
             if(result.frequency < 6000){
-                Log.d("SSID:"+result.SSID, result.level + ","+result.BSSID);
                 accessPoints.add(new AccessPoint(result.SSID, result.BSSID, String.valueOf(result.level)));
             }
         }
@@ -231,34 +228,14 @@ public class AddDeviceActivity extends AppCompatActivity {
         intent.putExtra("mode", deviceMode);
         binding.pbDevice.setVisibility(View.VISIBLE);
         if(binding.etPassword.getText().toString().equals(Constants.WIFI_PW)){
-            Log.d("PAENG_1_Conect_to", Constants.WIFI_ID+"/"+Constants.WIFI_PW);
+
+            Log.d("PAENG_1_Connect_to", Constants.WIFI_ID+"/"+Constants.WIFI_PW);
             connectToWifi(Constants.WIFI_ID, Constants.WIFI_PW);
 
             binding.pbDevice.setVisibility(View.INVISIBLE);
             Toast.makeText(AddDeviceActivity.this, "기기와 연결되었습니다.", Toast.LENGTH_SHORT).show();
             startActivity(intent);
             finish();
-
-/*
-
-            final Handler handler = new Handler();
-            handler.postDelayed(new Runnable() {
-                @Override
-                public void run() {
-                    Log.d("PAENGWifi", getConnectedWiFiSSID());
-                    if(String.valueOf(getConnectedWiFiSSID()).equals('"'+Constants.WIFI_ID+'"')){
-
-
-                    }else{
-                        handler.postDelayed(this,1000);
-
-                    }
-                }
-            }, 1000);
-*/
-
-
-
 
         }else{
             Toast.makeText(this, "비밀번호를 확인해주세요.", Toast.LENGTH_SHORT).show();
