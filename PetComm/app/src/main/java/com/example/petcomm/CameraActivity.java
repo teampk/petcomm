@@ -74,7 +74,6 @@ public class CameraActivity extends AppCompatActivity {
     }
 
     public void speakerListener(View view){
-        Toast.makeText(this, "speaker button clicked", Toast.LENGTH_SHORT).show();
         mSubscriptions.add(NetworkUtil.getRetrofit().playVoice(selectedDog)
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribeOn(Schedulers.io())
@@ -111,7 +110,7 @@ public class CameraActivity extends AppCompatActivity {
         Toast.makeText(CameraActivity.this, res.getMessage()+"g 배식되었습니다.", Toast.LENGTH_SHORT).show();
     }
     private void handleFeedResponseVoice(Res res){
-        Toast.makeText(CameraActivity.this, "재생되었습니다.", Toast.LENGTH_SHORT).show();
+        Toast.makeText(CameraActivity.this, String.valueOf(res.getMessage()), Toast.LENGTH_SHORT).show();
     }
 
     private void handleError(Throwable error) {

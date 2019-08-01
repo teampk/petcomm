@@ -106,14 +106,19 @@ public class AddDeviceActivity3 extends AppCompatActivity {
         binding.pbDevice.setVisibility(View.VISIBLE);
         if(deviceMode==1) {
             selectedDog.feederId = deviceId;
+            mSubscriptions.add(NetworkUtil.getRetrofit().registerFeeder(selectedDog.dogId, selectedDog)
+                    .observeOn(AndroidSchedulers.mainThread())
+                    .subscribeOn(Schedulers.io())
+                    .subscribe(this::handleResponse,this::handleError));
         }
         else if (deviceMode == 2) {
             selectedDog.toiletId = deviceId;
+            mSubscriptions.add(NetworkUtil.getRetrofit().registerToilet(selectedDog.dogId, selectedDog)
+                    .observeOn(AndroidSchedulers.mainThread())
+                    .subscribeOn(Schedulers.io())
+                    .subscribe(this::handleResponse,this::handleError));
         }
-        mSubscriptions.add(NetworkUtil.getRetrofit().registerFeeder(selectedDog.dogId, selectedDog)
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribeOn(Schedulers.io())
-                .subscribe(this::handleResponse,this::handleError));
+
     }
 
 

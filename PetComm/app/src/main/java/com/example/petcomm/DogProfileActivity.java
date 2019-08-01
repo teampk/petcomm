@@ -30,6 +30,7 @@ import rx.subscriptions.CompositeSubscription;
 public class DogProfileActivity extends AppCompatActivity {
     ActivityDogProfileBinding binding;
     private CompositeSubscription mSubscriptions;
+    private int pictureMode;
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -41,6 +42,24 @@ public class DogProfileActivity extends AppCompatActivity {
 
         Intent intent = getIntent();
         loadDogInf(intent.getStringExtra("dogId"));
+        pictureMode = intent.getIntExtra("pictureMode", 1);
+        switch(pictureMode){
+            case 1:
+                binding.ivProfile.setImageResource(R.drawable.dog_example1);
+                break;
+            case 2:
+                binding.ivProfile.setImageResource(R.drawable.dog_example2);
+                break;
+            case 3:
+                binding.ivProfile.setImageResource(R.drawable.dog_example3);
+                break;
+            case 4:
+                binding.ivProfile.setImageResource(R.drawable.dog_example4);
+                break;
+            default:
+                binding.ivProfile.setImageResource(R.drawable.ic_dog);
+                break;
+        }
 
     }
     @Override

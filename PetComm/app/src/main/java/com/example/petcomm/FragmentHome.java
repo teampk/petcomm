@@ -29,6 +29,7 @@ import com.google.gson.GsonBuilder;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Random;
 
 import retrofit2.adapter.rxjava.HttpException;
 import rx.android.schedulers.AndroidSchedulers;
@@ -43,10 +44,13 @@ public class FragmentHome extends Fragment{
     private ArrayList<FeedSchedule> feedScheduleList;
 
     private String signInEmail;
+    private int dataMode;
     private int selectedDogId;
     private CompositeSubscription mSubscriptions;
     private SharedPreferences mSharedPreferences;
     private SharedPreferences.Editor mEditor;
+
+    private int pictureMode;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -62,6 +66,7 @@ public class FragmentHome extends Fragment{
         mSubscriptions = new CompositeSubscription();
         mSharedPreferences = PreferenceManager.getDefaultSharedPreferences(getContext());
         signInEmail = mSharedPreferences.getString(Constants.EMAIL, "");
+
         loadDogList();
 
         return mView;
@@ -172,6 +177,7 @@ public class FragmentHome extends Fragment{
     }
 
     private void setDogProfile(int index){
+        // Spinner에서 선택된 강아지가 없을 때.
         if(index == -1){
             binding.clEmptyDog.setVisibility(View.VISIBLE);
             binding.clExistDog.setVisibility(View.GONE);
@@ -180,25 +186,97 @@ public class FragmentHome extends Fragment{
             mEditor.putString(Constants.DOG, "");
             mEditor.apply();
         }
+        // Spinner에서 강아지 선택 완료
         else{
+            Random rn = new Random();
+            pictureMode = rn.nextInt(4)+1;
+            switch(pictureMode){
+                case 1:
+                    binding.ivProfile.setImageResource(R.drawable.dog_example1);
+                    break;
+                case 2:
+                    binding.ivProfile.setImageResource(R.drawable.dog_example2);
+                    break;
+                case 3:
+                    binding.ivProfile.setImageResource(R.drawable.dog_example3);
+                    break;
+                case 4:
+                    binding.ivProfile.setImageResource(R.drawable.dog_example4);
+                    break;
+                default:
+                    binding.ivProfile.setImageResource(R.drawable.ic_dog);
+                    break;
+            }
+
+
             binding.clEmptyDog.setVisibility(View.GONE);
             binding.clExistDog.setVisibility(View.VISIBLE);
             binding.tvName.setText(dogDataArrayList.get(index).dogName);
             binding.tvPlanEmpty.setVisibility(View.VISIBLE);
             binding.tvPlanRecycler.setVisibility(View.GONE);
+            // 등록된 급식기가 없을 때
             if(dogDataArrayList.get(index).feederId.equals("")) {
                 binding.tvDevice.setText(getString(R.string.tv_device_empty));
                 binding.tvPlanEmpty.setText("급식기를 등록해주세요.");
                 binding.tvRecommend.setText(getString(R.string.tv_recommend_empty));
             }
+            // 급식기 등록 완료된 상태
             else{
                 binding.tvDevice.setText(dogDataArrayList.get(index).feederId);
-                binding.tvRecommend.setText(getString(R.string.tv_recommend_normal));
+                if (mSharedPreferences.getInt(Constants.DATA_MODE, 1) == 1){
+                    binding.tvRecommend.setText(getString(R.string.tv_recommend_initial));
+
+                }else if (mSharedPreferences.getInt(Constants.DATA_MODE, 1) == 2){
+                    binding.tvRecommend.setText(getString(R.string.tv_recommend_normal));
+
+                }else if (mSharedPreferences.getInt(Constants.DATA_MODE, 1) == 3){
+                    binding.tvRecommend.setText(getString(R.string.tv_recommend_fat));
+
+                }else if (mSharedPreferences.getInt(Constants.DATA_MODE, 1) == 4){
+                    binding.tvRecommend.setText(getString(R.string.tv_recommend_danger));
+                }
+
+                binding.tvRecommend.setOnClickListener(new View.OnClickListener(){
+                    @Override
+                    public void onClick(View v) {
+                        switch(mSharedPreferences.getInt(Constants.DATA_MODE, 1)){
+                            case 1:
+                                // 2로 이동
+                                binding.tvRecommend.setText(getString(R.string.tv_recommend_normal));
+                                mEditor = mSharedPreferences.edit();
+                                mEditor.putInt(Constants.DATA_MODE, 2);
+                                mEditor.apply();
+                                break;
+
+                            case 2:
+                                binding.tvRecommend.setText(getString(R.string.tv_recommend_fat));
+                                mEditor = mSharedPreferences.edit();
+                                mEditor.putInt(Constants.DATA_MODE, 3);
+                                mEditor.apply();
+                                break;
+
+                            case 3:
+                                binding.tvRecommend.setText(getString(R.string.tv_recommend_danger));
+                                mEditor = mSharedPreferences.edit();
+                                mEditor.putInt(Constants.DATA_MODE, 4);
+                                mEditor.apply();
+                                break;
+
+                            case 4:
+                                binding.tvRecommend.setText(getString(R.string.tv_recommend_initial));
+                                mEditor = mSharedPreferences.edit();
+                                mEditor.putInt(Constants.DATA_MODE, 1);
+                                mEditor.apply();
+                                break;
+                        }
+                    }
+                });
 
                 // 배식 계획 불러오기
                 loadSchedule(dogDataArrayList.get(index).feederId);
             }
 
+            // 등록된 배변판이 없을 때
             if(dogDataArrayList.get(index).toiletId.equals("")){
                 binding.tvDevice2.setText(getString(R.string.tv_device_empty));
             }else{
@@ -209,6 +287,7 @@ public class FragmentHome extends Fragment{
             mEditor.putString(Constants.DOG, dogDataArrayList.get(index).dogId);
             mEditor.apply();
         }
+
     }
     // >>>>>>>>>>>>>>>>>>>>>>>>> 스케줄 불러오기
     private void loadSchedule(String feederId){
@@ -275,6 +354,7 @@ public class FragmentHome extends Fragment{
     public void dogProfileListener(View view){
         Intent intent = new Intent(getContext(), DogProfileActivity.class);
         intent.putExtra("dogId", mSharedPreferences.getString(Constants.DOG, ""));
+        intent.putExtra("pictureMode", pictureMode);
         startActivity(intent);
 
     }
