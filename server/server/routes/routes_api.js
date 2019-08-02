@@ -172,6 +172,7 @@ router.post('/feed', function(req, res){
       message: 'Invalid Request!'
     });
   }else{
+    console.log('---App to Server---')
     console.log(feederId);
     console.log(feedTime);
     console.log(feedAmount);
@@ -186,8 +187,42 @@ router.post('/feed', function(req, res){
           message: err.message
         });
       });
+
+    var jsonDataSchedule = {
+      'feederId' : feederId,
+      'feedTime' : feedTime,
+      'feedAmount' : feedAmount
+    }
+    request.post({
+        headers: {'content-type': 'application/json'},
+        url: 'http://220.71.91.185:1111',
+        body : jsonDataSchedule,
+        json : true
+      }, function(error, response, body){
+        console.log('---Device to Server---')
+        console.log('body:', body);
+        //console.log('response:', response);
+        // console.log('error', error)
+    });
+    
   }
 
+})
+
+router.post('/voice', function(req, res){
+  var feederIP = req.body.feederIP;
+  console.log('ip', feederIP);
+  res.status(200).json({
+    message: 'voice played'
+  });
+})
+
+
+router.post('/test', function(req, res){
+  console.log('---test complete---');
+  res.status(200).json({
+    message: 'test message'
+  });
 })
 
 // Register Auto Feed Schedule
