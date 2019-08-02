@@ -63,6 +63,7 @@ public class SignInActivity extends AppCompatActivity {
         TransitionManager.beginDelayedTransition(constraint, transition);
         constraintSet.applyTo(constraint);
         //here constraint is the name of view to which we are applying the constraintSet
+        binding.etId.setText("paeng@naver.com");
     }
 
     private void hideComponents(View mView){

@@ -55,6 +55,7 @@
             app:layout_constraintStart_toStartOf="parent"
             >
 
+            <!--
             <com.rengwuxian.materialedittext.MaterialEditText
                 android:id="@+id/et_id"
                 android:layout_width="match_parent"
@@ -78,6 +79,38 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/et_id"
                 app:met_floatingLabel="highlight" />
+            -->
+
+            <EditText
+                android:id="@+id/et_id"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/height_edit_text"
+                android:hint="@string/et_email"
+                android:textColor="@color/colorBlack"
+                android:textSize="@dimen/text_size"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                android:inputType="text"
+                android:importantForAutofill="no"
+                tools:targetApi="O" />
+
+            <EditText
+                android:id="@+id/et_pw"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/height_edit_text"
+                android:hint="@string/et_pw"
+                android:textColor="@color/colorBlack"
+                android:textSize="@dimen/text_size"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/et_id"
+                android:inputType="textPassword"
+                android:importantForAutofill="no"
+                tools:targetApi="O"
+
+
+                />
 
             <Button
                 android:id="@+id/bt_sign_in"

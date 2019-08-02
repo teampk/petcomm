@@ -1,6 +1,7 @@
 package com.example.petcomm;
 
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -45,6 +46,11 @@ public class FragmentSetting extends Fragment {
                 });
         builder.show();
 
+    }
+    public void signOutListener(View view){
+        startActivity(new Intent(getContext(), SignInActivity.class));
+        Toast.makeText(getContext(), "로그아웃 되었습니다.", Toast.LENGTH_SHORT).show();
+        getActivity().finish();
     }
 
 

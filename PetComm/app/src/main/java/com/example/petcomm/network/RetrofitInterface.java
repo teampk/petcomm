@@ -54,6 +54,16 @@ public interface RetrofitInterface {
     @POST("voice")
     Observable<Res> playVoice(@Body Dog dog);
 
+    @POST("video")
+    Observable<Res> cctvCamera();
+
+    @GET("shutdown")
+    Observable<Res> cctvCameraShutDown();
+
+    @GET("video")
+    Observable<String> cctvCameraGet();
+
+
 
 
 }

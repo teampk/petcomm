@@ -281,10 +281,20 @@ public class FragmentDevice extends Fragment {
     }
     // (급식기) 카메라
     public void feederCameraListener(View view){
+        turnOnCamera();
+
+    }
+    public void turnOnCamera(){
+        mSubscriptions.add(NetworkUtil.getRetrofitCamera().cctvCamera()
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribeOn(Schedulers.io())
+                .subscribe(this::handleFeedResponseCamera,this::handleError));
+    }
+
+    private void handleFeedResponseCamera(Res res){
         Intent intentCamera = new Intent(getContext(), CameraActivity.class);
         intentCamera.putExtra("dog", selectedDog);
         startActivity(intentCamera);
-
     }
 
     public void settingToiletListener(View view){

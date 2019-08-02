@@ -51,15 +51,17 @@ public class CameraActivity extends AppCompatActivity {
 
         setView();
 
-
     }
+
+
+
     public void setView(){
+
         binding.tvDogName.setText(selectedDog.dogName);
         binding.tvDeviceId.setText(selectedDog.feederId);
 
         binding.wvCamera.getSettings().setJavaScriptEnabled(true);
         binding.wvCamera.loadUrl(Constants.CCTV_URL);
-        //binding.wvCamera.loadUrl("http://220.71.91.185:5000/");
         binding.wvCamera.setWebChromeClient(new WebChromeClient());
         binding.wvCamera.setWebViewClient(new WebViewClientClass());
     }
@@ -72,13 +74,16 @@ public class CameraActivity extends AppCompatActivity {
             return true;
         }
     }
-
+/*
     public void speakerListener(View view){
         mSubscriptions.add(NetworkUtil.getRetrofit().playVoice(selectedDog)
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribeOn(Schedulers.io())
                 .subscribe(this::handleFeedResponseVoice,this::handleError));
     }
+*/
+
+
     public void feedListener(View view){
 
         CustomDialog customDialogFeed = new CustomDialog(CameraActivity.this);
@@ -127,6 +132,25 @@ public class CameraActivity extends AppCompatActivity {
             Log.d("NetworkERROR", String.valueOf(error));
             Toast.makeText(getApplicationContext(), "NETWORK ERROR :(", Toast.LENGTH_SHORT).show();
         }
+    }
+
+    @Override
+    protected void onDestroy(){
+        super.onDestroy();
+
+    }
+
+    public void speakerListener(View view){
+        Log.d("PAENGCamera", "Speaker Clicked");
+        mSubscriptions.add(NetworkUtil.getRetrofitCameraShutDown().cctvCameraShutDown()
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribeOn(Schedulers.io())
+                .subscribe(this::handleFeedResponseCamera,this::handleError));
+    }
+
+    private void handleFeedResponseCamera(Res res){
+        Toast.makeText(this, res.getMessage(), Toast.LENGTH_SHORT).show();
+        finish();
     }
 
 
