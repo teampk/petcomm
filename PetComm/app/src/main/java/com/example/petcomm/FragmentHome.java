@@ -29,7 +29,6 @@ import com.google.gson.GsonBuilder;
 
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Random;
 
 import retrofit2.adapter.rxjava.HttpException;
 import rx.android.schedulers.AndroidSchedulers;
@@ -188,24 +187,12 @@ public class FragmentHome extends Fragment{
         }
         // Spinner에서 강아지 선택 완료
         else{
-            Random rn = new Random();
-            pictureMode = rn.nextInt(4)+1;
-            switch(pictureMode){
-                case 1:
-                    binding.ivProfile.setImageResource(R.drawable.dog_example1);
-                    break;
-                case 2:
-                    binding.ivProfile.setImageResource(R.drawable.dog_example2);
-                    break;
-                case 3:
-                    binding.ivProfile.setImageResource(R.drawable.dog_example3);
-                    break;
-                case 4:
-                    binding.ivProfile.setImageResource(R.drawable.dog_example4);
-                    break;
-                default:
-                    binding.ivProfile.setImageResource(R.drawable.ic_dog);
-                    break;
+            if (dogDataArrayList.get(index).dogBreeds.equals("Bichon Frise")){
+                binding.ivProfile.setImageResource(R.drawable.dog_example1);
+            }else if (dogDataArrayList.get(index).dogBreeds.equals("Pug")){
+                binding.ivProfile.setImageResource(R.drawable.dog_example2);
+            }else{
+                binding.ivProfile.setImageResource(R.drawable.dog_example3);
             }
 
 
@@ -348,7 +335,7 @@ public class FragmentHome extends Fragment{
     // >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 
     public void addDogListener(View view){
-        startActivity(new Intent(getContext(), RegisterDogActivity.class));
+        startActivity(new Intent(getContext(), AddDogActivity.class));
     }
 
     public void dogProfileListener(View view){

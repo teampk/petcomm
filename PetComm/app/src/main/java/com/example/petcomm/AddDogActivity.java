@@ -14,7 +14,7 @@ import android.widget.DatePicker;
 import android.widget.RadioGroup;
 import android.widget.Toast;
 
-import com.example.petcomm.databinding.ActivityRegisterDogBinding;
+import com.example.petcomm.databinding.ActivityAddDogBinding;
 import com.example.petcomm.model.Dog;
 import com.example.petcomm.model.Res;
 import com.example.petcomm.network.NetworkUtil;
@@ -24,7 +24,6 @@ import com.google.gson.GsonBuilder;
 
 import java.io.IOException;
 import java.util.Calendar;
-import java.util.Date;
 import java.util.Random;
 
 import retrofit2.adapter.rxjava.HttpException;
@@ -32,9 +31,9 @@ import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
 import rx.subscriptions.CompositeSubscription;
 
-public class RegisterDogActivity extends AppCompatActivity {
+public class AddDogActivity extends AppCompatActivity {
 
-    ActivityRegisterDogBinding binding;
+    ActivityAddDogBinding binding;
     private String mEmail;
     private String gender;
     private SharedPreferences mSharedPreferences;
@@ -46,7 +45,7 @@ public class RegisterDogActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
                 WindowManager.LayoutParams.FLAG_FULLSCREEN);
-        binding = DataBindingUtil.setContentView(this, R.layout.activity_register_dog);
+        binding = DataBindingUtil.setContentView(this, R.layout.activity_add_dog);
         binding.setSignUpDog(this);
         mSubscriptions = new CompositeSubscription();
 
@@ -73,7 +72,7 @@ public class RegisterDogActivity extends AppCompatActivity {
         mSubscriptions.unsubscribe();
     }
     public void selectBreedsListener(View view){
-        CustomDialog customDialogFeed = new CustomDialog(RegisterDogActivity.this);
+        CustomDialog customDialogFeed = new CustomDialog(AddDogActivity.this);
         customDialogFeed.callFunction(3, "품종을 선택해주세요", "선택", "취소");
         customDialogFeed.setDialoglistener(new CustomDialog.CustomDialogListener() {
             @Override
@@ -89,11 +88,11 @@ public class RegisterDogActivity extends AppCompatActivity {
     }
     public void selectBirthListener(View view){
         final Calendar cal = Calendar.getInstance();
-        DatePickerDialog dialog = new DatePickerDialog(RegisterDogActivity.this, new DatePickerDialog.OnDateSetListener() {
+        DatePickerDialog dialog = new DatePickerDialog(AddDogActivity.this, new DatePickerDialog.OnDateSetListener() {
             @Override
             public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
                 String monthString, dayString;
-                if (month<10){
+                if (month<9){
                     monthString = "0"+(month+1);
                 }else{
                     monthString = String.valueOf(month+1);

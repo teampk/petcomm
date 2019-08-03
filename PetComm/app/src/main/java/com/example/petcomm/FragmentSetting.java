@@ -49,7 +49,6 @@ public class FragmentSetting extends Fragment {
     }
     public void signOutListener(View view){
         startActivity(new Intent(getContext(), SignInActivity.class));
-        Toast.makeText(getContext(), "로그아웃 되었습니다.", Toast.LENGTH_SHORT).show();
         getActivity().finish();
     }
 
