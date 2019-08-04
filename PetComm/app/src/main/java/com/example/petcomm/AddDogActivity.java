@@ -2,6 +2,7 @@ package com.example.petcomm;
 
 import android.app.DatePickerDialog;
 import android.content.SharedPreferences;
+import android.content.pm.ActivityInfo;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
@@ -45,6 +46,8 @@ public class AddDogActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
                 WindowManager.LayoutParams.FLAG_FULLSCREEN);
+        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+
         binding = DataBindingUtil.setContentView(this, R.layout.activity_add_dog);
         binding.setSignUpDog(this);
         mSubscriptions = new CompositeSubscription();

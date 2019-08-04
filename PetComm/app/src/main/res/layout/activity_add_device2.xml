@@ -34,16 +34,13 @@
 
             />
 
-        <TextView
+        <ImageView
             android:layout_marginTop="20dp"
-            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/tv_device_connect_explain3"
-            android:textColor="@color/colorBlack"
-            android:textSize="@dimen/text_size_small"
-            android:textStyle="bold"
-            android:gravity="center"
+            android:layout_width="match_parent"
+            app:srcCompat="@drawable/explain_3"
             />
+
 
         <com.rengwuxian.materialedittext.MaterialEditText
             android:layout_marginTop="30dp"

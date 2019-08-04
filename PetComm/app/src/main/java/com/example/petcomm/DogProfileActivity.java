@@ -1,6 +1,7 @@
 package com.example.petcomm;
 
 import android.content.Intent;
+import android.content.pm.ActivityInfo;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -36,6 +37,8 @@ public class DogProfileActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
                 WindowManager.LayoutParams.FLAG_FULLSCREEN);
+        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+
         binding = DataBindingUtil.setContentView(this, R.layout.activity_dog_profile);
         binding.setDogProfile(this);
         mSubscriptions = new CompositeSubscription();

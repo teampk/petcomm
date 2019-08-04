@@ -3,6 +3,7 @@ package com.example.petcomm;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.pm.ActivityInfo;
 import android.databinding.DataBindingUtil;
 import android.net.wifi.WifiConfiguration;
 import android.net.wifi.WifiInfo;
@@ -58,6 +59,8 @@ public class AddDeviceActivity3 extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
                 WindowManager.LayoutParams.FLAG_FULLSCREEN);
+        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+
         binding = DataBindingUtil.setContentView(this, R.layout.activity_add_device3);
         binding.setAddDevice3(this);
         mSharedPreferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());

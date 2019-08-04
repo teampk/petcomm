@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.SharedPreferences;
+import android.content.pm.ActivityInfo;
 import android.databinding.DataBindingUtil;
 import android.net.wifi.WifiConfiguration;
 import android.net.wifi.WifiInfo;
@@ -76,6 +77,8 @@ public class AddDeviceActivity2 extends AppCompatActivity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
+        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+
         binding = DataBindingUtil.setContentView(this, R.layout.activity_add_device2);
         binding.setAddDevice2(this);
         mSharedPreferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
@@ -139,6 +142,7 @@ public class AddDeviceActivity2 extends AppCompatActivity {
 
 
                 if(msg.split("/")[0].equals("WIN")){
+                    Toast.makeText(AddDeviceActivity2.this, "기기에 정보를 전송 완료했습니다.", Toast.LENGTH_SHORT).show();
                     Log.d("PAENG_2_wifi", "Connect to " + connectWifiId +" // "+ connectWifiPw);
                     connectToWifi(connectWifiId, connectWifiPw);
 
@@ -181,7 +185,7 @@ public class AddDeviceActivity2 extends AppCompatActivity {
             binding.pbDevice.setVisibility(View.INVISIBLE);
             return false;
         }else if(!getConnectedWiFiSSID().equals("\""+Constants.WIFI_ID+"\"")){
-            Toast.makeText(this, "PETCOMM Wifi로 다시 연결해서 실행해주세요!", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "Something Wrong...\nPETCOMM Wifi로 다시 연결해서 실행해주세요!", Toast.LENGTH_SHORT).show();
             binding.pbDevice.setVisibility(View.INVISIBLE);
             return false;
         }else{

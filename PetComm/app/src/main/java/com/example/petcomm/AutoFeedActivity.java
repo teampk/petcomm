@@ -50,7 +50,7 @@ public class AutoFeedActivity extends AppCompatActivity {
         binding = DataBindingUtil.setContentView(this, R.layout.activity_auto_feed);
         binding.setAutoFeed(this);
 
-        dbHelper = new DBHelper(getApplicationContext(), "PetComm.db", null, 1);
+        // dbHelper = new DBHelper(getApplicationContext(), "PetComm.db", null, 1);
 
         mSharedPreferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
 

@@ -2,6 +2,7 @@ package com.example.petcomm;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.pm.ActivityInfo;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 
@@ -34,6 +35,7 @@ public class SignInActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
                 WindowManager.LayoutParams.FLAG_FULLSCREEN);
+        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
         binding = DataBindingUtil.setContentView(this, R.layout.activity_sign_in);
         final View mView = binding.getRoot();
         binding.setSignIn(this);

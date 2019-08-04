@@ -31,16 +31,13 @@
             android:gravity="center"
             />
 
-        <TextView
-            android:layout_marginTop="50dp"
-            android:layout_width="match_parent"
+        <ImageView
+            android:layout_marginTop="30dp"
             android:layout_height="wrap_content"
-            android:text="@string/tv_device_connect_explain4"
-            android:textColor="@color/colorBlack"
-            android:textSize="@dimen/text_size"
-            android:textStyle="bold"
-            android:gravity="center"
+            android:layout_width="match_parent"
+            app:srcCompat="@drawable/explain_4"
             />
+
 
         <ProgressBar
             android:layout_marginTop="20dp"

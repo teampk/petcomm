@@ -6,6 +6,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.SharedPreferences;
+import android.content.pm.ActivityInfo;
 import android.content.pm.PackageManager;
 import android.databinding.DataBindingUtil;
 import android.location.LocationManager;
@@ -91,6 +92,8 @@ public class AddDeviceActivity extends AppCompatActivity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
+        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+
         binding = DataBindingUtil.setContentView(this, R.layout.activity_add_device);
         binding.setAddDevice(this);
 
@@ -232,10 +235,16 @@ public class AddDeviceActivity extends AppCompatActivity {
             Log.d("PAENG_1_Connect_to", Constants.WIFI_ID+"/"+Constants.WIFI_PW);
             connectToWifi(Constants.WIFI_ID, Constants.WIFI_PW);
 
-            binding.pbDevice.setVisibility(View.INVISIBLE);
-            Toast.makeText(AddDeviceActivity.this, "기기와 연결되었습니다.", Toast.LENGTH_SHORT).show();
-            startActivity(intent);
-            finish();
+            new Handler().postDelayed(new Runnable(){
+                @Override
+                public void run() {
+                    binding.pbDevice.setVisibility(View.INVISIBLE);
+                    Toast.makeText(AddDeviceActivity.this, "기기와 연결되었습니다.", Toast.LENGTH_SHORT).show();
+                    startActivity(intent);
+                    finish();
+                }
+            }, 3000);
+
 
         }else{
             Toast.makeText(this, "비밀번호를 확인해주세요.", Toast.LENGTH_SHORT).show();

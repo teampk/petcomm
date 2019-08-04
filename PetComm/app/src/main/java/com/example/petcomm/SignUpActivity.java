@@ -1,6 +1,7 @@
 package com.example.petcomm;
 
 import android.content.Intent;
+import android.content.pm.ActivityInfo;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.os.Handler;
@@ -27,6 +28,7 @@ public class SignUpActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
                 WindowManager.LayoutParams.FLAG_FULLSCREEN);
+        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
         overridePendingTransition(R.anim.anim_slide_in_top, R.anim.anim_slide_out_bottom);
         binding = DataBindingUtil.setContentView(this, R.layout.activity_sign_up);
         binding.setSignUp(this);
