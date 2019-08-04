@@ -318,8 +318,8 @@ public class FragmentHome extends Fragment{
         int element1, element2;
         for(int i=0;i<outputAl.size();i++){
             for(int j=0;j<outputAl.size()-1;j++){
-                element1 = Integer.valueOf(outputAl.get(j).getmFeedTime().replace(":",""));
-                element2 = Integer.valueOf(outputAl.get(j+1).getmFeedTime().replace(":",""));
+                element1 = Integer.valueOf(outputAl.get(j).getFeedTime().replace(":",""));
+                element2 = Integer.valueOf(outputAl.get(j+1).getFeedTime().replace(":",""));
                 if(element1>element2){
                     FeedSchedule buffer1, buffer2;
                     buffer1 = outputAl.get(j);

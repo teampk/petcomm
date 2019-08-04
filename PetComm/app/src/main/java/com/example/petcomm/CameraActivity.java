@@ -91,7 +91,7 @@ public class CameraActivity extends AppCompatActivity {
         customDialogFeed.setDialoglistener(new CustomDialog.CustomDialogListener() {
             @Override
             public void onPositiveClicked(String feedAmount, String a) {
-                FeedSchedule feedManually = new FeedSchedule(0, selectedDog.feederId, "99:99", feedAmount);
+                FeedSchedule feedManually = new FeedSchedule(0, selectedDog.feederId,0,  "99:99", feedAmount);
                 feedManually(feedManually);
 
             }

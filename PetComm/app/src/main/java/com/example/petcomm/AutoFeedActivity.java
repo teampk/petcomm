@@ -117,17 +117,16 @@ public class AutoFeedActivity extends AppCompatActivity {
     public ArrayList<FeedSchedule> listSorting(ArrayList<FeedSchedule> inputAl){
         ArrayList<FeedSchedule> outputAl = new ArrayList<>();
         for (int i=0; i<inputAl.size();i++){
-            if(inputAl.get(i).getmFeederId().equals(selectedDog.feederId)){
+            if(inputAl.get(i).getFeederId().equals(selectedDog.feederId)){
                 outputAl.add(inputAl.get(i));
             }
         }
-
         //시간 순으로 정렬
         int element1, element2;
         for(int i=0;i<outputAl.size();i++){
             for(int j=0;j<outputAl.size()-1;j++){
-                element1 = Integer.valueOf(outputAl.get(j).getmFeedTime().replace(":",""));
-                element2 = Integer.valueOf(outputAl.get(j+1).getmFeedTime().replace(":",""));
+                element1 = Integer.valueOf(outputAl.get(j).getFeedTime().replace(":",""));
+                element2 = Integer.valueOf(outputAl.get(j+1).getFeedTime().replace(":",""));
                 if(element1>element2){
                     FeedSchedule buffer1, buffer2;
                     buffer1 = outputAl.get(j);
@@ -147,16 +146,18 @@ public class AutoFeedActivity extends AppCompatActivity {
             @Override
             public void onPositiveClicked(String feedTime, String feedAmount) {
                 int canAdd = 1;
+                // 동일한 시간이 있는 경우
                 for(FeedSchedule scheduleElement:feedScheduleList){
-                    if(feedTime.equals(scheduleElement.getmFeedTime())){
+                    if(feedTime.equals(scheduleElement.getFeedTime())){
                         canAdd = 2;
                     }
                 }
+                // 스케줄이 10개 이상인 경우
                 if(feedScheduleList.size()>=10){
                     canAdd = 3;
                 }
                 if(canAdd == 1){
-                    feedScheduleList.add(new FeedSchedule(0, selectedDog.feederId, feedTime, feedAmount));
+                    feedScheduleList.add(new FeedSchedule(0, selectedDog.feederId, 0, feedTime, feedAmount));
                     isEdited = true;
                     initRecyclerView();
                 }else if(canAdd == 2){
@@ -196,9 +197,11 @@ public class AutoFeedActivity extends AppCompatActivity {
 
     private void handleResponseRemove(Res response) {
         // Toast.makeText(this, response.getMessage(), Toast.LENGTH_SHORT).show();
-
+        int i =0;
         //Register
-        for(FeedSchedule fsItem:feedScheduleList){
+        for(FeedSchedule fsItem:listSorting(feedScheduleList)){
+            i++;
+            fsItem.setFeedOrder(i);
             registerFeedScheduleList(fsItem);
         }
 

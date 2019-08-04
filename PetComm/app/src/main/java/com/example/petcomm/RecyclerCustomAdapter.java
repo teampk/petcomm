@@ -62,8 +62,8 @@ public class RecyclerCustomAdapter extends RecyclerView.Adapter<RecyclerView.Vie
         MyViewHolderScheduleList viewHolder = (MyViewHolderScheduleList) holder;
 
         viewHolder.setIsRecyclable(false);
-        viewHolder.itemFeedTime.setText(selectedData.getmFeedTime());
-        viewHolder.itemFeedAmount.setText(selectedData.getmFeedAmount());
+        viewHolder.itemFeedTime.setText(selectedData.getFeedTime());
+        viewHolder.itemFeedAmount.setText(selectedData.getFeedAmount());
         viewHolder.itemParent.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View view){

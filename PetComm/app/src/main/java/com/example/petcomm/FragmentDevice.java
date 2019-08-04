@@ -252,7 +252,7 @@ public class FragmentDevice extends Fragment {
                 }else{
                     feedTime = "99:99";
                 }
-                FeedSchedule feedManually = new FeedSchedule(0, selectedDog.feederId, feedTime, feedAmount);
+                FeedSchedule feedManually = new FeedSchedule(0, selectedDog.feederId,0, feedTime, feedAmount);
                 feedManually(feedManually);
             }
 

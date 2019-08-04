@@ -42,8 +42,9 @@ public class DBHelper extends SQLiteOpenHelper {
             FeedSchedule scheduleElement = new FeedSchedule(
                     Integer.valueOf(cursor.getString(0)),
                     cursor.getString(1),
-                    cursor.getString(2),
-                    cursor.getString(3)
+                    Integer.valueOf(cursor.getString(2)),
+                    cursor.getString(3),
+                    cursor.getString(4)
             );
             scheduleData.add(scheduleElement);
         }
@@ -59,8 +60,9 @@ public class DBHelper extends SQLiteOpenHelper {
             FeedSchedule scheduleElement = new FeedSchedule(
                     Integer.valueOf(cursor.getString(0)),
                     cursor.getString(1),
-                    cursor.getString(2),
-                    cursor.getString(3)
+                    Integer.valueOf(cursor.getString(2)),
+                    cursor.getString(3),
+                    cursor.getString(4)
             );
             scheduleData.add(scheduleElement);
         }
