@@ -3,6 +3,7 @@ package com.example.petcomm;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.graphics.Typeface;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 
@@ -24,11 +25,13 @@ public class LineChartItem extends ChartItem {
 
     private final Typeface mTf;
     private int mode;
+    public Context context;
 
     public LineChartItem(int mode, ChartData<?> cd, Context c) {
         super(cd);
         this.mode = mode;
         this.mTf = Typeface.createFromAsset(c.getAssets(), "OpenSans-Regular.ttf");
+        this.context = c;
     }
 
     @Override
@@ -45,7 +48,6 @@ public class LineChartItem extends ChartItem {
         if (convertView == null) {
 
             holder = new ViewHolder();
-
             convertView = LayoutInflater.from(c).inflate(R.layout.list_item_linechart, null);
             holder.chart = convertView.findViewById(R.id.chart);
 
@@ -68,9 +70,13 @@ public class LineChartItem extends ChartItem {
         xAxis.setTypeface(mTf);
         xAxis.setAxisMinValue(7.01f); //experiment with these values
         xAxis.setAxisMaxValue(7.10f);
-        xAxis.setLabelCount(5);
+        // xAxis.setLabelCount(5);
         xAxis.setDrawGridLines(false);
         xAxis.setDrawAxisLine(true);
+
+        //
+        xAxis.setGranularity(1f);
+        xAxis.setLabelCount(7);
 
         YAxis leftAxis = holder.chart.getAxisLeft();
         if (mode == 1){

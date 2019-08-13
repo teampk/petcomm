@@ -196,13 +196,13 @@ public class FragmentHome extends Fragment{
             }
 
 
-            binding.clEmptyDog.setVisibility(View.GONE);
             binding.clExistDog.setVisibility(View.VISIBLE);
+            binding.clEmptyDog.setVisibility(View.GONE);
             binding.tvName.setText(dogDataArrayList.get(index).dogName);
-            binding.tvPlanEmpty.setVisibility(View.VISIBLE);
-            binding.tvPlanRecycler.setVisibility(View.GONE);
             // 등록된 급식기가 없을 때
             if(dogDataArrayList.get(index).feederId.equals("")) {
+                binding.tvPlanEmpty.setVisibility(View.VISIBLE);
+                binding.tvPlanRecycler.setVisibility(View.GONE);
                 binding.tvDevice.setText(getString(R.string.tv_device_empty));
                 binding.tvPlanEmpty.setText("급식기를 등록해주세요.");
                 binding.tvRecommend.setText(getString(R.string.tv_recommend_empty));
@@ -350,9 +350,7 @@ public class FragmentHome extends Fragment{
         startActivity(new Intent(getContext(), DataActivity.class));
     }
 
-    public void registerDeviceListener(View view){
 
-    }
     public void testListener(View view){
 
     }

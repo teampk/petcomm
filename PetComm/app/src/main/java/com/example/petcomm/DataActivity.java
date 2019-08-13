@@ -1,6 +1,7 @@
 package com.example.petcomm;
 
 import android.content.Context;
+import android.content.pm.ActivityInfo;
 import android.databinding.DataBindingUtil;
 import android.graphics.Color;
 import android.graphics.DashPathEffect;
@@ -42,61 +43,69 @@ public class DataActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
                 WindowManager.LayoutParams.FLAG_FULLSCREEN);
+        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
 
         binding = DataBindingUtil.setContentView(this, R.layout.activity_data);
         binding.setData(this);
         mSubscriptions = new CompositeSubscription();
 
-        ArrayList<ChartItem> list = new ArrayList<>();
 
-        list.add(new LineChartItem(1, generateDataLine(1), getApplicationContext()));
-        list.add(new LineChartItem(2, generateDataLine(2), getApplicationContext()));
-        list.add(new LineChartItem(3, generateDataLine(3), getApplicationContext()));
-        ChartDataAdapter cda = new ChartDataAdapter(getApplicationContext(), list);
+
+
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        ArrayList<ChartItem> chartList = new ArrayList<>();
+        chartList.add(new LineChartItem(1, generateDataLine(1), getApplicationContext()));
+        chartList.add(new LineChartItem(2, generateDataLine(2), getApplicationContext()));
+        chartList.add(new LineChartItem(3, generateDataLine(3), getApplicationContext()));
+        ChartDataAdapter cda = new ChartDataAdapter(getApplicationContext(), chartList);
         binding.lvData.setAdapter(cda);
-
-
     }
 
     private LineData generateDataLine(int mode){
         ArrayList<Entry> dataVals = new ArrayList<>();
 
 
-        LineDataSet d1;
+        LineDataSet mLineDataSet;
         if (mode == 1) {
             for (int i = 1; i <= 10; i++) {
                 dataVals.add(new Entry((float)(7+(i*0.01)), (float)(Math.random() * 10) + 40));
             }
-            d1 = new LineDataSet(dataVals, "먹은 사료 양 (g)");
-            d1.setHighLightColor(getColor(R.color.colorChart1));
-            d1.setCircleColor(getColor(R.color.colorChart1));
-            d1.setColor(getColor(R.color.colorChart1));
+
+            mLineDataSet = new LineDataSet(dataVals, "먹은 사료 양 (g)");
+            mLineDataSet.setHighLightColor(getColor(R.color.colorChart1));
+            mLineDataSet.setCircleColor(getColor(R.color.colorChart1));
+            mLineDataSet.setColor(getColor(R.color.colorChart1));
         }else if (mode==2){
             for (int i = 1; i <= 10; i++) {
                 dataVals.add(new Entry((float)(7+(i*0.01)), (float)(Math.random() * 5) + 10));
 
             }
-            d1 = new LineDataSet(dataVals, "체중 (kg)");
-            d1.setHighLightColor(getColor(R.color.colorChart2));
-            d1.setCircleColor(getColor(R.color.colorChart2));
-            d1.setColor(getColor(R.color.colorChart2));
+            mLineDataSet = new LineDataSet(dataVals, "체중 (kg)");
+            mLineDataSet.setHighLightColor(getColor(R.color.colorChart2));
+            mLineDataSet.setCircleColor(getColor(R.color.colorChart2));
+            mLineDataSet.setColor(getColor(R.color.colorChart2));
         }else{
             for (int i = 1; i <= 10; i++) {
                 dataVals.add(new Entry((float)(7+(i*0.01)), (float)(Math.random() * 10) + 30));
             }
-            d1 = new LineDataSet(dataVals, "배변 양 (g)");
-            d1.setHighLightColor(getColor(R.color.colorChart3));
-            d1.setCircleColor(getColor(R.color.colorChart3));
-            d1.setColor(getColor(R.color.colorChart3));
+            mLineDataSet = new LineDataSet(dataVals, "배변 양 (g)");
+            mLineDataSet.setHighLightColor(getColor(R.color.colorChart3));
+            mLineDataSet.setCircleColor(getColor(R.color.colorChart3));
+            mLineDataSet.setColor(getColor(R.color.colorChart3));
         }
 
-        d1.setLineWidth(4f);
-        d1.setCircleRadius(4f);
-        d1.setDrawValues(false);
+        mLineDataSet.setLineWidth(4f);
+        mLineDataSet.setCircleRadius(4f);
+        mLineDataSet.setDrawValues(false);
 
-        return new LineData(d1);
+        return new LineData(mLineDataSet);
 
     }
+
     private class ChartDataAdapter extends ArrayAdapter<ChartItem> {
 
         ChartDataAdapter(Context context, List<ChartItem> objects) {
@@ -122,8 +131,4 @@ public class DataActivity extends AppCompatActivity {
             return 3; // we have 3 different item-types
         }
     }
-
-
-
-
 }

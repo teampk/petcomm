@@ -65,7 +65,7 @@ public class AddDeviceActivity2 extends AppCompatActivity {
 
     private Dog selectedDog;
 
-    private String generatedDeviceId;
+    private String generatedDeviceId="11111111111";
 
 
     public SendData mSendData;
@@ -91,13 +91,6 @@ public class AddDeviceActivity2 extends AppCompatActivity {
         deviceMode  = intent.getIntExtra("mode", 1);
         selectedDog = (Dog) intent.getSerializableExtra("dog");
 
-        if(deviceMode==1){
-            binding.ivDevice.setImageResource(R.drawable.img_feeder);
-            generatedDeviceId = "f_"+getRandomString(8);
-        }else if (deviceMode==2){
-            binding.ivDevice.setImageResource(R.drawable.img_toilet);
-            generatedDeviceId = "t_"+getRandomString(8);
-        }
         ////// 지워
         binding.etWifiId.setText("Trojan.proxy.41241.5");
         binding.etWifiPw.setText("pkpk9596");
@@ -119,8 +112,23 @@ public class AddDeviceActivity2 extends AppCompatActivity {
                 InetAddress serverAddr = InetAddress.getByName(Constants.DEVICE_IP);
                 connectWifiId = binding.etWifiId.getText().toString();
                 connectWifiPw = binding.etWifiPw.getText().toString();
+                if(deviceMode==1){
+                    binding.ivDevice.setImageResource(R.drawable.img_feeder);
+                    generatedDeviceId = "f_"+getRandomString(6);
+                }else if (deviceMode==2){
+                    binding.ivDevice.setImageResource(R.drawable.img_toilet);
+                    generatedDeviceId = "t_"+getRandomString(6);
+                }else{
+                    generatedDeviceId = "11111111111";
+                }
+
                 //String data = binding.etWifiId.getText().toString()+"/"+binding.etWifiPw.getText().toString()+"/"+generatedDeviceId;
-                String data = connectWifiId+"/"+connectWifiPw;
+                String data = "";
+                if(deviceMode==1){
+                    data = connectWifiId+"/"+connectWifiPw+"/"+generatedDeviceId+"/";
+                }else if(deviceMode == 2){
+                    data = connectWifiId+"/"+connectWifiPw+"/"+generatedDeviceId+"/";
+                }
 
                 // Send
                 byte[] bufSend = (data).getBytes();
@@ -142,7 +150,6 @@ public class AddDeviceActivity2 extends AppCompatActivity {
 
 
                 if(msg.split("/")[0].equals("WIN")){
-                    Toast.makeText(AddDeviceActivity2.this, "기기에 정보를 전송 완료했습니다.", Toast.LENGTH_SHORT).show();
                     Log.d("PAENG_2_wifi", "Connect to " + connectWifiId +" // "+ connectWifiPw);
                     connectToWifi(connectWifiId, connectWifiPw);
 
@@ -153,7 +160,7 @@ public class AddDeviceActivity2 extends AppCompatActivity {
                     startActivity(intent);
                     finish();
                 } else{
-                    Toast.makeText(AddDeviceActivity2.this, "RESPONSE ERROR :(", Toast.LENGTH_SHORT).show();
+                    Log.d("PAENG_2_wifi", "RESPONSE ERROR :(");
                 }
 
             }catch (Exception e){
@@ -167,7 +174,6 @@ public class AddDeviceActivity2 extends AppCompatActivity {
     // 기기 등록 버튼
     public void registerDeviceListener(View view){
         binding.pbDevice.setVisibility(View.VISIBLE);
-        Log.d("PAENG_2_wifi_direct", "--- wifi direct ---");
         if(checkRegister()){
             mSendData = new SendData();
             mSendData.start();
