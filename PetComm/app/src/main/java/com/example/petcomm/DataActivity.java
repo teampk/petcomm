@@ -72,7 +72,7 @@ public class DataActivity extends AppCompatActivity {
         LineDataSet mLineDataSet;
         if (mode == 1) {
             for (int i = 1; i <= 10; i++) {
-                dataVals.add(new Entry((float)(7+(i*0.01)), (float)(Math.random() * 10) + 40));
+                dataVals.add(new Entry(i, (float)(Math.random() * 10) + 40));
             }
 
             mLineDataSet = new LineDataSet(dataVals, "먹은 사료 양 (g)");
@@ -81,7 +81,7 @@ public class DataActivity extends AppCompatActivity {
             mLineDataSet.setColor(getColor(R.color.colorChart1));
         }else if (mode==2){
             for (int i = 1; i <= 10; i++) {
-                dataVals.add(new Entry((float)(7+(i*0.01)), (float)(Math.random() * 5) + 10));
+                dataVals.add(new Entry(i, (float)(Math.random() * 5) + 10));
 
             }
             mLineDataSet = new LineDataSet(dataVals, "체중 (kg)");
@@ -90,7 +90,7 @@ public class DataActivity extends AppCompatActivity {
             mLineDataSet.setColor(getColor(R.color.colorChart2));
         }else{
             for (int i = 1; i <= 10; i++) {
-                dataVals.add(new Entry((float)(7+(i*0.01)), (float)(Math.random() * 10) + 30));
+                dataVals.add(new Entry(i, (float)(Math.random() * 10) + 30));
             }
             mLineDataSet = new LineDataSet(dataVals, "배변 양 (g)");
             mLineDataSet.setHighLightColor(getColor(R.color.colorChart3));

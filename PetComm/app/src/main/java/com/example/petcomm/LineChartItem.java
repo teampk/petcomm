@@ -68,15 +68,12 @@ public class LineChartItem extends ChartItem {
         XAxis xAxis = holder.chart.getXAxis();
         xAxis.setPosition(XAxis.XAxisPosition.BOTTOM);
         xAxis.setTypeface(mTf);
-        xAxis.setAxisMinValue(7.01f); //experiment with these values
-        xAxis.setAxisMaxValue(7.10f);
-        // xAxis.setLabelCount(5);
+        xAxis.setAxisMinValue(1); //experiment with these values
+        xAxis.setAxisMaxValue(10);
+        xAxis.setLabelCount(9);
         xAxis.setDrawGridLines(false);
         xAxis.setDrawAxisLine(true);
 
-        //
-        xAxis.setGranularity(1f);
-        xAxis.setLabelCount(7);
 
         YAxis leftAxis = holder.chart.getAxisLeft();
         if (mode == 1){
@@ -102,8 +99,8 @@ public class LineChartItem extends ChartItem {
         holder.chart.setData((LineData) mChartData);
 
         // do not forget to refresh the chart
-        // holder.chart.invalidate();
-        holder.chart.animateX(1500);
+        holder.chart.invalidate();
+        holder.chart.animateX(1200);
 
         return convertView;
     }
