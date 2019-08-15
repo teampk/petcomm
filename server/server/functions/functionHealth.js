@@ -27,3 +27,14 @@ exports.registerHealthEat = (mFeederId, mFeedAmount) =>
             });
         }
     );
+
+exports.getHealthEatByDeviceId = deviceId =>
+	new Promise(function(resolve,reject){
+		eatdb.find({ feederId: deviceId })
+		.then(function(health_eat){
+			resolve(health_eat);
+		})
+		.catch(function(err){
+			reject({ status: 500, message: 'Internal Server Error !' });
+		});
+	});

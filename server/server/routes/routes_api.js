@@ -9,7 +9,7 @@ router.get('/', function(req, res) {
     res.end('This is for pk server');
 });
 
-// Register Dog
+// register Dog
 router.post('/dog', function(req, res){
   var dogId = req.body.dogId;
   var dogName = req.body.dogName;
@@ -63,8 +63,6 @@ router.get('/dogs/:id', function(req, res){
 
 });
 
-
-
 // get dog profile by dog id
 router.get('/dog/:dogId', function(req, res){
   functionDog.getDogBydogId(req.params.dogId)
@@ -78,6 +76,22 @@ router.get('/dog/:dogId', function(req, res){
       res.status(err.status).json({
         message: err.message
       });
+    });
+});
+
+// get Health Data (eat) by Device id
+router.get('/health/eat/:feederId', function(req, res){
+  functionHealth.getHealthEatByDeviceId(req.params.feederId)
+    .then(function(result){
+      console.log('-- Getting Health eat data... --');
+      console.log('feederId = ' + req.params.feederId);
+      res.json(result);
+    })
+    .catch(function(err){
+      console.log('feed health err :'+err);
+      res.status(err.status).json({
+        message: err.message
+      })
     });
 });
 
@@ -172,10 +186,14 @@ router.post('/feed', function(req, res){
       message: 'Invalid Request!'
     });
   }else{
+    console.log('<   Feed Manually   >')
     console.log('---App to Server---')
     console.log(feederId);
     console.log(feedTime);
     console.log(feedAmount);
+
+    // Delete afterwards... This function will be implemented in Device->Server
+    // *************************************************************
     functionHealth.registerHealthEat(feederId, feedAmount)
       .then(function(result){
         res.status(result.status).json({
@@ -188,10 +206,16 @@ router.post('/feed', function(req, res){
         });
       });
 
+    // ************************************************************
+
+    feedAmount *= 1;
+    var feedAmountSend = feedAmount + 90;
+    feedAmountSend+="";
+
     var jsonDataSchedule = {
       'feederId' : feederId,
       'feedTime' : feedTime,
-      'feedAmount' : feedAmount
+      'feedAmount' : feedAmountSend
     }
     request.post({
         headers: {'content-type': 'application/json'},
@@ -204,11 +228,11 @@ router.post('/feed', function(req, res){
         //console.log('response:', response);
         // console.log('error', error)
     });
-    
   }
 
 })
 
+// Play voice
 router.post('/voice', function(req, res){
   var feederIP = req.body.feederIP;
   console.log('ip', feederIP);
@@ -217,29 +241,24 @@ router.post('/voice', function(req, res){
   });
 })
 
-
-router.post('/test', function(req, res){
-  console.log('---test complete---');
-  res.status(200).json({
-    message: 'test message'
-  });
-})
-
 // Register Auto Feed Schedule
 router.post('/schedule', function(req, res){
   var feederId = req.body.feederId;
+  var feedOrder = req.body.feedOrder;
   var feedTime = req.body.feedTime;
   var feedAmount = req.body.feedAmount;
+  console.log(feederId+'//'+feedOrder+'//'+feedTime+'//'+feedAmount+'///////')
   
-  if (!feederId || !feedTime || !feedAmount){
+  if (!feederId || !feedOrder || !feedTime || !feedAmount){
     res.status(400).json({
       message: 'Invalid Request!'
     });
   }else{
-    functionSchedule.registerSchedule(feederId, feedTime, feedAmount)
+    functionSchedule.registerSchedule(feederId, feedOrder, feedTime, feedAmount)
       .then(function(result){
         var jsonDataSchedule = {
           'feederId' : feederId,
+          'feedOrder' : feedOrder,
           'feedTime' : feedTime,
           'feedAmount' : feedAmount
         }
@@ -277,10 +296,5 @@ router.get('/schedule/:feederId', function(req, res){
       });
     });
 });
-
-
-
-
-
 
 module.exports = router;

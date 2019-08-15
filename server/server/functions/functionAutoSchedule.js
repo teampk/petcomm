@@ -17,11 +17,12 @@ exports.removeScheduleByFeederId = feederId =>
         }
     );
 
-exports.registerSchedule = (mFeederId, mFeedTime, mFeedAmount) =>
+exports.registerSchedule = (mFeederId, mFeedOrder, mFeedTime, mFeedAmount) =>
     new Promise(
         function(resolve, reject){
             var newSchedule = new scheduledb({
                 feederId : mFeederId,
+                feedOrder : mFeedOrder,
                 feedTime : mFeedTime,
                 feedAmount : mFeedAmount,
                 created_at : new Date()

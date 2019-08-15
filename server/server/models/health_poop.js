@@ -2,7 +2,7 @@ var mongoose = require('mongoose');
 var healthPoopSchema = mongoose.Schema({
 
     toiletId : String,
-    poop : String,
+    poopAmount : String,
     created_at  : String
 });
 
