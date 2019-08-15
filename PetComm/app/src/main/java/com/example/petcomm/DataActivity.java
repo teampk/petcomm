@@ -69,62 +69,11 @@ public class DataActivity extends AppCompatActivity {
         mSharedPreferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
         selectedDogId = mSharedPreferences.getString(Constants.DOG, "");
         loadDogInf(selectedDogId);
-        setChart(binding.chart1, 1);
+        setChart(binding.chart2, 1);
         setChart(binding.chart2, 2);
         setChart(binding.chart3, 3);
 
     }
-
-    private void setChart(LineChart lineChart, int mode){
-        lineChart.setBackgroundColor(getColor(R.color.colorWhite));
-        lineChart.getDescription().setEnabled(false);
-        lineChart.setDragEnabled(false);
-        lineChart.setScaleEnabled(false);
-        lineChart.setPinchZoom(false);
-
-        XAxis xAxis;
-        {
-            xAxis = lineChart.getXAxis();
-            xAxis.setPosition(XAxis.XAxisPosition.BOTTOM);
-            xAxis.setAxisMinValue(1);
-            xAxis.setAxisMaxValue(10);
-            xAxis.setLabelCount(9);
-            xAxis.setDrawAxisLine(false);
-            xAxis.setDrawGridLines(false);
-        }
-        YAxis leftAxis;
-        {
-            leftAxis = lineChart.getAxisLeft();
-            if (mode == 1){
-                leftAxis.setAxisMaximum(90f);
-            }else if (mode == 2){
-                leftAxis.setAxisMaximum(50f);
-            }else if (mode == 3){
-                leftAxis.setAxisMaximum(90f);
-            }
-            leftAxis.setDrawLabels(true);
-            leftAxis.setDrawAxisLine(true);
-            leftAxis.setDrawGridLines(true);
-            leftAxis.setLabelCount(5, false);
-            leftAxis.setAxisMinimum(0f); // this replaces setStartAtZero(true)
-        }
-        YAxis rightAxis;
-        {
-            rightAxis = lineChart.getAxisRight();
-            rightAxis.setDrawLabels(false);
-            rightAxis.setDrawAxisLine(false);
-            //rightAxis.setTypeface(mTf);
-            //rightAxis.setLabelCount(5, false);
-            rightAxis.setDrawGridLines(false);
-            //rightAxis.setAxisMinimum(0f); // this replaces setStartAtZero(true)
-        }
-
-        lineChart.setData(generateDataLine(mode));
-
-        lineChart.invalidate();
-        lineChart.animateX(1200);
-    }
-
 
     @Override
     protected void onResume() {
@@ -190,22 +139,63 @@ public class DataActivity extends AppCompatActivity {
             Log.d("PaengHealthData", h.getmFeedAmount());
             Log.d("PaengHealthData", h.getCreated_at());
         }
-
-    }
-    private void handleError(Throwable error) {
-        if (error instanceof HttpException) {
-            Gson gson = new GsonBuilder().create();
-            try {
-                String errorBody = ((HttpException) error).response().errorBody().string();
-                Res response = gson.fromJson(errorBody, Res.class);
-                Toast.makeText(getApplicationContext(), response.getMessage(), Toast.LENGTH_SHORT).show();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        } else {
-            Log.d("PaengHelathError", String.valueOf(error));
-            Toast.makeText(getApplicationContext(), "Network Error :(", Toast.LENGTH_SHORT).show();
+// *************************************************************
+/*        ArrayList<Entry> eatDataVals = new ArrayList<>();
+        for (int i = 1; i <= 10; i++) {
+            eatDataVals.add(new Entry(i, (float)(Math.random() * 10) + 40));
         }
+
+        setChart(binding.chart1, 1);
+*/
+    }
+    private void setChart(LineChart lineChart, int mode){
+        lineChart.setBackgroundColor(getColor(R.color.colorWhite));
+        lineChart.getDescription().setEnabled(false);
+        lineChart.setDragEnabled(false);
+        lineChart.setScaleEnabled(false);
+        lineChart.setPinchZoom(false);
+
+        XAxis xAxis;
+        {
+            xAxis = lineChart.getXAxis();
+            xAxis.setPosition(XAxis.XAxisPosition.BOTTOM);
+            xAxis.setAxisMinValue(1);
+            xAxis.setAxisMaxValue(10);
+            xAxis.setLabelCount(9);
+            xAxis.setDrawAxisLine(false);
+            xAxis.setDrawGridLines(false);
+        }
+        YAxis leftAxis;
+        {
+            leftAxis = lineChart.getAxisLeft();
+            if (mode == 1){
+                leftAxis.setAxisMaximum(90f);
+            }else if (mode == 2){
+                leftAxis.setAxisMaximum(50f);
+            }else if (mode == 3){
+                leftAxis.setAxisMaximum(90f);
+            }
+            leftAxis.setDrawLabels(true);
+            leftAxis.setDrawAxisLine(true);
+            leftAxis.setDrawGridLines(true);
+            leftAxis.setLabelCount(5, false);
+            leftAxis.setAxisMinimum(0f); // this replaces setStartAtZero(true)
+        }
+        YAxis rightAxis;
+        {
+            rightAxis = lineChart.getAxisRight();
+            rightAxis.setDrawLabels(false);
+            rightAxis.setDrawAxisLine(false);
+            //rightAxis.setTypeface(mTf);
+            //rightAxis.setLabelCount(5, false);
+            rightAxis.setDrawGridLines(false);
+            //rightAxis.setAxisMinimum(0f); // this replaces setStartAtZero(true)
+        }
+
+        lineChart.setData(generateDataLine(mode));
+
+        lineChart.invalidate();
+        lineChart.animateX(1200);
     }
     private LineData generateDataLine(int mode){
         ArrayList<Entry> dataVals = new ArrayList<>();
@@ -245,6 +235,22 @@ public class DataActivity extends AppCompatActivity {
 
         return new LineData(mLineDataSet);
 
+    }
+
+    private void handleError(Throwable error) {
+        if (error instanceof HttpException) {
+            Gson gson = new GsonBuilder().create();
+            try {
+                String errorBody = ((HttpException) error).response().errorBody().string();
+                Res response = gson.fromJson(errorBody, Res.class);
+                Toast.makeText(getApplicationContext(), response.getMessage(), Toast.LENGTH_SHORT).show();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        } else {
+            Log.d("PaengHelathError", String.valueOf(error));
+            Toast.makeText(getApplicationContext(), "Network Error :(", Toast.LENGTH_SHORT).show();
+        }
     }
 
 }
