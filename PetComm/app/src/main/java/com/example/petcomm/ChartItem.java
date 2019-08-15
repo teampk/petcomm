@@ -18,6 +18,11 @@ public abstract class ChartItem {
     static final int TYPE_PIECHART = 2;
 
     ChartData<?> mChartData;
+    String mDate;
+
+    ChartItem(String date){
+        this.mDate = date;
+    }
 
     ChartItem(ChartData<?> cd) {
         this.mChartData = cd;

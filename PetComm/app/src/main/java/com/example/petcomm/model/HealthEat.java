@@ -1,17 +1,17 @@
 package com.example.petcomm.model;
 
-public class HealthFeed {
+public class HealthEat {
     private int id;
     private String feederId;
-    private String feedTime;
     private String feedAmount;
+    private String created_at;
 
 
-    public HealthFeed(int id, String feederId, String feedTime, String feedAmount){
+    public HealthEat(int id, String feederId, String feedAmount, String created_at){
         this.id = id;
         this.feederId = feederId;
-        this.feedTime = feedTime;
         this.feedAmount = feedAmount;
+        this.created_at = created_at;
 
     }
 
@@ -22,9 +22,11 @@ public class HealthFeed {
     public String getmFeederId() {
         return this.feederId;
     }
-    public String getmFeedTime() {
-        return this.feedTime;
+
+    public String getCreated_at() {
+        return this.created_at;
     }
+
     public String getmFeedAmount() {
         return this.feedAmount;
     }

@@ -20,31 +20,28 @@
         android:usesCleartextTraffic="true"
         >
 
-
         <activity
             android:name=".SignInActivity"
             android:label="@string/app_name">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
+                <action android:name="android.intent.action.VIEW" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
         <activity android:name=".MainActivity"/>
         <activity android:name=".SplashActivity"/>
         <activity android:name=".SignUpActivity"/>
         <activity android:name=".AddDogActivity"/>
-
         <activity android:name=".AddDeviceActivity"/>
         <activity android:name=".AddDeviceActivity2"/>
         <activity android:name=".AddDeviceActivity3"/>
         <activity android:name=".DogProfileActivity"/>
         <activity android:name=".AutoFeedActivity"/>
         <activity android:name=".CameraActivity"/>
-        <activity android:name=".DataActivity"/>
         <activity android:name=".CheckProperFeedActivity"/>
-
-
+        <activity android:name=".DataActivity"/>
 
 
     </application>

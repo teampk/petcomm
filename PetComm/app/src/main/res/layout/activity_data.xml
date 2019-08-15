@@ -14,7 +14,8 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:background="@color/colorWhite">
 
         <!-- Header View -->
         <android.support.constraint.ConstraintLayout
@@ -46,13 +47,102 @@
 
         </android.support.constraint.ConstraintLayout>
 
-        <ListView
-            android:id="@+id/lv_data"
+        <ScrollView
             android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="1">
+            android:layout_height="match_parent">
 
-        </ListView>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+
+                <!-- 식습관 데이터 -->
+                <TextView
+                    android:id="@+id/tv_feeder"
+                    android:layout_marginTop="20dp"
+                    android:layout_marginStart="15dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Feeder"
+                    android:textColor="@color/colorBlack"
+                    android:textSize="@dimen/text_size_small"
+                    android:gravity="center_vertical"/>
+                <TextView
+                    android:id="@+id/tv_data_eat"
+                    android:layout_marginTop="5dp"
+                    android:layout_marginStart="15dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="식사량"
+                    android:textColor="@color/colorBlack"
+                    android:textSize="@dimen/text_size_big"
+                    android:textStyle="bold"
+                    android:gravity="center_vertical"
+                    />
+                <com.github.mikephil.charting.charts.LineChart
+                    android:id="@+id/chart1"
+                    android:layout_width="match_parent"
+                    android:layout_height="200dp"/>
+
+                <View
+                    android:layout_marginTop="20dp"
+                    android:layout_marginStart="15dp"
+                    android:layout_marginEnd="15dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="@color/colorBackgroundGray"/>
+
+                <!-- 체중 데이터 -->
+                <TextView
+                    android:id="@+id/tv_toilet"
+                    android:layout_marginTop="20dp"
+                    android:layout_marginStart="15dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Toilet"
+                    android:textColor="@color/colorBlack"
+                    android:textSize="@dimen/text_size_small"
+                    android:gravity="center_vertical"/>
+                <TextView
+                    android:id="@+id/tv_data_weight"
+                    android:layout_marginTop="5dp"
+                    android:layout_marginStart="15dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="체중"
+                    android:textColor="@color/colorBlack"
+                    android:textSize="@dimen/text_size_big"
+                    android:textStyle="bold"
+                    android:gravity="center_vertical"
+                    />
+                <com.github.mikephil.charting.charts.LineChart
+                    android:id="@+id/chart2"
+                    android:layout_width="match_parent"
+                    android:layout_height="200dp"/>
+
+                <!-- 체중 데이터 -->
+                <TextView
+                    android:id="@+id/tv_data_poop"
+                    android:layout_marginTop="20dp"
+                    android:layout_marginStart="15dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="배변량"
+                    android:textColor="@color/colorBlack"
+                    android:textSize="@dimen/text_size_big"
+                    android:textStyle="bold"
+                    android:gravity="center_vertical"
+                    />
+                <com.github.mikephil.charting.charts.LineChart
+                    android:layout_marginBottom="30dp"
+                    android:id="@+id/chart3"
+                    android:layout_width="match_parent"
+                    android:layout_height="200dp"/>
+
+            </LinearLayout>
+        </ScrollView>
+
 
     </LinearLayout>
 
