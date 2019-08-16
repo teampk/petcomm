@@ -15,20 +15,19 @@ public class HealthWeight {
 
     }
 
-    public int getmId(){
-        return this.id;
+    public int getId() {
+        return id;
     }
 
-    public String getmFeederId() {
-        return this.toiletId;
+    public String getToiletId() {
+        return toiletId;
     }
 
-    public String getmFeedAmount() {
-        return this.weight;
+    public String getWeight() {
+        return weight;
     }
 
     public String getCreated_at() {
-        return this.created_at;
+        return created_at;
     }
-
 }

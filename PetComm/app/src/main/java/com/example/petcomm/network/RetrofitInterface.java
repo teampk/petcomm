@@ -3,6 +3,8 @@ package com.example.petcomm.network;
 import com.example.petcomm.model.Dog;
 import com.example.petcomm.model.FeedSchedule;
 import com.example.petcomm.model.HealthEat;
+import com.example.petcomm.model.HealthPoop;
+import com.example.petcomm.model.HealthWeight;
 import com.example.petcomm.model.Res;
 
 import retrofit2.Call;
@@ -29,6 +31,10 @@ public interface RetrofitInterface {
 
     @GET("health/eat/{feederId}")
     Observable<HealthEat[]> getHealthEatByFeederId(@Path("feederId") String feederId);
+    @GET("health/weight/{toiletId}")
+    Observable<HealthWeight[]> getHealthWeightByToiletId(@Path("toiletId") String toiletId);
+    @GET("health/poop/{toiletId}")
+    Observable<HealthPoop[]> getHealthPoopByToiletId(@Path("toiletId") String toiletId);
 
     @PUT("register/feeder/{dogId}")
     Observable<Res> registerFeeder(@Path("dogId") String dogId, @Body Dog dog);

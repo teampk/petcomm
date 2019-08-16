@@ -15,20 +15,19 @@ public class HealthPoop {
 
     }
 
-    public int getmId(){
-        return this.id;
+    public int getId() {
+        return id;
     }
 
-    public String getmFeederId() {
-        return this.toiletId;
+    public String getToiletId() {
+        return toiletId;
     }
 
-    public String getmFeedAmount() {
-        return this.poopAmount;
+    public String getPoopAmount() {
+        return poopAmount;
     }
 
     public String getCreated_at() {
-        return this.created_at;
+        return created_at;
     }
-
 }

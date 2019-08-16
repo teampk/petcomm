@@ -18,11 +18,14 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.widget.ArrayAdapter;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.petcomm.databinding.ActivityDataBinding;
 import com.example.petcomm.model.Dog;
 import com.example.petcomm.model.HealthEat;
+import com.example.petcomm.model.HealthPoop;
+import com.example.petcomm.model.HealthWeight;
 import com.example.petcomm.model.Res;
 import com.example.petcomm.network.NetworkUtil;
 import com.example.petcomm.utils.Constants;
@@ -69,9 +72,6 @@ public class DataActivity extends AppCompatActivity {
         mSharedPreferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
         selectedDogId = mSharedPreferences.getString(Constants.DOG, "");
         loadDogInf(selectedDogId);
-        setChart(binding.chart2, 1);
-        setChart(binding.chart2, 2);
-        setChart(binding.chart3, 3);
 
     }
 
@@ -91,19 +91,23 @@ public class DataActivity extends AppCompatActivity {
                 .subscribeOn(Schedulers.io())
                 .subscribe(this::handleResponseDog,this::handleError));
     }
+
+    // 강아지 정보 불러오기
     private void handleResponseDog(Dog myDog){
         if(myDog.feederId.equals("")){
             binding.tvFeeder.setText(getString(R.string.tv_feeder_empty));
             binding.chart1.setVisibility(View.GONE);
             binding.tvDataEat.setVisibility(View.GONE);
+            binding.llTvEatDate.setVisibility(View.GONE);
         }else{
             String placeholder = "자동급식기 : " + myDog.feederId;
             binding.tvFeeder.setText(placeholder);
             binding.chart1.setVisibility(View.VISIBLE);
             binding.tvDataEat.setVisibility(View.VISIBLE);
+            binding.llTvEatDate.setVisibility(View.VISIBLE);
 
             // 식습관 데이터 불러오기
-            loadHealthEat(myDog.feederId);
+            loadHealthData(myDog.feederId, 1);
 
         }
         if(myDog.toiletId.equals("")){
@@ -119,41 +123,125 @@ public class DataActivity extends AppCompatActivity {
             binding.chart3.setVisibility(View.VISIBLE);
             binding.tvDataWeight.setVisibility(View.VISIBLE);
             binding.tvDataPoop.setVisibility(View.VISIBLE);
-
+            // 체중 데이터 불러오기
+            loadHealthData(myDog.toiletId, 2);
+            // 배변량 데이터 불러오기
+            loadHealthData(myDog.toiletId, 3);
 
 
 
 
         }
     }
-    private void loadHealthEat(String feederId){
-        mSubscriptions.add(NetworkUtil.getRetrofit().getHealthEatByFeederId(feederId)
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribeOn(Schedulers.io())
-                .subscribe(this::handleResponseHealthEat,this::handleError));
+    private void loadHealthData(String deviceId, int mode){
+        // get Eat Amount
+        if(mode==1){
+            mSubscriptions.add(NetworkUtil.getRetrofit().getHealthEatByFeederId(deviceId)
+                    .observeOn(AndroidSchedulers.mainThread())
+                    .subscribeOn(Schedulers.io())
+                    .subscribe(this::handleResponseHealthEat,this::handleError));
+        }
+        // get weight
+        else if (mode==2){
+            mSubscriptions.add(NetworkUtil.getRetrofit().getHealthWeightByToiletId(deviceId)
+                    .observeOn(AndroidSchedulers.mainThread())
+                    .subscribeOn(Schedulers.io())
+                    .subscribe(this::handleResponseHealthWeight,this::handleError));
+        }
+
+        // get Poop Amount
+        else if (mode == 3){
+            mSubscriptions.add(NetworkUtil.getRetrofit().getHealthPoopByToiletId(deviceId)
+                    .observeOn(AndroidSchedulers.mainThread())
+                    .subscribeOn(Schedulers.io())
+                    .subscribe(this::handleResponseHealthPoop,this::handleError));
+        }
+
     }
     private void handleResponseHealthEat(HealthEat[] healthEats){
-        for (HealthEat h : healthEats){
-            Log.d("PaengHealthData", "-----------");
-            Log.d("PaengHealthData", h.getmFeederId());
-            Log.d("PaengHealthData", h.getmFeedAmount());
-            Log.d("PaengHealthData", h.getCreated_at());
+        ArrayList<HealthEat> alHealthEat = new ArrayList<>();
+        for(HealthEat h : healthEats){
+            // 거꾸로 집어넣기
+            alHealthEat.add(0, h);
         }
-// *************************************************************
-/*        ArrayList<Entry> eatDataVals = new ArrayList<>();
-        for (int i = 1; i <= 10; i++) {
-            eatDataVals.add(new Entry(i, (float)(Math.random() * 10) + 40));
+        ArrayList<Entry> eatDataVals = new ArrayList<>();
+
+        int i = 10;
+        for(HealthEat h2 : alHealthEat){
+            eatDataVals.add(0, new Entry(i, Float.valueOf(h2.getmFeedAmount())));
+            int tmpId = getResources().getIdentifier("tv_data_eat_"+i, "id", "com.example.petcomm");
+            TextView tv = findViewById(tmpId);
+            tv.setText(getStringTime(h2.getCreated_at()));
+            i--;
+            if (i==0){
+                break;
+            }
         }
 
-        setChart(binding.chart1, 1);
-*/
+        setChart(binding.chart1, 1, eatDataVals);
     }
-    private void setChart(LineChart lineChart, int mode){
+    private void handleResponseHealthWeight(HealthWeight[] healthWeights){
+        ArrayList<HealthWeight> alHealthWeight = new ArrayList<>();
+        for(HealthWeight h : healthWeights){
+            // 거꾸로 집어넣기
+            alHealthWeight.add(0, h);
+        }
+        ArrayList<Entry> weightDataVals = new ArrayList<>();
+
+        int i = 10;
+        for(HealthWeight h2 : alHealthWeight){
+            weightDataVals.add(0, new Entry(i, Float.valueOf(h2.getWeight())));
+
+            int tmpId = getResources().getIdentifier("tv_data_weight_"+i, "id", "com.example.petcomm");
+            TextView tv = findViewById(tmpId);
+            tv.setText(getStringTime(h2.getCreated_at()));
+
+            i--;
+            if (i==0){
+                break;
+            }
+        }
+
+        setChart(binding.chart2, 2, weightDataVals);
+    }
+    private void handleResponseHealthPoop(HealthPoop[] healthPoops){
+        ArrayList<HealthPoop> alHealthPoop = new ArrayList<>();
+        for(HealthPoop h : healthPoops){
+            // 거꾸로 집어넣기
+            alHealthPoop.add(0, h);
+        }
+        ArrayList<Entry> poopDataVals = new ArrayList<>();
+
+        int i = 10;
+        for(HealthPoop h2 : alHealthPoop){
+            poopDataVals.add(0, new Entry(i, Float.valueOf(h2.getPoopAmount())));
+
+            int tmpId = getResources().getIdentifier("tv_data_poop_"+i, "id", "com.example.petcomm");
+            TextView tv = findViewById(tmpId);
+            tv.setText(getStringTime(h2.getCreated_at()));
+
+            i--;
+            if (i==0){
+                break;
+            }
+        }
+
+        setChart(binding.chart3, 3, poopDataVals);
+    }
+
+    private String getStringTime(String createdAt){
+        String[] dateInf = createdAt.split(" ");
+        String date = dateInf[1]+" "+dateInf[2];
+        String time = dateInf[4].substring(0, 5);
+
+        return date + "\n" + time;
+    }
+    private void setChart(LineChart lineChart, int mode, ArrayList<Entry> dataVals){
         lineChart.setBackgroundColor(getColor(R.color.colorWhite));
         lineChart.getDescription().setEnabled(false);
-        lineChart.setDragEnabled(false);
-        lineChart.setScaleEnabled(false);
-        lineChart.setPinchZoom(false);
+        lineChart.setDragEnabled(true);
+        lineChart.setScaleEnabled(true);
+        lineChart.setPinchZoom(true);
 
         XAxis xAxis;
         {
@@ -169,11 +257,11 @@ public class DataActivity extends AppCompatActivity {
         {
             leftAxis = lineChart.getAxisLeft();
             if (mode == 1){
-                leftAxis.setAxisMaximum(90f);
+                leftAxis.setAxisMaximum(100f);
             }else if (mode == 2){
                 leftAxis.setAxisMaximum(50f);
             }else if (mode == 3){
-                leftAxis.setAxisMaximum(90f);
+                leftAxis.setAxisMaximum(100f);
             }
             leftAxis.setDrawLabels(true);
             leftAxis.setDrawAxisLine(true);
@@ -192,38 +280,34 @@ public class DataActivity extends AppCompatActivity {
             //rightAxis.setAxisMinimum(0f); // this replaces setStartAtZero(true)
         }
 
-        lineChart.setData(generateDataLine(mode));
+        lineChart.setData(generateDataLine(mode, dataVals));
 
         lineChart.invalidate();
         lineChart.animateX(1200);
     }
-    private LineData generateDataLine(int mode){
-        ArrayList<Entry> dataVals = new ArrayList<>();
-
+    private LineData generateDataLine(int mode, ArrayList<Entry> dataVals){
+        ArrayList<Entry> dataVals_random = new ArrayList<>();
         LineDataSet mLineDataSet;
         if (mode == 1) {
-            for (int i = 1; i <= 10; i++) {
-                dataVals.add(new Entry(i, (float)(Math.random() * 10) + 40));
-            }
-
             mLineDataSet = new LineDataSet(dataVals, "먹은 사료 양 (g)");
             mLineDataSet.setHighLightColor(getColor(R.color.colorChart1));
             mLineDataSet.setCircleColor(getColor(R.color.colorChart1));
             mLineDataSet.setColor(getColor(R.color.colorChart1));
         }else if (mode==2){
-            for (int i = 1; i <= 10; i++) {
-                dataVals.add(new Entry(i, (float)(Math.random() * 5) + 10));
-
-            }
             mLineDataSet = new LineDataSet(dataVals, "체중 (kg)");
             mLineDataSet.setHighLightColor(getColor(R.color.colorChart2));
             mLineDataSet.setCircleColor(getColor(R.color.colorChart2));
             mLineDataSet.setColor(getColor(R.color.colorChart2));
+        }else if (mode==3){
+            mLineDataSet = new LineDataSet(dataVals, "배변 양 (g)");
+            mLineDataSet.setHighLightColor(getColor(R.color.colorChart3));
+            mLineDataSet.setCircleColor(getColor(R.color.colorChart3));
+            mLineDataSet.setColor(getColor(R.color.colorChart3));
         }else{
             for (int i = 1; i <= 10; i++) {
-                dataVals.add(new Entry(i, (float)(Math.random() * 10) + 30));
+                dataVals_random.add(new Entry(i, (float)(Math.random() * 10) + 30));
             }
-            mLineDataSet = new LineDataSet(dataVals, "배변 양 (g)");
+            mLineDataSet = new LineDataSet(dataVals_random, "배변 양 (g)");
             mLineDataSet.setHighLightColor(getColor(R.color.colorChart3));
             mLineDataSet.setCircleColor(getColor(R.color.colorChart3));
             mLineDataSet.setColor(getColor(R.color.colorChart3));
