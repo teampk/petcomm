@@ -37,4 +37,24 @@ exports.getHealthEatByDeviceId = deviceId =>
 		.catch(function(err){
 			reject({ status: 500, message: 'Internal Server Error !' });
 		});
+    });
+exports.getHealthWeightByDeviceId = deviceId =>
+	new Promise(function(resolve,reject){
+		weightdb.find({ toiletId: deviceId })
+		.then(function(health_eat){
+			resolve(health_eat);
+		})
+		.catch(function(err){
+			reject({ status: 500, message: 'Internal Server Error !' });
+		});
+    });
+exports.getHealthPoopByDeviceId = deviceId =>
+	new Promise(function(resolve,reject){
+		poopdb.find({ toiletId: deviceId })
+		.then(function(health_eat){
+			resolve(health_eat);
+		})
+		.catch(function(err){
+			reject({ status: 500, message: 'Internal Server Error !' });
+		});
 	});

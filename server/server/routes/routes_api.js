@@ -8,7 +8,6 @@ var request = require('request');
 router.get('/', function(req, res) {
     res.end('This is for pk server');
 });
-
 // register Dog
 router.post('/dog', function(req, res){
   var dogId = req.body.dogId;
@@ -45,7 +44,6 @@ router.post('/dog', function(req, res){
     
     }
 });
-
 // get Dogs list by user id
 router.get('/dogs/:id', function(req, res){
   console.log("user id = " + req.params.id);
@@ -62,7 +60,6 @@ router.get('/dogs/:id', function(req, res){
     });
 
 });
-
 // get dog profile by dog id
 router.get('/dog/:dogId', function(req, res){
   functionDog.getDogBydogId(req.params.dogId)
@@ -78,7 +75,6 @@ router.get('/dog/:dogId', function(req, res){
       });
     });
 });
-
 // get Health Data (eat) by Device id
 router.get('/health/eat/:feederId', function(req, res){
   functionHealth.getHealthEatByDeviceId(req.params.feederId)
@@ -88,13 +84,42 @@ router.get('/health/eat/:feederId', function(req, res){
       res.json(result);
     })
     .catch(function(err){
-      console.log('feed health err :'+err);
+      console.log('health eat err :'+err);
       res.status(err.status).json({
         message: err.message
       })
     });
 });
-
+// get Health Data (weight) by Device id
+router.get('/health/weight/:toiletId', function(req, res){
+  functionHealth.getHealthWeightByDeviceId(req.params.toiletId)
+    .then(function(result){
+      console.log('-- Getting Health weight data... --');
+      console.log('toiletId = ' + req.params.toiletId);
+      res.json(result);
+    })
+    .catch(function(err){
+      console.log('health weight err :'+err);
+      res.status(err.status).json({
+        message: err.message
+      })
+    });
+});
+// get Health Data (poop) by Device id
+router.get('/health/poop/:toiletId', function(req, res){
+  functionHealth.getHealthPoopByDeviceId(req.params.toiletId)
+    .then(function(result){
+      console.log('-- Getting Health poop data... --');
+      console.log('toiletId = ' + req.params.toiletId);
+      res.json(result);
+    })
+    .catch(function(err){
+      console.log('health poop err :'+err);
+      res.status(err.status).json({
+        message: err.message
+      })
+    });
+});
 // register Feeder
 router.put('/register/feeder/:dogId', function(req, res){
   functionDog.setDeviceId(req.params.dogId, req.body.feederId, 1)
@@ -110,7 +135,6 @@ router.put('/register/feeder/:dogId', function(req, res){
       });
     });
 });
-
 // register Toilet
 router.put('/register/toilet/:dogId', function(req, res){
   functionDog.setDeviceId(req.params.dogId, req.body.toiletId, 2)
@@ -126,7 +150,6 @@ router.put('/register/toilet/:dogId', function(req, res){
       });
     });
 });
-
 // unregister Feeder
 router.put('/unregister/feeder/:dogId', function(req, res){
   functionDog.setDeviceId(req.params.dogId, '', 11)
@@ -142,7 +165,6 @@ router.put('/unregister/feeder/:dogId', function(req, res){
       });
     });
 });
-
 // unregister Toilet
 router.put('/unregister/toilet/:dogId', function(req, res){
   functionDog.setDeviceId(req.params.dogId, '', 22)
@@ -159,7 +181,6 @@ router.put('/unregister/toilet/:dogId', function(req, res){
       });
     });
 });
-
 // Remove Feed Schedule 
 router.post('/schedule/delete', function(req, res){
   var feederId = req.body.feederId;
@@ -175,7 +196,6 @@ router.post('/schedule/delete', function(req, res){
       });
     });
 })
-
 // Feed Manually
 router.post('/feed', function(req, res){
   var feederId = req.body.feederId;
@@ -231,7 +251,6 @@ router.post('/feed', function(req, res){
   }
 
 })
-
 // Play voice
 router.post('/voice', function(req, res){
   var feederIP = req.body.feederIP;
@@ -240,7 +259,6 @@ router.post('/voice', function(req, res){
     message: 'voice played'
   });
 })
-
 // Register Auto Feed Schedule
 router.post('/schedule', function(req, res){
   var feederId = req.body.feederId;
@@ -283,7 +301,6 @@ router.post('/schedule', function(req, res){
       });
   }
 })
-
 // get Auto Feed Schedules
 router.get('/schedule/:feederId', function(req, res){
   functionSchedule.getScheduleByFeederId(req.params.feederId)
@@ -296,5 +313,4 @@ router.get('/schedule/:feederId', function(req, res){
       });
     });
 });
-
 module.exports = router;
