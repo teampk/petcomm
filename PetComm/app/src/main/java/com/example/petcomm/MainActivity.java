@@ -27,6 +27,11 @@ public class MainActivity extends AppCompatActivity {
                 case R.id.navigation_device:
                     selectedFragment = new FragmentDevice();
                     break;
+                case R.id.navigation_mall:
+                    selectedFragment = new FragmentMall();
+
+
+                    break;
                 case R.id.navigation_setting:
                     selectedFragment = new FragmentSetting();
                     break;

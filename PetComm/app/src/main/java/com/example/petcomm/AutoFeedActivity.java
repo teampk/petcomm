@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
+import android.os.Handler;
 import android.preference.PreferenceManager;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
@@ -200,9 +201,21 @@ public class AutoFeedActivity extends AppCompatActivity {
         int i =0;
         //Register
         for(FeedSchedule fsItem:listSorting(feedScheduleList)){
+
             i++;
             fsItem.setFeedOrder(i);
+
+
             registerFeedScheduleList(fsItem);
+            Log.d("PaengTestSchedule", String.valueOf(fsItem.getFeedOrder()));
+            Log.d("PaengTestSchedule", String.valueOf(fsItem.getFeedTime()));
+            Log.d("PaengTestSchedule", String.valueOf(fsItem.getFeedAmount()));
+
+
+            try { Thread.sleep(2000);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
         }
 
     }

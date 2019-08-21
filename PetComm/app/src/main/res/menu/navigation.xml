@@ -12,6 +12,11 @@
         android:title="@string/nav_device" />
 
     <item
+        android:id="@+id/navigation_mall"
+        android:icon="@drawable/ic_nav_mall"
+        android:title="@string/nav_mall" />
+
+    <item
         android:id="@+id/navigation_setting"
         android:icon="@drawable/ic_nav_setting"
         android:title="@string/nav_setting" />

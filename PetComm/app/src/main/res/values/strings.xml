@@ -2,6 +2,7 @@
     <string name="app_name">PetComm</string>
     <string name="nav_home">홈</string>
     <string name="nav_device">기기</string>
+    <string name="nav_mall">펫콤몰</string>
     <string name="nav_setting">설정</string>
 
     <string name="et_email">메일주소</string>
