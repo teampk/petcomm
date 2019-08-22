@@ -349,9 +349,9 @@
                                 />
 
                             <android.support.constraint.ConstraintLayout
+                                android:id="@+id/cl_recommend"
                                 android:layout_marginTop="10dp"
                                 android:layout_marginStart="15dp"
-                                android:layout_marginBottom="15dp"
 
 
                                 android:paddingStart="15dp"
@@ -377,7 +377,26 @@
                                     />
 
 
+
+
+
                             </android.support.constraint.ConstraintLayout>
+
+                            <TextView
+                                android:layout_marginTop="15dp"
+                                android:layout_marginBottom="15dp"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:text="수의사 1:1 맞춤형 상담 하러가기 ->"
+                                android:textSize="@dimen/text_size_small"
+                                android:textColor="@color/colorBlack"
+
+                                android:gravity="end"
+
+                                app:layout_constraintTop_toBottomOf="@+id/cl_recommend"
+                                android:onClick="@{fragmentHome::consultingListener}"
+
+                                />
 
 
                         </LinearLayout>

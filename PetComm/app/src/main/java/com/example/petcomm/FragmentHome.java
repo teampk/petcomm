@@ -354,5 +354,8 @@ public class FragmentHome extends Fragment{
     public void testListener(View view){
 
     }
+    public void consultingListener(View view){
+        Toast.makeText(getContext(), "준비중입니다...", Toast.LENGTH_SHORT).show();
+    }
 
 }
